@@ -1,0 +1,13 @@
+{
+  "layout": {
+    "login": "Đăng Nhập",
+    "IpFactory": "IP Nhà Máy",
+    "UserName": "Tên Đăng Nhập",
+    "password": "Mật Khẩu",
+    "ForgotPassword": "Thay đổi mật khẩu",
+    "submit": "Gửi"
+  },
+  "message": {
+
+  }
+}
