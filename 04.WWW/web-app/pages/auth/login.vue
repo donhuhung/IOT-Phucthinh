@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="min-h-screen flex items-stretch text-white ">
+    <section class="min-h-screen flex items-stretch text-white">
       <div class="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
            style="background-image: url(https://images.unsplash.com/photo-1577495508048-b635879837f1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80);">
         <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
@@ -30,27 +30,20 @@
           <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
         </div>
         <div class="w-full py-6 z-20">
-          <h1 class="my-6">
-
-          </h1>
-          <div class="py-6 space-x-2">
-            <span
-              class="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white">f</span>
-            <span
-              class="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white">G+</span>
-            <span
-              class="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white">in</span>
-          </div>
-          <p class="text-gray-100">
-            or use email your account
-          </p>
           <form action="" class="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
             <div class="pb-2 pt-4">
-              <input type="email" name="email" id="email" placeholder="Email"
+              <input type="text" name="email" id="email" placeholder="IP Factory"
                      class="block w-full p-4 text-lg rounded-sm bg-black">
             </div>
             <div class="pb-2 pt-4">
-              <input class="block w-full p-4 text-lg rounded-sm bg-black" type="password" name="password" id="password"
+              <input class="block w-full p-4 text-lg rounded-sm bg-black"
+                     name="password"
+                     placeholder="Username">
+            </div>
+            <div class="pb-2 pt-4">
+              <input class="block w-full p-4 text-lg rounded-sm bg-black"
+                     type="password"
+                     name="password" id="password"
                      placeholder="Password">
             </div>
             <div class="text-right text-gray-400 hover:underline hover:text-gray-100">

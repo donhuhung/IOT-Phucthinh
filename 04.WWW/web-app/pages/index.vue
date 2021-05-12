@@ -9,7 +9,6 @@
         class="mr-6 w-1/2 mt-8 py-2 flex-shrink-0 flex flex-col bg-white
 				dark:bg-gray-600 rounded-lg">
         <!-- Card list container -->
-
         <h3
           class="flex items-center pt-1 pb-1 px-8 text-lg font-semibold
 					capitalize dark:text-gray-300">
