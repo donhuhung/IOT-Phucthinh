@@ -11,8 +11,10 @@
     <main
       class="flex-1 bg-gray-200 dark:bg-black rounded-l-lg border-l
 		transition duration-500 ease-in-out overflow-y-auto">
-      <TheTopBar/>
-      <Nuxt />
+      <TheTopBar class="sticky top-0 z-20 border-b"/>
+      <div class="px-4 py-2 min-h-full">
+        <Nuxt/>
+      </div>
     </main>
   </div>
 </template>
@@ -20,12 +22,13 @@
 <script>
 import TheTopBar from "../components/TheTopBar";
 import TheMenuSidebar from "../components/TheMenuSidebar";
+
 export default {
   components: {TheMenuSidebar, TheTopBar},
-  middleware({ store, redirect, route }) {
+  middleware({store, redirect, route}) {
     if (!store.getters['auth/isLoggedIn']) {
-      let query = { redirect: route.fullPath }
-      redirect({ path: '/auth/login', query })
+      let query = {redirect: route.fullPath}
+      redirect({path: '/auth/login', query})
     }
   },
   data() {

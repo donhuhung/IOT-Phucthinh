@@ -1,5 +1,5 @@
 <template>
-<div></div>
+  <div>Device</div>
 </template>
 
 <script>

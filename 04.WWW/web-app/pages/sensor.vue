@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    Sensor
   </div>
 </template>
 

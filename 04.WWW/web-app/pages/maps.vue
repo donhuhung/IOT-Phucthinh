@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>Maps</div>
 </template>
 
 <script>
