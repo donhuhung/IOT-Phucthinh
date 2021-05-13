@@ -6,7 +6,8 @@
 
 <script>
 export default {
-  name: "factory"
+  name: "factory",
+  layout: "app"
 }
 </script>
 

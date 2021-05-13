@@ -1,33 +1,21 @@
 <template>
-  <div class="h-screen w-full flex overflow-hidden select-none">
-    <nav class="w-24 flex flex-col items-center bg-white dark:bg-gray-800 py-4 overflow-y-auto">
-      <!-- Left side NavBar -->
-      <div>
-        <!-- App Logo -->
-        <img class="" loading="lazy" src="~/assets/img/logo-phuc-thinh-22.png" alt=""/>
-      </div>
-      <TheMenuSidebar/>
-    </nav>
-    <main
-      class="flex-1 bg-gray-200 dark:bg-black rounded-l-lg border-l
-		transition duration-500 ease-in-out overflow-y-auto">
-      <TheTopBar/>
-      <Nuxt />
-    </main>
-  </div>
+  <ul class="mt-2 text-gray-700 dark:text-gray-400 capitalize">
+    <!-- Links -->
+    <template v-for="(nav, index) in navs">
+      <li :key="index" class="mt-3 p-2 text-blue-600 dark:text-blue-300 rounded-lg">
+        <nuxt-link :to="nav.to" class=" flex flex-col items-center">
+          <img :src="require(`~/assets/img/${nav.icon}`)" />
+          <span class="text-xs mt-2">{{ $t(nav.label) }}</span>
+        </nuxt-link>
+      </li>
+    </template>
+
+  </ul>
 </template>
 
 <script>
-import TheTopBar from "../components/TheTopBar";
-import TheMenuSidebar from "../components/TheMenuSidebar";
 export default {
-  components: {TheMenuSidebar, TheTopBar},
-  middleware({ store, redirect, route }) {
-    if (!store.getters['auth/isLoggedIn']) {
-      let query = { redirect: route.fullPath }
-      redirect({ path: '/auth/login', query })
-    }
-  },
+  name: "TheMenuSidebar",
   data() {
     return {
       navs: [

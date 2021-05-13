@@ -6,7 +6,8 @@
 
 <script>
 export default {
-  name: "sensor"
+  name: "sensor",
+  layout: "app"
 }
 </script>
 
