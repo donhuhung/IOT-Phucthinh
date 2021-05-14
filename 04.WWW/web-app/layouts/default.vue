@@ -5,17 +5,20 @@
 </template>
 
 <style>
-
+@font-face {
+  font-family: RobotoMedium;
+  src: url(~/assets/fonts/Roboto-Medium.ttf);
+}
+@font-face {
+  font-family: RobotoRegular;
+  src: url(~/assets/fonts/Roboto-Regular.ttf);
+}
+@font-face {
+  font-family: RobotoBold;
+  src: url(~/assets/fonts/Roboto-Bold.ttf);
+}
 html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: 'RobotoRegular',sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -59,5 +62,22 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+a:hover{
+  color:#007BFF;
+}
+a{
+  color:#007BFF;
+}
+input{
+  border-radius: 45px !important;
+  font-size: 16px;
+  height: 60px;
+  outline: none;
+  color:#686868;
+}
+.title-welcome{
+  font-family: 'RobotoMedium',sans-serif;
+  font-size: 24px;
 }
 </style>

@@ -1,11 +1,14 @@
 <template>
-  <ul class="mt-2 text-gray-700 dark:text-gray-400 capitalize">
+  <ul class="mt-2 text-gray-700 dark:text-gray-400 capitalize w-full">
     <!-- Links -->
     <template v-for="(nav, index) in navs">
-      <li :key="index" class="mt-3 p-2 text-blue-600 dark:text-blue-300 rounded-lg">
-        <nuxt-link :to="nav.to" class=" flex flex-col items-center">
+      <li :key="index" class="mt-3 p-1 pl-3 text-blue-600 dark:text-blue-300 rounded-lg">
+        <nuxt-link :to="nav.to" class=" flex items-center">
           <img :src="require(`~/assets/img/${nav.icon}`)" />
-          <span class="text-xs mt-2">{{ $t(nav.label) }}</span>
+          <span class="text-xl m-3 pl-4" style="color:#000A12"
+                @click="selected = index"
+                :class="{active:selected == index}"
+          >{{ $t(nav.label) }}</span>
         </nuxt-link>
       </li>
     </template>
@@ -68,12 +71,21 @@ export default {
             path: '/setting'
           }
         },
-      ]
+      ],
+      selected: ''
     }
   }
 }
 </script>
 
 <style scoped>
-
+nav li{
+  border-bottom: 1px solid #EEEEEE;
+}
+nav li:hover span{
+  color:#007BFF !important;
+}
+nav li .active{
+  color:#007BFF !important;
+}
 </style>

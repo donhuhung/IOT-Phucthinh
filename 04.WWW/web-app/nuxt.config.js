@@ -3,6 +3,9 @@ let VUE_APP_API_HOST = process.env.VUE_APP_API_HOST
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+  router: {
+    mode: 'hash'
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {

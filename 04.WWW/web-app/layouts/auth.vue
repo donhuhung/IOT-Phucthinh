@@ -1,9 +1,8 @@
 <template>
   <div>
     <section class="min-h-screen flex items-stretch text-white">
-      <div class="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
-           style="background-image: url('~/assets/img/banner-login.png')">
-        <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
+      <div class="lg:flex hidden bg-gray-500 bg-no-repeat bg-cover bg-center relative items-center"
+           style="background-image: url(https://www.htechsolution.vn/phucthinh/images/banner-login.png); width: 50%;">
         <div class="w-full px-24 z-10">
           <h1 class="text-5xl font-bold text-left tracking-wide">Phúc Thịnh</h1>
           <p class="text-3xl my-4">System Management IOT</p>
@@ -51,5 +50,22 @@ export default {
 html{
   font-family: 'RobotoRegular',sans-serif;
   font-size: 16px;
+}
+a:hover{
+  color:#007BFF;
+}
+a{
+  color:#007BFF;
+}
+input{
+  border-radius: 45px;
+  font-size: 16px;
+  height: 60px;
+  outline: none;
+  color:#686868;
+}
+.title-welcome{
+  font-family: 'RobotoMedium',sans-serif;
+  font-size: 24px;
 }
 </style>

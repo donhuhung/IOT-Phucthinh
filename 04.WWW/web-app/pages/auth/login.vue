@@ -49,28 +49,12 @@ export default {
 </script>
 
 <style scoped>
-a:hover{
-  color:#007BFF;
-}
-a{
-  color:#007BFF;
-  text-decoration: underline;
-}
-input{
-  border-radius: 45px;
-  font-size: 16px;
-  height: 60px;
-}
 .btn-login{
   background-color: #007BFF;
   color:#fff;
 }
 span{
   color:#686868;
-}
-.title-welcome{
-  font-family: 'RobotoMedium',sans-serif;
-  font-size: 24px;
 }
 #remember-me{
   height: auto;

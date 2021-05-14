@@ -1,10 +1,10 @@
 <template>
   <div class="h-screen w-full flex overflow-hidden select-none">
-    <nav class="w-24 flex flex-col items-center bg-white dark:bg-gray-800 py-4 overflow-y-auto">
+    <nav class="w-50 flex flex-col items-center dark:bg-gray-800 overflow-y-auto">
       <!-- Left side NavBar -->
-      <div>
+      <div class="box-logo">
         <!-- App Logo -->
-        <img class="" loading="lazy" src="~/assets/img/logo-phuc-thinh-22.png" alt=""/>
+        <img class="p-2" loading="lazy" src="~/assets/img/logo-phuc-thinh-22.png" alt=""/>
       </div>
       <TheMenuSidebar/>
     </nav>
@@ -90,5 +90,28 @@ export default {
 </script>
 
 <style scoped>
-
+@font-face {
+  font-family: RobotoMedium;
+  src: url(~/assets/fonts/Roboto-Medium.ttf);
+}
+@font-face {
+  font-family: RobotoRegular;
+  src: url(~/assets/fonts/Roboto-Regular.ttf);
+}
+@font-face {
+  font-family: RobotoBold;
+  src: url(~/assets/fonts/Roboto-Bold.ttf);
+}
+nav{
+  background-color: #c4dec0;
+}
+h2{
+  font-family: 'RobotoBold',sans-serif;
+}
+.box-logo{
+  background-color: #1E87F0;
+}
+.box-logo img{
+  width: 70% !important;
+}
 </style>
