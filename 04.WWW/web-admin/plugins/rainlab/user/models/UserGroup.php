@@ -40,6 +40,8 @@ class UserGroup extends GroupBase
         'code',
         'description'
     ];
+    
+    protected $hidden = ['pivot','updated_at','created_at','description'];
 
     protected static $guestGroup = null;
 

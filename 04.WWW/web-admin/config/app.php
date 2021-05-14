@@ -107,7 +107,7 @@ return [
     |
     */
 
-    'key' => 'B3xmOWKMP7MHFSbNRuHGd6MPS2FhlKiL',
+    'key' => 'base64:zYJT0aJSL5rGO3e7NzLMwzYFhH1bzBEh2UbFfXXVJxA=',
 
     'cipher' => 'AES-256-CBC',
 
@@ -127,7 +127,6 @@ return [
         // 'Illuminate\Html\HtmlServiceProvider', // Example
 
         'System\ServiceProvider',
-        'SimpleSoftwareIO\QrCode\QrCodeServiceProvider'
     ]),
 
     /*
@@ -164,7 +163,6 @@ return [
     'aliases' => array_merge(include(base_path('modules/system/aliases.php')), [
 
         // 'Str' => 'Illuminate\Support\Str', // Example        
-        'QrCode' => 'SimpleSoftwareIO\QrCode\Facades\QrCode'
 
     ]),
 
