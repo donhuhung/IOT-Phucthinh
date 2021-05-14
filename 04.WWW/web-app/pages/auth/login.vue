@@ -1,45 +1,42 @@
 <template>
   <div>
     <form action="" class="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
-      <p class="text-left">
+      <!-- App Logo -->
+      <img class="text-center m-auto" loading="lazy" src="~/assets/img/logo-phuc-thinh-22.png" alt=""/>
+      <p class="text-center title-welcome p-5" style="color: #007BFF">
         {{ $t('layout.login')}}
       </p>
       <div class="pb-2 pt-4">
-        <input type="text" name="email" id="email" :placeholder="$t('layout.IpFactory')"
-               class="block w-full p-4 text-lg rounded-sm bg-black">
+        <input type="text" name="ip-factory" id="ip-factory" :placeholder="$t('layout.IpFactory')"
+               class="block w-full p-4 text-lg rounded-sm bg-white text-center">
       </div>
       <div class="pb-2 pt-4">
-        <input class="block w-full p-4 text-lg rounded-sm bg-black"
-               name="password"
+        <input class="block w-full p-4 text-lg rounded-sm bg-white text-center"
+               name="username" type="email"
                :placeholder="$t('layout.UserName')">
       </div>
       <div class="pb-2 pt-4">
-        <input class="block w-full p-4 text-lg rounded-sm bg-black"
+        <input class="block w-full p-4 text-lg rounded-sm bg-white text-center"
                type="password"
                name="password" id="password"
                :placeholder="$t('layout.password')">
       </div>
-      <div class="text-right text-gray-400 hover:underline hover:text-gray-100">
-        <router-link to="/auth/forgot-password">
-          {{ $t('layout.ForgotPassword') }}?
-        </router-link>
+      <div class="flex justify-between mt-4">
+        <div>
+          <input name="remember-me" id="remember-me" type="checkbox">
+          <span>Remember me</span>
+        </div>
+        <div>
+          <router-link to="/auth/forgot-password">
+            {{ $t('layout.ForgotPassword') }}?
+          </router-link>
+        </div>
       </div>
-      <div class="px-4 pb-2 pt-4">
+      <div class="px-4 pb-2 pt-4 mt-5">
         <button @click="$store.commit('auth/authSuccess', {token: 1})"
-                class="uppercase block w-full p-2 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none">
+                class="btn-login uppercase block w-full p-2 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none">
           {{ $t('layout.login') }}
         </button>
-      </div>
-      <div class="p-4 text-center right-0 left-0 flex justify-center space-x-4 mt-16 ">
-        <a href="#">
-
-        </a>
-        <a href="#">
-
-        </a>
-        <a href="#">
-
-        </a>
       </div>
     </form>
   </div>
@@ -52,5 +49,30 @@ export default {
 </script>
 
 <style scoped>
-
+a:hover{
+  color:#007BFF;
+}
+a{
+  color:#007BFF;
+  text-decoration: underline;
+}
+input{
+  border-radius: 45px;
+  font-size: 16px;
+  height: 60px;
+}
+.btn-login{
+  background-color: #007BFF;
+  color:#fff;
+}
+span{
+  color:#686868;
+}
+.title-welcome{
+  font-family: 'RobotoMedium',sans-serif;
+  font-size: 24px;
+}
+#remember-me{
+  height: auto;
+}
 </style>
