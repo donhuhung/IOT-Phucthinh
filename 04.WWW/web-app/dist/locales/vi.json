@@ -1,0 +1,20 @@
+{
+  "layout": {
+    "login": "Đăng Nhập",
+    "IpFactory": "IP Nhà Máy",
+    "UserName": "Tên Đăng Nhập",
+    "password": "Mật Khẩu",
+    "ForgotPassword": "Thay đổi mật khẩu",
+    "submit": "Gửi",
+    "navFactory": "Nhà Máy",
+    "navOverview": "Tổng Quan",
+    "navSensor": "Sensor",
+    "navDevice": "Thiết Bị",
+    "navChart": "Thống Kê",
+    "navMaps": "Bản Đồ",
+    "navSetting": "Cài Đặt"
+  },
+  "message": {
+
+  }
+}

@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{363:function(n,t,e){"use strict";e.r(t);var o={name:"dashboard",layout:"app",mounted:function(){console.log(this.$axios)},methods:{}},c=e(19),component=Object(c.a)(o,(function(){var n=this.$createElement;return(this._self._c||n)("div")}),[],!1,null,"d64dac02",null);t.default=component.exports}}]);

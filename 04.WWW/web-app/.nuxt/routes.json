@@ -1,0 +1,62 @@
+[
+  {
+    "name": "chart",
+    "path": "/chart",
+    "component": "D:\\\\xampp\\\\htdocs\\\\project\\\\Other\\\\PhucThinh\\\\IOT-Phucthinh\\\\04.WWW\\\\web-app\\\\pages\\\\chart.vue",
+    "chunkName": "pages/chart"
+  },
+  {
+    "name": "dashboard",
+    "path": "/dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\project\\\\Other\\\\PhucThinh\\\\IOT-Phucthinh\\\\04.WWW\\\\web-app\\\\pages\\\\dashboard.vue",
+    "chunkName": "pages/dashboard"
+  },
+  {
+    "name": "factory",
+    "path": "/factory",
+    "component": "D:\\\\xampp\\\\htdocs\\\\project\\\\Other\\\\PhucThinh\\\\IOT-Phucthinh\\\\04.WWW\\\\web-app\\\\pages\\\\factory.vue",
+    "chunkName": "pages/factory"
+  },
+  {
+    "name": "maps",
+    "path": "/maps",
+    "component": "D:\\\\xampp\\\\htdocs\\\\project\\\\Other\\\\PhucThinh\\\\IOT-Phucthinh\\\\04.WWW\\\\web-app\\\\pages\\\\maps.vue",
+    "chunkName": "pages/maps"
+  },
+  {
+    "name": "overview",
+    "path": "/overview",
+    "component": "D:\\\\xampp\\\\htdocs\\\\project\\\\Other\\\\PhucThinh\\\\IOT-Phucthinh\\\\04.WWW\\\\web-app\\\\pages\\\\overview.vue",
+    "chunkName": "pages/overview"
+  },
+  {
+    "name": "sensor",
+    "path": "/sensor",
+    "component": "D:\\\\xampp\\\\htdocs\\\\project\\\\Other\\\\PhucThinh\\\\IOT-Phucthinh\\\\04.WWW\\\\web-app\\\\pages\\\\sensor.vue",
+    "chunkName": "pages/sensor"
+  },
+  {
+    "name": "setting",
+    "path": "/setting",
+    "component": "D:\\\\xampp\\\\htdocs\\\\project\\\\Other\\\\PhucThinh\\\\IOT-Phucthinh\\\\04.WWW\\\\web-app\\\\pages\\\\setting.vue",
+    "chunkName": "pages/setting"
+  },
+  {
+    "name": "auth-forgot-password",
+    "path": "/auth/forgot-password",
+    "component": "D:\\\\xampp\\\\htdocs\\\\project\\\\Other\\\\PhucThinh\\\\IOT-Phucthinh\\\\04.WWW\\\\web-app\\\\pages\\\\auth\\\\forgot-password.vue",
+    "chunkName": "pages/auth/forgot-password"
+  },
+  {
+    "name": "auth-login",
+    "path": "/auth/login",
+    "component": "D:\\\\xampp\\\\htdocs\\\\project\\\\Other\\\\PhucThinh\\\\IOT-Phucthinh\\\\04.WWW\\\\web-app\\\\pages\\\\auth\\\\login.vue",
+    "chunkName": "pages/auth/login"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "D:\\\\xampp\\\\htdocs\\\\project\\\\Other\\\\PhucThinh\\\\IOT-Phucthinh\\\\04.WWW\\\\web-app\\\\pages\\\\index.vue",
+    "chunkName": "pages/index"
+  }
+]

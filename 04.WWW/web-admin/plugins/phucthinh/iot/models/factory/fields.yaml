@@ -1,0 +1,25 @@
+fields:
+    id:
+        label: ID
+        disabled: true
+        type: text
+    name:
+        label: 'Tên Nhà Máy'
+        span: auto
+        type: text
+    ip:
+        label: 'IP Nhà Máy'
+        span: auto
+        type: text
+    langtitude:
+        label: Lantitude
+        span: auto
+        type: text
+    longtitude:
+        label: Longtitude
+        span: auto
+        type: text
+    status:
+        label: 'Trạng Thái'
+        span: auto
+        type: switch

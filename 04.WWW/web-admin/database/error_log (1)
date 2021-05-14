@@ -1,0 +1,6 @@
+[03-May-2021 03:38:35 UTC] PHP Fatal error:  Uncaught Error: Class 'Event' not found in /home/ficpicom/public_html/mhvdinners.com/vendor/october/rain/src/Foundation/Exception/Handler.php:57
+Stack trace:
+#0 /home/ficpicom/public_html/mhvdinners.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(92): October\Rain\Foundation\Exception\Handler->report(Object(Symfony\Component\Debug\Exception\FatalThrowableError))
+#1 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Symfony\Component\Debug\Exception\FatalThrowableError))
+#2 {main}
+  thrown in /home/ficpicom/public_html/mhvdinners.com/vendor/october/rain/src/Foundation/Exception/Handler.php on line 57

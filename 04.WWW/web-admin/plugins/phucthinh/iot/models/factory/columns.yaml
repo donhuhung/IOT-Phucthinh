@@ -1,0 +1,23 @@
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+    name:
+        label: name
+        type: text
+    ip:
+        label: ip
+        type: text
+    langtitude:
+        label: langtitude
+        type: text
+    longtitude:
+        label: longtitude
+        type: text
+    status:
+        label: status
+        type: number
+    created_at:
+        label: created_at
+        type: datetime

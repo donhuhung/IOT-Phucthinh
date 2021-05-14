@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Factory
+
+# Model Form Field configuration
+form: $/phucthinh/iot/models/factory/fields.yaml
+
+# Model Class name
+modelClass: PhucThinh\IOT\Models\Factory
+
+# Default redirect location
+defaultRedirect: phucthinh/iot/factory
+
+# Create page
+create:
+    title: Create Factory
+    redirect: phucthinh/iot/factory/update/:id
+    redirectClose: phucthinh/iot/factory
+
+# Update page
+update:
+    title: Edit Factory
+    redirect: phucthinh/iot/factory
+    redirectClose: phucthinh/iot/factory
+
+# Preview page
+preview:
+    title: Preview Factory
