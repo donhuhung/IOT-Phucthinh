@@ -12,7 +12,7 @@
       class="flex-1 bg-gray-200 dark:bg-black rounded-l-lg border-l
 		transition duration-500 ease-in-out overflow-y-auto">
       <TheTopBar class="sticky top-0 z-20 border-b"/>
-      <div class="px-4 py-2 min-h-full">
+      <div class="py-8 min-h-full px-24">
         <Nuxt/>
       </div>
     </main>
@@ -89,7 +89,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @font-face {
   font-family: RobotoMedium;
   src: url(~/assets/fonts/Roboto-Medium.ttf);
@@ -102,16 +102,26 @@ export default {
   font-family: RobotoBold;
   src: url(~/assets/fonts/Roboto-Bold.ttf);
 }
-nav{
-  background-color: #c4dec0;
+@font-face {
+  font-family: RobotoLight;
+  src: url(~/assets/fonts/Roboto-Light.ttf);
+}
+@font-face {
+  font-family: RobotoBoldItalic;
+  src: url(~/assets/fonts/Roboto-BoldItalic.ttf);
+}
+h3.title{
+  font-family: 'RobotoLight',sans-serif;
+  font-size: 35px;
+  padding-left: 15px;
 }
 h2{
   font-family: 'RobotoBold',sans-serif;
 }
-.box-logo{
-  background-color: #1E87F0;
-}
+
 .box-logo img{
-  width: 70% !important;
+  width: 50% !important;
+  margin: auto;
+  display: block;
 }
 </style>

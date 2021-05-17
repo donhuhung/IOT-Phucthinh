@@ -1,19 +1,29 @@
-<template>
-  <ul class="mt-2 text-gray-700 dark:text-gray-400 capitalize w-full">
-    <!-- Links -->
-    <template v-for="(nav, index) in navs">
-      <li :key="index" class="mt-3 p-1 pl-3 text-blue-600 dark:text-blue-300 rounded-lg">
-        <nuxt-link :to="nav.to" class=" flex items-center">
-          <img :src="require(`~/assets/img/${nav.icon}`)" />
-          <span class="text-xl m-3 pl-4" style="color:#000A12"
-                @click="selected = index"
-                :class="{active:selected == index}"
-          >{{ $t(nav.label) }}</span>
-        </nuxt-link>
-      </li>
-    </template>
 
-  </ul>
+<template>
+  <div>
+    <div class="flex justify-start m-4">
+      <div class="w-10 h-10 rounded-full overflow-hidden mr-4">
+        <img class="w-full h-full" src="https://image.lag.vn/upload/news/19/09/21/the-flash-season-5-release-date_TCZY.jpg" alt="">
+      </div>
+      <p>Xin chào,<br><span class="username">Phúc Thịnh</span></p>
+    </div>
+      <ul class="mt-2 text-gray-700 dark:text-gray-400 capitalize w-full">
+        <!-- Links -->
+        <template v-for="(nav, index) in navs">
+          <li :key="index" class="mt-3 p-1 pl-3 text-blue-600 dark:text-blue-300 rounded-lg">
+            <nuxt-link :to="nav.to" class=" flex items-center">
+              <img :src="require(`~/assets/img/${nav.icon}`)" />
+              <span class="m-2 pl-4" style="color:#000A12"
+                    @click="selected = index"
+                    :class="{active:selected == index}"
+              >{{ $t(nav.label) }}</span>
+            </nuxt-link>
+          </li>
+        </template>
+
+      </ul>
+  </div>
+
 </template>
 
 <script>
@@ -70,7 +80,7 @@ export default {
           to: {
             path: '/setting'
           }
-        },
+        }
       ],
       selected: ''
     }
@@ -79,13 +89,16 @@ export default {
 </script>
 
 <style scoped>
-nav li{
-  border-bottom: 1px solid #EEEEEE;
+nav li span{
+  font-family: 'RobotoRegular',sans-serif;
 }
 nav li:hover span{
   color:#007BFF !important;
 }
 nav li .active{
   color:#007BFF !important;
+}
+.username{
+  font-family: 'RobotoBoldItalic',sans-serif;
 }
 </style>
