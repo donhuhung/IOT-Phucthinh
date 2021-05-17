@@ -12,7 +12,7 @@
       class="flex-1 bg-gray-200 dark:bg-black rounded-l-lg border-l
 		transition duration-500 ease-in-out overflow-y-auto">
       <TheTopBar class="sticky top-0 z-20 border-b"/>
-      <div class="py-8 min-h-full px-24">
+      <div class="py-4 min-h-full px-4">
         <Nuxt/>
       </div>
     </main>
