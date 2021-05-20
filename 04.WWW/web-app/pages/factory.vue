@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex items-center justify-between">
-      <h3 class="title">Thông tin nhà máy</h3>
+      <h3 class="inline-block text-xl font-semibold text-blue-600 tracking-tight uppercase pl-4">Thông tin nhà máy</h3>
       <div class="relative text-gray-600">
         <input type="search" name="serch" placeholder="Search" class="bg-gray-100 h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
         <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
@@ -20,10 +20,6 @@
             <div class="body">
               <p><span class="xl:font-bold">Address</span>:TX 43 Thạnh Xuân, Q12, Tp.HCM</p>
               <p><span class="xl:font-bold">IP</span>:192.168.0.13</p>
-              <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting
-              </p>
               <img src="~/assets/img/factory.png" class="w-full">
             </div>
             <div class="footer">
@@ -39,10 +35,6 @@
           <div class="body">
             <p><span class="xl:font-bold">Address</span>:TX 43 Thạnh Xuân, Q12, Tp.HCM</p>
             <p><span class="xl:font-bold">IP</span>:192.168.0.13</p>
-            <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-              It has survived not only five centuries, but also the leap into electronic typesetting
-            </p>
             <img src="~/assets/img/factory.png" class="w-full">
           </div>
           <div class="footer">
@@ -58,10 +50,6 @@
           <div class="body">
             <p><span class="xl:font-bold">Address</span>:TX 43 Thạnh Xuân, Q12, Tp.HCM</p>
             <p><span class="xl:font-bold">IP</span>:192.168.0.13</p>
-            <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-              It has survived not only five centuries, but also the leap into electronic typesetting
-            </p>
             <img src="~/assets/img/factory.png" class="w-full">
           </div>
           <div class="footer">
@@ -77,10 +65,6 @@
           <div class="body">
             <p><span class="xl:font-bold">Address</span>:TX 43 Thạnh Xuân, Q12, Tp.HCM</p>
             <p><span class="xl:font-bold">IP</span>:192.168.0.13</p>
-            <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-              It has survived not only five centuries, but also the leap into electronic typesetting
-            </p>
             <img src="~/assets/img/factory.png" class="w-full">
           </div>
           <div class="footer">

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h3 class="title">Danh sách nhà máy</h3>
-    <div class="flex flex-wrap pt-4">
+    <h3 class="inline-block text-xl font-semibold text-blue-600 tracking-tight uppercase pl-4">Danh sách nhà máy</h3>
+    <div class="flex flex-wrap pt-4 mt-4 bg-white">
       <div class="2xl:w-1/2 px-4">
         <img src="~/assets/img/map.png"/>
       </div>
