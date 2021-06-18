@@ -27,7 +27,7 @@ export default {
   middleware({ store, redirect, route }) {
     console.error(store)
     if (store.getters['auth/isLoggedIn']) {
-      let path = route.query['redirect'] || '/'
+      let path = route.query['redirect'] || '/factory'
       return redirect(path)
     }
   },

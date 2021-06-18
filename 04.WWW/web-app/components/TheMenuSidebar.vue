@@ -20,7 +20,10 @@
             </nuxt-link>
           </li>
         </template>
-
+        <li class="signout">
+          <i class="fas fa-sign-out-alt"></i>
+          Đăng xuất
+        </li>
       </ul>
   </div>
 
@@ -100,5 +103,11 @@ nav li .active{
 }
 .username{
   font-family: 'RobotoBoldItalic',sans-serif;
+}
+.signout{
+  position: absolute;
+  bottom: 20px;
+  left: 3rem;
+  text-align: center;
 }
 </style>

@@ -1,14 +1,13 @@
 <template>
   <div>
-    <div class="flex items-center justify-between">
-      <h3 class="inline-block text-xl font-semibold text-blue-600 tracking-tight uppercase pl-4">Thông tin cá nhân</h3>
-    </div>
+    <AccountInformation/>
   </div>
 </template>
 
 <script>
+import AccountInformation from "../components/AccountInformation";
 export default {
-  name: "setting",
+  components: {AccountInformation},
   layout: "app"
 }
 </script>

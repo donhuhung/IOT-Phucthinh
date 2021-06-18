@@ -124,4 +124,13 @@ h2{
   margin: auto;
   display: block;
 }
+.text-green-pt{
+  color:#1ABB9C;
+}
+.font-bold-italic{
+  font-family: 'RobotoBoldItalic',sans-serif;
+}
+.font-light{
+  font-family: 'RobotoLight',sans-serif;
+}
 </style>
