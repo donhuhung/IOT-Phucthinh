@@ -47,7 +47,8 @@
         "swagger-api/swagger-ui": "^3.0",
         "spatie/laravel-fractal": "^5.4",
         "barryvdh/laravel-cors": "^0.11.3",
-        "zircote/swagger-php": "~2.0"
+        "zircote/swagger-php": "~2.0",
+        "league/flysystem-aws-s3-v3": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.4|^9.3.3",

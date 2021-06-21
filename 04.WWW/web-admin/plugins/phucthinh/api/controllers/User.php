@@ -83,10 +83,7 @@ class User extends General {
     public function forgotPassWord(Request $request) {
         try {
             $username = $request->get('username');
-            $user = $this->userRepository->where('username', $username)->first();            
-            
-            //Store Log
-            $userId = $user->id;            
+            $user = $this->userRepository->where('username', $username)->first();                      
             
             $password = HelperClass::randomString(6);
             $user->password = $password;
@@ -128,6 +125,7 @@ class User extends General {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
         }
     }
+       
     
 
 }

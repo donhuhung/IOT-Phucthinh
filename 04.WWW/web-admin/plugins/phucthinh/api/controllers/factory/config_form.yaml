@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Factory
+
+# Model Form Field configuration
+form: $/phucthinh/api/models/factory/fields.yaml
+
+# Model Class name
+modelClass: Phucthinh\API\Models\Factory
+
+# Default redirect location
+defaultRedirect: phucthinh/api/factory
+
+# Create page
+create:
+    title: Create Factory
+    redirect: phucthinh/api/factory/update/:id
+    redirectClose: phucthinh/api/factory
+
+# Update page
+update:
+    title: Edit Factory
+    redirect: phucthinh/api/factory
+    redirectClose: phucthinh/api/factory
+
+# Preview page
+preview:
+    title: Preview Factory

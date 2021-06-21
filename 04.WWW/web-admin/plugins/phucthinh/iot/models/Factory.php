@@ -69,6 +69,9 @@ class Factory extends Model
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];
-    public $attachOne = [];
+    public $attachOne = [
+        'thumbnail' => 'System\Models\File',
+        'overview' => 'System\Models\File'
+    ];
     public $attachMany = [];
 }

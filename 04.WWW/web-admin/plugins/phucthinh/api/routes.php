@@ -12,4 +12,8 @@ Route::group([
         Route::post('logout', 'Mtech\Api\Controllers\User@logout');
     });
     
+    Route::prefix('factory')->group(function () {
+        Route::get('list', 'PhucThinh\Api\Controllers\Factory@getList');        
+    });
+    
 });

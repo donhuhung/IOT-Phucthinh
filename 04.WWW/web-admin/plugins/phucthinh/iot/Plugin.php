@@ -1,4 +1,6 @@
-<?php namespace PhucThinh\IOT;
+<?php
+
+namespace PhucThinh\IOT;
 
 use Backend;
 use System\Classes\PluginBase;
@@ -8,20 +10,19 @@ use RainLab\User\Models\User;
 /**
  * IOT Plugin Information File
  */
-class Plugin extends PluginBase
-{
+class Plugin extends PluginBase {
+
     /**
      * Returns information about this plugin.
      *
      * @return array
      */
-    public function pluginDetails()
-    {
+    public function pluginDetails() {
         return [
-            'name'        => 'IOT',
+            'name' => 'IOT',
             'description' => 'No description provided yet...',
-            'author'      => 'PhucThinh',
-            'icon'        => 'icon-leaf'
+            'author' => 'PhucThinh',
+            'icon' => 'icon-leaf'
         ];
     }
 
@@ -30,9 +31,8 @@ class Plugin extends PluginBase
      *
      * @return void
      */
-    public function register()
-    {
-
+    public function register() {
+        
     }
 
     /**
@@ -62,34 +62,38 @@ class Plugin extends PluginBase
                     'span' => 'auto'
                 ]
             ]);
-        });
-        User::extend(function($model) {
-            $model->belongsTo['user_factory'] = ['PhucThinh\IOT\Models\Factory', 'key' => 'factory_id', 'conditions' => 'status = 1'];            
-        });
 
-        Event::listen('backend.form.extendFields', function($widget) {
-
-            // Only for the User controller
-            if (!$widget->getController() instanceof \Tiipiik\Catalog\Controllers\Categories) {
-                return;
-            }
-
-            // Only for the User model
-            if (!$widget->model instanceof \Tiipiik\Catalog\Models\Category) {
-                return;
-            }
-
-            // Add an extra Category code field
-            $widget->addFields([
-                'category_code' => [
-                    'label' => 'Category Code',
-                    'comment' => 'Category code',
-                    'type' => 'text'
+            //Add tab fields
+            $widget->addTabFields([
+                'phone' => [
+                    'label' => 'Phone',
+                    'type' => 'text',
+                    'tab' => 'Personal',
+                    'span' => 'auto'
                 ]
             ]);
-
+            //Add tab fields
+            $widget->addTabFields([
+                'address' => [
+                    'label' => 'Address',
+                    'type' => 'text',
+                    'tab' => 'Personal',
+                    'span' => 'auto'
+                ]
+            ]);
+            //Add tab fields
+            $widget->addTabFields([
+                'birthday' => [
+                    'label' => 'Birthday',
+                    'type' => 'text',
+                    'tab' => 'Personal',
+                    'span' => 'auto'
+                ]
+            ]);
         });
-        
+        User::extend(function($model) {
+            $model->belongsTo['user_factory'] = ['PhucThinh\IOT\Models\Factory', 'key' => 'factory_id', 'conditions' => 'status = 1'];
+        });
     }
 
     /**
@@ -97,8 +101,7 @@ class Plugin extends PluginBase
      *
      * @return array
      */
-    public function registerComponents()
-    {
+    public function registerComponents() {
         return []; // Remove this line to activate
 
         return [
@@ -111,8 +114,7 @@ class Plugin extends PluginBase
      *
      * @return array
      */
-    public function registerPermissions()
-    {
+    public function registerPermissions() {
         return []; // Remove this line to activate
 
         return [
@@ -128,15 +130,14 @@ class Plugin extends PluginBase
      *
      * @return array
      */
-    public function registerNavigation()
-    {
+    public function registerNavigation() {
         return [
             'iot' => [
-                'label'       => 'Phúc Thịnh - IOT',
-                'url'         => Backend::url('phucthinh/iot/factory'),
-                'icon'        => 'icon-desktop',
+                'label' => 'Phúc Thịnh - IOT',
+                'url' => Backend::url('phucthinh/iot/factory'),
+                'icon' => 'icon-desktop',
                 'permissions' => ['phucthinh.iot.*'],
-                'order'       => 500,
+                'order' => 500,
                 'sideMenu' => [
                     'factory' => [
                         'label' => 'Factory',
@@ -149,4 +150,5 @@ class Plugin extends PluginBase
             ],
         ];
     }
+
 }
