@@ -1,9 +1,21 @@
 <template>
   <div>
-    <h2 v-if="!disabledTitle" class="m-0 px-4 py-2 text-sm bg-blue-200 text-blue-600">
-      {{ title }}
-    </h2>
-    <div class="bg-white shadow-md rounded overflow-x-auto">
+    <div class="tab__header">
+      <div class="flex justify-between bg-blue-200" @click.prevent="active = !active">
+          <div>
+            <h2 v-if="!disabledTitle" class="m-0 p-3 bg-blue-200 text-blue-600">
+              <i class="fas fa-map-marked-alt"></i>
+              {{ title }}
+            </h2>
+          </div>
+          <div>
+            <span class="text-blue-600 p-3 md:inline-block" v-show="!active">&#9660;</span>
+            <span class="text-blue-600 p-3 md:inline-block" v-show="active">&#9650;</span>
+          </div>
+      </div>
+
+    </div>
+    <div class="tab__content bg-white shadow-md rounded overflow-x-auto" v-show="active"><slot />
       <table class="min-w-max w-full table-auto">
         <thead>
         <tr class="text-gray-600 border-b border-gray-200 uppercase text-sm leading-normal">
@@ -189,7 +201,7 @@ export default {
   },
   data() {
     return {
-
+      active:false,
     }
   },
   computed: {
@@ -200,5 +212,8 @@ export default {
 <style scoped>
 .row-item:nth-child(even) {
   @apply bg-gray-100;
+}
+h2{
+  font-size: 18px;
 }
 </style>

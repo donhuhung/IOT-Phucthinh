@@ -5,11 +5,11 @@
     </h3>
     <p class="mt-1 text-lg text-gray-500">MONITORING & CONTROLLING DEVICES</p>
     <div class="mt-6"></div>
-    <TableInformationDevice/>
+    <TableInformationDevice index="1"/>
     <div class="mt-6"></div>
-    <TableInformationDevice title="PROCESS STATION"/>
+    <TableInformationDevice title="PROCESS STATION" index="2"/>
     <div class="mt-6"></div>
-    <TableInformationDevice title="CHEMICAL STATION"/>
+    <TableInformationDevice title="CHEMICAL STATION" index="3"/>
   </div>
 </template>
 

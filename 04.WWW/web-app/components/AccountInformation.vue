@@ -26,25 +26,25 @@
                 Thông tin chung
               </h4>
               <table>
-                <tr class="text-xl lg:h-10">
+                <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Họ & tên:</td>
                   <td class="pl-2 font-light">Nguyễn Văn Tèo</td>
                 </tr>
-                <tr class="text-xl lg:h-10">
+                <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Email:</td>
                   <td class="pl-2 font-light">nguyenvanteo@gmail.com</td>
                 </tr>
-                <tr class="col-end-2 text-xl lg:h-10">
+                <tr class="col-end-2 lg:h-10">
                   <td class="text-green-pt font-bold-italic">Giới tính:</td>
                   <td class="pl-2 font-light">Nam</td>
                   <td class="text-green-pt font-bold-italic">Ngày sinh:</td>
                   <td class="pl-2 font-light">05-01-1997</td>
                 </tr>
-                <tr class="text-xl lg:h-10">
+                <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Số điện thoại:</td>
                   <td class="pl-2 font-light">0916214477</td>
                 </tr>
-                <tr class="text-xl lg:h-10">
+                <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Địa chỉ:</td>
                   <td class="pl-2 font-light">Số 01 Thạnh Xuân, Quận 12</td>
                 </tr>
@@ -60,15 +60,15 @@
                 Thông tin đăng nhập
               </h4>
               <table>
-                <tr class="text-xl lg:h-10">
+                <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">IP Đăng Nhập:</td>
                   <td class="pl-2 font-light">192.168.1.1</td>
                 </tr>
-                <tr class="text-xl lg:h-10">
+                <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Nhà máy:</td>
                   <td class="pl-2 font-light">Hà Thanh</td>
                 </tr>
-                <tr class="text-xl lg:h-10">
+                <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Mật khẩu:</td>
                   <td class="pl-2 font-light">
                     <input type="password" value="matkhaudangnhap"/>
@@ -162,12 +162,15 @@ export default {
 .update-info{
   color: #ffffff;
   background-color: #007BFF;
-  padding: 5px 20px;
+  padding: 7px 20px;
   border-radius: 10px;
   margin: auto;
   display: block;
   width: 35%;
   margin-top: 20px;
   text-align: center;
+}
+table tr{
+  font-size: 18px;
 }
 </style>
