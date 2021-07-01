@@ -1,5 +1,7 @@
 import { getSESSION, removeSESSION, SESSION, setSESSION } from '~/helpers/sessions'
-import api from '~/api/auth';  // eslint-disable-line
+import { login } from "../api/auth";
+
+
 export const state = () => {
   return {
     status: '',
@@ -21,24 +23,7 @@ export const actions = {
 
     })
   },
-  login({commit}, user) { // eslint-disable-line
-    return new Promise(async resolve => {
-      commit("authRequest");
-      try {
-        let rs = await api.login(user);
-        console.log(await api.login(user));  // eslint-disable-line
-        let token = rs['data'].token;
-        commit("authSuccess", rs);
-        console.log(token);  // eslint-disable-line
-        resolve(true);
-      } catch (e) {
-        commit("authError", e);
-        resolve(false);
-
-      }
-    })
-
-  },
+  login,
   logout({ commit }) {
     return new Promise((resolve) => {
       commit('logout')

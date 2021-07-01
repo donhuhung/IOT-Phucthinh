@@ -35,7 +35,7 @@
       <div class="px-4 pb-2 pt-4 mt-5">
         <button type="submit"
                 class="btn-login uppercase block w-full p-2 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none">
-          {{ $t('layout.login') }}
+          {{ submitting ? 'submitting...' : $t('layout.login') }}
         </button>
       </div>
     </form>
@@ -52,24 +52,29 @@ export default {
       password: '',
       ip_factory: '',
       click_submit: false,
-      error_login:false
+      error_login:false,
+      submitting: false,
     }
   },
   methods: {
     ...mapActions("auth", ["login"]),
     async submit(e) {
       e.preventDefault();
+      if(this.submitting) {
+        return
+      }
       this.click_submit = true;
       let ip_factory = this.ip_factory;
       let username = this.username;
       let password = this.password;
-      let loggedIn = await this.login({ip_factory,username,password});
-      if(loggedIn){
-        alert(loggedIn);
+      try {
+        this.submitting = true
+        let loggedIn = await this.login({ip_factory,username,password});
+      }finally {
+        this.submitting = false
       }
-      else{
-        return false;
-      }
+
+
     }
   }
 }

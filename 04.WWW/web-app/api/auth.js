@@ -1,9 +1,17 @@
-async function login(data) {
+async function login( { commit }, data) {
   let form = new FormData();
   form.append("ip_factory", data.ip_factory);
   form.append("username", data.username);
   form.append("password", data.password);
-  return await this.$axios.$post('/api/v1/user/login', form);
+  try {
+    commit("authRequest");
+    const res = await this.$axios.$post('/api/v1/user/login', form);
+    commit("authSuccess", res.data);
+  }catch (e) {
+    commit("authError", e);
+  }finally {
+
+  }
 }
 
 async function forgotPassword(data) {
@@ -41,7 +49,7 @@ async function updateAccount(data) {
   return await this.$axios.$post('/api/v1/user/edit', form);
 }
 
-export default {
+export {
   login,
   logout,
   forgotPassword,
