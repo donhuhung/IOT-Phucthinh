@@ -30,7 +30,7 @@ export default function (
     }
     if (store.getters['auth/token']) {
       let token = store.getters['auth/token']
-      config.headers.common['Authorization'] = `JWT ${token}`
+      config.headers.common['Authorization'] = `Bearer ${token}`
     } else {
       // todo
       // config.headers.common['Authorization'] = `Token `

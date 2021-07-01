@@ -1,4 +1,5 @@
 import { getSESSION, removeSESSION, SESSION, setSESSION } from '~/helpers/sessions'
+import api from '~/api/auth';  // eslint-disable-line
 export const state = () => {
   return {
     status: '',
@@ -20,10 +21,23 @@ export const actions = {
 
     })
   },
-  login({ commit }, user) {
-    return new Promise((resolve, reject) => {
-      commit('authRequest')
+  login({commit}, user) { // eslint-disable-line
+    return new Promise(async resolve => {
+      commit("authRequest");
+      try {
+        let rs = await api.login(user);
+        console.log(await api.login(user));  // eslint-disable-line
+        let token = rs['data'].token;
+        commit("authSuccess", rs);
+        console.log(token);  // eslint-disable-line
+        resolve(true);
+      } catch (e) {
+        commit("authError", e);
+        resolve(false);
+
+      }
     })
+
   },
   logout({ commit }) {
     return new Promise((resolve) => {
@@ -32,6 +46,7 @@ export const actions = {
     })
   },
 }
+
 
 // mutations
 export const mutations = {
@@ -42,7 +57,7 @@ export const mutations = {
     state.status = 'success'
     state.token = token
     state.user = user
-    this.$axios.setToken(`JWT ${token}`)
+    this.$axios.setToken(`Bearer ${token}`)
     // this.$axios.defaults.headers.common['Authorization'] = `JWT ${token}`
     setSESSION(SESSION.TOKEN, token)
   },
@@ -57,3 +72,10 @@ export const mutations = {
   },
 }
 
+export default {
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations
+};
