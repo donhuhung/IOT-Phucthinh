@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen w-full flex overflow-hidden select-none">
-    <nav class="w-50 flex flex-col items-center dark:bg-gray-800 overflow-y-auto">
+    <nav class="w-50 dark:bg-gray-800 overflow-y-hidden px-6">
       <!-- Left side NavBar -->
       <div class="box-logo">
         <!-- App Logo -->

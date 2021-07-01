@@ -5,7 +5,7 @@
     </h3>
     <p class="mt-1 text-lg text-gray-500">MONITORING & SCALLING SENSOR</p>
 
-    <div id="tabs" class="container mt-6">
+    <div id="tabs" class="mt-6">
       <div class="tabs bg-blue-200 p-2">
         <a href="javascript:void(0)"  class="m-0 px-4 text-blue-600"  v-on:click="activetab=1" v-bind:class="[ activetab == 1 ? 'active' : '' ]">
           <i class="fas fa-map-marked-alt"></i>
