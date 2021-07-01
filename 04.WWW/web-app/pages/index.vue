@@ -81,7 +81,16 @@
 
 <script>
 export default {
-  layout: 'app'
+  layout: 'app',
+  mounted() {
+    this.fetchEntries()
+  },
+  methods: {
+    async fetchEntries() {
+      const res = await this.$axios.$get('/api/factory')
+      console.error(res)
+    }
+  },
 }
 </script>
 

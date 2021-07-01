@@ -13,7 +13,7 @@ import TheSearchBox from "./TheSearchBox";
 
 export default {
   name: "TheTopBar",
-  components: {TheSearchBox, ThumbAccount}
+  components: {TheSearchBox, ThumbAccount},
 }
 </script>
 

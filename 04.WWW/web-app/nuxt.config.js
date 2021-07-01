@@ -1,5 +1,4 @@
 require('dotenv').config()
-let VUE_APP_API_HOST = process.env.VUE_APP_API_HOST
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -52,5 +51,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+  axios: {
+    // baseURL: '/',
+    baseURL: process.env.VUE_APP_API_HOST,
+    // proxy: process.env.NODE_ENV !== 'production' // enable proxy for development mode only,
+    // retry: { retries: 3 }
+  },
 }

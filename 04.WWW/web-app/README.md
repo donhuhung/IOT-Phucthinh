@@ -15,6 +15,11 @@ $ yarn start
 
 # generate static project
 $ yarn generate
+
+# if use dotenv package
+$ mv .env.local .env || create .env file
+Ex: .env file
+VUE_APP_API_HOST=https://phucthinh.io
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
