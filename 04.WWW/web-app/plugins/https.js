@@ -1,5 +1,4 @@
 import axiosRetry from 'axios-retry'
-const TOKEN_COURTS = '4809f8560fe7894fe67c524f908317c584f264dc'
 export default function (
   {$axios, route, store, redirect, error },
   inject
@@ -33,7 +32,8 @@ export default function (
       let token = store.getters['auth/token']
       config.headers.common['Authorization'] = `JWT ${token}`
     } else {
-      config.headers.common['Authorization'] = `Token ${TOKEN_COURTS}`
+      // todo
+      // config.headers.common['Authorization'] = `Token `
     }
   })
   $axios.onResponse((response) => {

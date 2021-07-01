@@ -3,7 +3,6 @@ export const state = () => {
   return {
     status: '',
     token: getSESSION(SESSION.TOKEN) || '',
-    // token: '1',
     user: null,
   }
 }
@@ -55,7 +54,6 @@ export const mutations = {
     state.token = ''
     removeSESSION(SESSION.TOKEN)
     this.$axios.setToken('')
-
   },
 }
 
