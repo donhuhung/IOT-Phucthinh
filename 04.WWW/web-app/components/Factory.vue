@@ -29,7 +29,7 @@
             <p><span class="xl:font-bold">Address: </span>{{ item.address }}
             </p>
             <p><span class="xl:font-bold">IP: </span>{{ item.ip }}</p>
-            <img :src="item.thumbnail" class="w-full mt-4">
+            <img :src="`${item.thumbnail}`" class="w-full mt-4">
           </div>
           <div class="footer">
             <router-link :to="`/factory/${item.id}`">
@@ -52,27 +52,17 @@ export default {
       type: String,
       default: () => 'Thông tin Nhà Máy'
     },
-    items: {
-      type: Array,
-      default: () => [
-        {
-          "name": "HA THANH WATER SUPPLY FACTORY",
-          "address": 'TX 43 Thạnh Xuân, Q12, Tp.HCM',
-          "ip": '192.168.0.13',
-          "thumbnail": "/img/factory.png",
-          "id": 1,
-        },
-      ]
-    }
   },
   data() {
-    return {}
+    return {
+      items: []
+    }
   },
   computed: {},
   async mounted() {
     const res = await fetch('/json/factory.json')
     const json = await res.json()
-    console.error(json)
+    this.items = json
   },
 
 }

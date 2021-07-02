@@ -33,59 +33,10 @@ export default {
   },
   data() {
     return {
-      navs: [
-        {
-          label: 'layout.navFactory',
-          icon: 'Home-Icon.svg',
-          to: {
-            path: '/factory'
-          }
-        },
-        {
-          label: 'layout.navOverview',
-          icon: 'icon-overview.svg',
-          to: {
-            path: '/overview'
-          }
-        },
-        {
-          label: 'layout.navSensor',
-          icon: 'sensor.svg',
-          to: {
-            path: '/sensor'
-          }
-        },
-        {
-          label: 'layout.navDevice',
-          icon: 'device.svg',
-          to: {
-            path: '/device'
-          }
-        },
-        {
-          label: 'layout.navChart',
-          icon: 'bar-chart.svg',
-          to: {
-            path: '/chart'
-          }
-        },
-        {
-          label: 'layout.navMaps',
-          icon: 'place.svg',
-          to: {
-            path: '/maps'
-          }
-        },
-        {
-          label: 'layout.navSetting',
-          icon: 'settings.svg',
-          to: {
-            path: '/setting'
-          }
-        },
-      ]
+
     }
-  }
+  },
+
 }
 </script>
 

@@ -34,7 +34,7 @@
           </div>
 
         </template>
-        <li class="signout">
+        <li class="signout cursor-pointer" @click="signOut">
           <i class="fas fa-sign-out-alt"></i>
           Đăng xuất
         </li>
@@ -112,6 +112,19 @@ export default {
         groupUser:'auth/groupUser'
       }),
   },
+  methods: {
+    ...mapActions({
+      logout: 'auth/logout',
+    }),
+    async signOut() {
+      await this.logout()
+      this.redirectLogin()
+    },
+    redirectLogin() {
+      let query = { redirect: this.$route.fullPath }
+      this.$router.replace({ path: '/auth/login', query })
+    },
+  }
 }
 </script>
 
