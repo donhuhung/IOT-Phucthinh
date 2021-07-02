@@ -48,9 +48,9 @@ export default {
   layout: 'auth',
   data() {
     return {
-      username: '',
-      password: '',
-      ip_factory: '',
+      username: 'adminhathanh@mail.com',
+      password: '12345678',
+      ip_factory: '197.168.0.12',
       click_submit: false,
       error_login:false,
       submitting: false,

@@ -1,12 +1,16 @@
 <template>
   <div>
-    <nuxt-child />
+    Detail
   </div>
 </template>
 
 <script>
 export default {
-  layout: "app",
+  mounted() {
+  }
 }
 </script>
 
+<style scoped>
+
+</style>

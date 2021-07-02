@@ -24,10 +24,14 @@
             <p><span class="xl:font-bold">Address: </span>{{item.address}}
             </p>
             <p><span class="xl:font-bold">IP: </span>{{item.ip}}</p>
+            <p>
+              {{ item }}
+              {{ `/factory/${item.id}` }}
+            </p>
             <img :src="item.thumbnail" class="w-full mt-4">
           </div>
           <div class="footer">
-            <router-link :to="item.link">
+            <router-link :to="`/factory/${item.id}`">
               Truy cập
             </router-link>
           </div>
@@ -41,7 +45,7 @@
 <script>
 
 export default {
-  name: "Factory",
+  name: "ListFactory",
   props: {
     title: {
       type: String,
@@ -55,6 +59,7 @@ export default {
           address: 'TX 43 Thạnh Xuân, Q12, Tp.HCM',
           ip: '192.168.0.13',
           thumbnail: require('../assets/img/factory.png'),
+          id: 1,
           link:'/sensor'
         },
         {
@@ -62,6 +67,7 @@ export default {
           address: 'TX 43 Thạnh Xuân, Q12, Tp.HCM',
           ip: '192.168.0.13',
           thumbnail: require('../assets/img/factory.png'),
+          id: 2,
           link:'/sensor'
         },
         {
@@ -69,6 +75,7 @@ export default {
           address: 'TX 43 Thạnh Xuân, Q12, Tp.HCM',
           ip: '192.168.0.13',
           thumbnail: require('../assets/img/factory.png'),
+          id: 3,
           link:'/sensor'
         },
         {
@@ -76,6 +83,7 @@ export default {
           address: 'TX 43 Thạnh Xuân, Q12, Tp.HCM',
           ip: '192.168.0.13',
           thumbnail: require('../assets/img/factory.png'),
+          id: 4,
           link:'/sensor'
         },
       ]
@@ -86,7 +94,9 @@ export default {
     }
   },
   computed: {
-  }
+
+  },
+
 }
 </script>
 
