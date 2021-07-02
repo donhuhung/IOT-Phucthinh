@@ -1,30 +1,28 @@
 <template>
-  <div class="h-screen w-full flex overflow-hidden select-none">
-    <nav class="w-50 dark:bg-gray-800 overflow-y-hidden px-6">
-      <!-- Left side NavBar -->
-      <div class="box-logo">
-        <!-- App Logo -->
-        <img class="p-2" loading="lazy" src="~/assets/img/logo-phuc-thinh-22.png" alt=""/>
-      </div>
-      <TheMenuSidebar/>
-    </nav>
-    <main
-      class="flex-1 bg-gray-200 dark:bg-black rounded-l-lg border-l
-		transition duration-500 ease-in-out overflow-y-auto">
-      <TheTopBar class="sticky top-0 z-20 border-b"/>
-      <div class="py-4 min-h-full px-4">
+  <v-app>
+    <v-navigation-drawer app permanent expand-on-hover>
+      <SideBarProfile />
+      <v-divider></v-divider>
+      <SideBarNavs/>
+    </v-navigation-drawer>
+    <v-app-bar app flat color="white">
+      <TheTopBar/>
+    </v-app-bar>
+    <v-main class="grey lighten-3">
+      <v-container>
         <Nuxt/>
-      </div>
-    </main>
-  </div>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 import TheTopBar from "../components/TheTopBar";
-import TheMenuSidebar from "../components/TheMenuSidebar";
+import SideBarNavs from "../components/SideBarNavs";
+import SideBarProfile from "../components/SideBarProfile";
 
 export default {
-  components: {TheMenuSidebar, TheTopBar},
+  components: {SideBarProfile, SideBarNavs, TheTopBar},
   middleware({store, redirect, route}) {
     if (!store.getters['auth/isLoggedIn']) {
       let query = {redirect: route.fullPath}
@@ -32,9 +30,7 @@ export default {
     }
   },
   data() {
-    return {
-
-    }
+    return {}
   },
 
 }
@@ -45,43 +41,52 @@ export default {
   font-family: RobotoMedium;
   src: url(~/assets/fonts/Roboto-Medium.ttf);
 }
+
 @font-face {
   font-family: RobotoRegular;
   src: url(~/assets/fonts/Roboto-Regular.ttf);
 }
+
 @font-face {
   font-family: RobotoBold;
   src: url(~/assets/fonts/Roboto-Bold.ttf);
 }
+
 @font-face {
   font-family: RobotoLight;
   src: url(~/assets/fonts/Roboto-Light.ttf);
 }
+
 @font-face {
   font-family: RobotoBoldItalic;
   src: url(~/assets/fonts/Roboto-BoldItalic.ttf);
 }
-h3.title{
-  font-family: 'RobotoLight',sans-serif;
+
+h3.title {
+  font-family: 'RobotoLight', sans-serif;
   font-size: 35px;
   padding-left: 15px;
 }
-h2{
-  font-family: 'RobotoBold',sans-serif;
+
+h2 {
+  font-family: 'RobotoBold', sans-serif;
 }
 
-.box-logo img{
+.box-logo img {
   width: 50% !important;
   margin: auto;
   display: block;
 }
-.text-green-pt{
-  color:#1ABB9C;
+
+.text-green-pt {
+  color: #1ABB9C;
 }
-.font-bold-italic{
-  font-family: 'RobotoBoldItalic',sans-serif;
+
+.font-bold-italic {
+  font-family: 'RobotoBoldItalic', sans-serif;
 }
-.font-light{
-  font-family: 'RobotoLight',sans-serif;
+
+.font-light {
+  font-family: 'RobotoLight', sans-serif;
 }
 </style>

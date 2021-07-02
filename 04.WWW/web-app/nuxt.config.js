@@ -1,3 +1,4 @@
+import colors from 'vuetify/es5/util/colors'
 require('dotenv').config()
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -49,7 +50,32 @@ export default {
   modules: [
     '@nuxtjs/axios'
   ],
-
+  vuetify: {
+    customVariables: ['~/assets/styles/variables.scss'],
+    treeShake: true,
+    icons: {
+      iconfont: 'fa',
+    },
+    theme: {
+      // disable: true,
+      // dark: true,
+      dark: false,
+      themes: {
+        light: {
+          primary: '#6d42c7',
+        },
+        dark: {
+          primary: '#6d42c7',
+          accent: colors.grey.darken3,
+          secondary: colors.amber.darken3,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3,
+        },
+      },
+    },
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
