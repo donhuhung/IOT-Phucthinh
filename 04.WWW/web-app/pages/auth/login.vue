@@ -8,7 +8,7 @@
       </p>
       <div class="pb-2 pt-4">
         <input type="text" name="ip-factory" id="ip-factory" v-model="ip_factory" :placeholder="$t('layout.IpFactory')"
-               class="block w-full p-4 text-lg rounded-sm bg-white text-center">
+               class="block w-full p-4 text-lg rounded-sm bg-white text-center" required>
       </div>
       <div class="pb-2 pt-4">
         <input class="block w-full p-4 text-lg rounded-sm bg-white text-center"
@@ -56,6 +56,15 @@ export default {
       submitting: false,
     }
   },
+  computed: {
+    ...mapGetters(
+      {
+        isLoggedIn:'auth/isLoggedIn',
+        user:'auth/user',
+        token:'auth/token',
+        groupUser:'auth/groupUser'
+      }),
+  },
   methods: {
     ...mapActions("auth", ["login"]),
     async submit(e) {
@@ -68,8 +77,19 @@ export default {
       let username = this.username;
       let password = this.password;
       try {
-        this.submitting = true
-        let loggedIn = await this.login({ip_factory,username,password});
+        if(ip_factory && username && password){
+          this.submitting = true
+          let loggedIn = await this.login({ip_factory,username,password});
+          if(this.token){
+            if(this.groupUser == 'super_admin_app')
+              this.$router.push({path: '/factory'})
+            else
+              this.$router.push({path: '/overview'})
+          }
+        }
+        else{
+          return false;
+        }
       }finally {
         this.submitting = false
       }

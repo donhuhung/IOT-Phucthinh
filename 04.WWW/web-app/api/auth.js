@@ -1,17 +1,21 @@
 async function login( { commit }, data) {
-  let form = new FormData();
-  form.append("ip_factory", data.ip_factory);
-  form.append("username", data.username);
-  form.append("password", data.password);
-  try {
-    commit("authRequest");
-    const res = await this.$axios.$post('/api/v1/user/login', form);
-    commit("authSuccess", res.data);
-  }catch (e) {
-    commit("authError", e);
-  }finally {
+  return new Promise(async (resolve) =>{
+    let form = new FormData();
+    form.append("ip_factory", data.ip_factory);
+    form.append("username", data.username);
+    form.append("password", data.password);
+    try {
+      commit("authRequest");
+      const res = await this.$axios.$post('/api/v1/user/login', form);
+      commit("authSuccess", res.data);
+      resolve(res.data);
+    }catch (e) {
+      commit("authError", e);
+    }finally {
 
-  }
+    }
+  })
+
 }
 
 async function forgotPassword(data) {

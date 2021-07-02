@@ -6,7 +6,8 @@ export const state = () => {
   return {
     status: '',
     token: getSESSION(SESSION.TOKEN) || '',
-    user: null,
+    user: getSESSION(SESSION.USER) || '',
+    groupUser:getSESSION(SESSION.GROUPUSER) || '',
   }
 }
 
@@ -15,6 +16,7 @@ export const getters = {
   authStatus: (state) => state.status,
   user: (state) => state.user,
   token: (state) => state.token,
+  groupUser: (state) => state.groupUser,
 }
 
 export const actions = {
@@ -38,13 +40,16 @@ export const mutations = {
   authRequest(state) {
     state.status = 'loading'
   },
-  authSuccess(state, { token, user }) {
+  authSuccess(state, data) {
     state.status = 'success'
-    state.token = token
-    state.user = user
-    this.$axios.setToken(`Bearer ${token}`)
-    // this.$axios.defaults.headers.common['Authorization'] = `JWT ${token}`
-    setSESSION(SESSION.TOKEN, token)
+    state.token = data.access_token
+    state.user = data
+    state.groupUser = data.group[0].code
+    //this.$axios.setToken(`Bearer ${token}`)
+     this.$axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`
+    setSESSION(SESSION.TOKEN, data.access_token)
+    setSESSION(SESSION.GROUPUSER,data.group[0].code)
+    setSESSION(SESSION.USER,data)
   },
   authError(state) {
     state.status = 'error'
@@ -52,7 +57,10 @@ export const mutations = {
   logout(state) {
     state.status = ''
     state.token = ''
+    state.groupUser = ''
     removeSESSION(SESSION.TOKEN)
+    removeSESSION(SESSION.GROUPUSER)
+    removeSESSION(SESSION.USER)
     this.$axios.setToken('')
   },
 }

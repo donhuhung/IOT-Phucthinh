@@ -1,5 +1,7 @@
 export const SESSION = {
   TOKEN: 'token',
+  GROUPUSER:'group_user',
+  USER:'user',
 }
 export const SETTINGS = {
   CAF_TYPE_DEFAULT: 'default',

@@ -5,20 +5,34 @@
       <div class="w-10 h-10 rounded-full overflow-hidden mr-4">
         <img class="w-full h-full" src="https://image.lag.vn/upload/news/19/09/21/the-flash-season-5-release-date_TCZY.jpg" alt="">
       </div>
-      <p>Xin chào,<br><span class="username">Phúc Thịnh</span></p>
+      <p>Xin chào,<br><span class="username">{{user.name}}</span></p>
     </div>
       <ul class="mt-2 text-gray-700 dark:text-gray-400 capitalize w-full">
         <!-- Links -->
         <template v-for="(nav, index) in navs">
-          <li :key="index" class="mt-3 p-1 pl-3 text-blue-600 dark:text-blue-300 rounded-lg">
-            <nuxt-link :to="nav.to" class=" flex items-center">
-              <img :src="require(`~/assets/img/${nav.icon}`)" />
-              <span class="m-2 pl-4" style="color:#000A12"
-                    @click="selected = index"
-                    :class="{active:selected == index}"
-              >{{ $t(nav.label) }}</span>
-            </nuxt-link>
-          </li>
+          <div v-if="groupUser == 'super_admin_app'">
+            <li :key="index" class="mt-3 p-1 pl-3 text-blue-600 dark:text-blue-300 rounded-lg">
+              <nuxt-link :to="nav.to" class=" flex items-center">
+                <img :src="require(`~/assets/img/${nav.icon}`)" />
+                <span class="m-2 pl-4" style="color:#000A12"
+                      @click="selected = index"
+                      :class="{active:selected == index}"
+                >{{ $t(nav.label) }}</span>
+              </nuxt-link>
+            </li>
+          </div>
+          <div v-else>
+            <li v-if="(index > 0)" :key="index" class="mt-3 p-1 pl-3 text-blue-600 dark:text-blue-300 rounded-lg">
+              <nuxt-link :to="nav.to" class=" flex items-center">
+                <img :src="require(`~/assets/img/${nav.icon}`)" />
+                <span class="m-2 pl-4" style="color:#000A12"
+                      @click="selected = index"
+                      :class="{active:selected == index}"
+                >{{ $t(nav.label) }}</span>
+              </nuxt-link>
+            </li>
+          </div>
+
         </template>
         <li class="signout">
           <i class="fas fa-sign-out-alt"></i>
@@ -30,6 +44,7 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
 export default {
   name: "TheMenuSidebar",
   data() {
@@ -87,7 +102,16 @@ export default {
       ],
       selected: ''
     }
-  }
+  },
+  computed: {
+    ...mapGetters(
+      {
+        isLoggedIn:'auth/isLoggedIn',
+        user:'auth/user',
+        token:'auth/token',
+        groupUser:'auth/groupUser'
+      }),
+  },
 }
 </script>
 
