@@ -9,7 +9,6 @@ import ListFactory from "../../components/Factory";
 export default {
   components: {ListFactory},
   mounted() {
-    alert('ók')
   }
 }
 </script>

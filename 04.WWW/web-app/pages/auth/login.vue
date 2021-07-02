@@ -57,13 +57,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(
-      {
+    ...mapGetters({
         isLoggedIn:'auth/isLoggedIn',
         user:'auth/user',
         token:'auth/token',
         groupUser:'auth/groupUser'
       }),
+    defaultPage() {
+      const { groupUser } = this
+      return groupUser === 'super_admin_app' ? '/factory' : '/overview'
+    },
   },
   methods: {
     ...mapActions("auth", ["login"]),
@@ -79,12 +82,9 @@ export default {
       try {
         if(ip_factory && username && password){
           this.submitting = true
-          let loggedIn = await this.login({ip_factory,username,password});
-          if(this.token){
-            if(this.groupUser == 'super_admin_app')
-              this.$router.push({path: '/factory'})
-            else
-              this.$router.push({path: '/overview'})
+          await this.login({ip_factory,username,password});
+          if(this.isLoggedIn) {
+            this.authSuccess()
           }
         }
         else{
@@ -95,7 +95,11 @@ export default {
       }
 
 
-    }
+    },
+    authSuccess() {
+      let path = this.$route.query['redirect'] || this.defaultPage
+      this.$router.replace({ path })
+    },
   }
 }
 </script>
