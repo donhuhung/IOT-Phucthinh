@@ -40,7 +40,9 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        \App::register('Barryvdh\Cors\ServiceProvider');
 
+        $this->app['Illuminate\Contracts\Http\Kernel']->pushMiddleware('Barryvdh\Cors\HandleCors');
     }
 
     /**

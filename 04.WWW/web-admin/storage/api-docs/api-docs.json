@@ -1,0 +1,721 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Focus Sampling",
+        "description": "Focus Sampling",
+        "version": "1.0.0"
+    },
+    "host": "",
+    "basePath": "/",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/api/v1/customer/store": {
+            "post": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Store Customer",
+                "description": "Store Customer",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Store Customer",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "name": "Nguy\u1ec5n V\u0103n A",
+                                "gender": 1,
+                                "dob": "05-02-1991",
+                                "phone": "0903123456",
+                                "cmnd": "0258963214",
+                                "address": "01 L\u00ea Du\u1ea9n",
+                                "brand_in_use": 1,
+                                "product": 1,
+                                "product_sampling": 1,
+                                "location_id": 16,
+                                "otp": "123456789"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/customer/update-bill": {
+            "post": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Store Customer",
+                "description": "Update Bill",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "customer_id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "bill_image",
+                        "in": "formData",
+                        "description": "Bill Image",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/customer/update-avatar": {
+            "post": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Update Avatar Customer",
+                "description": "Update Avatar Customer",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "customer_id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "customer_avatar",
+                        "in": "formData",
+                        "description": "Customer Avatar",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/customer/check-phone": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Check Phone Customer",
+                "description": "",
+                "operationId": "api.v1.checkPhone",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Check Phone Customer",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "phone": "091456987",
+                                "location_id": 1
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/customer/get-otp": {
+            "post": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Get OTP Customer",
+                "description": "",
+                "operationId": "api.v1.getOTP",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Check Phone Customer",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "phone": "0916214433"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/gift/list": {
+            "post": {
+                "tags": [
+                    "Gift"
+                ],
+                "summary": "Get List Gift By Location",
+                "description": "",
+                "operationId": "api.v1.getListGiftByLocation",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get List Gift By Location",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "location_id": 1
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/gift/catch-gift": {
+            "post": {
+                "tags": [
+                    "Gift"
+                ],
+                "summary": "Catch Gift",
+                "description": "",
+                "operationId": "api.v1.catchGift",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Catch Gift",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "customer_id": 1,
+                                "arr_gift_id": "[1,2]"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/config/app": {
+            "post": {
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Congif App",
+                "description": "",
+                "operationId": "api.v1.configApp",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/general/get-product-sampling": {
+            "get": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Get List Product Sampling",
+                "description": "",
+                "operationId": "api.v1.getProductSampling",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/general/get-list-location": {
+            "get": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Get List Location",
+                "description": "",
+                "operationId": "api.v1.getListLocation",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/general/get-list-project": {
+            "post": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Get List Project",
+                "description": "",
+                "operationId": "api.v1.getListProject",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get List Project",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "location_id": 1
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/general/get-list-brand-project": {
+            "get": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Get List Brand Project",
+                "description": "",
+                "operationId": "api.v1.getBrandProject",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login User",
+                "description": "Login User",
+                "operationId": "api.v1.postLoginUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Login User",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "email": "test@gmail.com",
+                                "password": "123456789"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/logout": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout User",
+                "description": "",
+                "operationId": "api.v1.logout",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user/forgot-password": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login User",
+                "description": "",
+                "operationId": "api.v1.forgotPassword",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Login User",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "email": "test@gmail.com"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/relogin": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login User",
+                "description": "",
+                "operationId": "api.v1.reLogin",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Login User",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "email": "test@gmail.com"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/change-password": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Change Password",
+                "description": "",
+                "operationId": "api.v1.changePassword",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Change Password",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "new_password": "123456789",
+                                "confirm_password": "123456789"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user/checkin": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User Checkin",
+                "description": "",
+                "operationId": "api.v1.userCheckin",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_image",
+                        "in": "formData",
+                        "description": "User Image",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "latitude_checkin",
+                        "in": "formData",
+                        "description": "Latitude Checkin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "longitude_checkin",
+                        "in": "formData",
+                        "description": "Longitude Checkin",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user/checkout": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User Checkout",
+                "description": "",
+                "operationId": "api.v1.userCheckout",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_image",
+                        "in": "formData",
+                        "description": "User Image",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "latitude_checkout",
+                        "in": "formData",
+                        "description": "Latitude Checkout",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "longitude_checkout",
+                        "in": "formData",
+                        "description": "Longitude Checkout",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Server is OK!"
+                    },
+                    "500": {
+                        "description": "Internal server error!"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {},
+    "securityDefinitions": {
+        "bearerAuth": {
+            "type": "apiKey",
+            "description": "Enter Bearer {{access_token}}",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
