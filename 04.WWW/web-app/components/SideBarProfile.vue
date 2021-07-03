@@ -1,6 +1,6 @@
 <template>
   <v-list dense>
-    <v-list-item class="px-2">
+    <v-list-item class="px-2" to="/">
       <v-list-item-avatar>
         <v-img src="/img/logo-phuc-thinh-22.png"></v-img>
       </v-list-item-avatar>
@@ -29,19 +29,6 @@ export default {
         groupUser:'auth/groupUser'
       }),
   },
-  methods: {
-    ...mapActions({
-      logout: 'auth/logout',
-    }),
-    async signOut() {
-      await this.logout()
-      this.redirectLogin()
-    },
-    redirectLogin() {
-      let query = { redirect: this.$route.fullPath }
-      this.$router.replace({ path: '/auth/login', query })
-    },
-  }
 }
 </script>
 

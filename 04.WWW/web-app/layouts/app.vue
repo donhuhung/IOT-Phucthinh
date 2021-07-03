@@ -4,8 +4,9 @@
       <SideBarProfile />
       <v-divider></v-divider>
       <SideBarNavs/>
+      <div class="mb-2"></div>
       <template v-slot:append>
-        <LinkSignOut />
+        <LinkSignOut class="px-2" />
       </template>
     </v-navigation-drawer>
     <v-app-bar app flat color="white">
