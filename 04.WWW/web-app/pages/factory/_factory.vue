@@ -14,7 +14,7 @@
         </v-list>
       </v-sheet>
     </v-col>
-    <v-col :col="isSuperAdminApp ? '10' : '12'">
+    <v-col class="col" :class="{'col-10': isSuperAdminApp, 'col-12': !isSuperAdminApp}">
       <v-sheet
         min-height="70vh" class="content-detail-factory">
         <div class="px-2 py-2">
