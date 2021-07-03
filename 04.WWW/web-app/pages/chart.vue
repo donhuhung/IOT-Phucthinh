@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  name: "chart",
   layout: "app"
 }
 </script>

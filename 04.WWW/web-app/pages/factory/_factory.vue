@@ -1,6 +1,6 @@
 <template>
   <v-row no-gutters>
-    <v-col cols="2">
+    <v-col cols="2" v-if="isSuperAdminApp">
       <v-sheet class="nav-detail-factory" height="100%">
         <v-list nav dense>
           <template v-for="(nav, index) in navs">
@@ -14,7 +14,7 @@
         </v-list>
       </v-sheet>
     </v-col>
-    <v-col>
+    <v-col :col="isSuperAdminApp ? '10' : '12'">
       <v-sheet
         min-height="70vh" class="content-detail-factory">
         <div class="px-2 py-2">
@@ -28,13 +28,19 @@
 <script>
 
 import jsonMixin from "../../mixins/jsonMixin";
-
+import { mapGetters } from 'vuex'
 export default {
   mixins: [jsonMixin],
   data() {
     return {
       navs: []
     }
+  },
+  computed: {
+    ...mapGetters({
+      isSuperAdminApp: 'auth/isSuperAdminApp'
+    }),
+
   },
   async mounted() {
     const navs = await this.fetchNavs()

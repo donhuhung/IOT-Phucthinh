@@ -4,7 +4,8 @@
     "icon": "/img/Home-Icon.svg",
     "to": {
       "path": "factory"
-    }
+    },
+    "isSuperAdminApp": true
   },
   {
     "label": "layout.navOverview",
@@ -51,6 +52,7 @@
     "icon": "/img/settings.svg",
     "to": {
       "path": "setting"
-    }
+    },
+    "isSuperAdminApp": true
   }
 ]

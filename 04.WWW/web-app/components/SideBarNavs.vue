@@ -29,7 +29,7 @@ export default {
     navsCombined() {
       const { isSuperAdminApp, navs } = this
       const _filter = (nav) => {
-        return isSuperAdminApp ? !nav.inFactory : true
+        return isSuperAdminApp ? nav.isSuperAdminApp : nav.inFactory
       }
       return navs.filter(_filter)
     },
