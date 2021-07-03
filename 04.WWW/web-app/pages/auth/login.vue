@@ -22,7 +22,7 @@
                :placeholder="$t('layout.password')">
       </div>
       <div class="flex justify-between mt-4">
-        <div>
+        <div class="opacity-0">
           <input name="remember-me" id="remember-me" type="checkbox">
           <span>Remember me</span>
         </div>

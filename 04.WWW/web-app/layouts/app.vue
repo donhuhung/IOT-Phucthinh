@@ -4,6 +4,9 @@
       <SideBarProfile />
       <v-divider></v-divider>
       <SideBarNavs/>
+      <template v-slot:append>
+        <LinkSignOut />
+      </template>
     </v-navigation-drawer>
     <v-app-bar app flat color="white">
       <TheTopBar/>
@@ -20,9 +23,10 @@
 import TheTopBar from "../components/TheTopBar";
 import SideBarNavs from "../components/SideBarNavs";
 import SideBarProfile from "../components/SideBarProfile";
+import LinkSignOut from "../components/LinkSignOut";
 
 export default {
-  components: {SideBarProfile, SideBarNavs, TheTopBar},
+  components: {LinkSignOut, SideBarProfile, SideBarNavs, TheTopBar},
   middleware({store, redirect, route}) {
     if (!store.getters['auth/isLoggedIn']) {
       let query = {redirect: route.fullPath}
