@@ -13,7 +13,7 @@
       <TheTopBar/>
     </v-app-bar>
     <v-main class="grey lighten-3">
-      <v-container>
+      <v-container fluid>
         <Nuxt/>
       </v-container>
     </v-main>

@@ -1,10 +1,13 @@
 <template>
-  <nuxt-child />
+  <div>device</div>
 </template>
 
 <script>
 export default {
-  layout: "app",
+  name: "device"
 }
 </script>
 
+<style scoped>
+
+</style>

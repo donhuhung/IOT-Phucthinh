@@ -1,13 +1,10 @@
 <template>
-  <div>
-    Detail
-  </div>
+  <div>Detail Index</div>
 </template>
 
 <script>
 export default {
-  mounted() {
-  }
+
 }
 </script>
 
