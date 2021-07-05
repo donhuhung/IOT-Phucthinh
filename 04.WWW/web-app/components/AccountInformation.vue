@@ -8,10 +8,10 @@
                 <img class="avatar" :src="this.userInfo.avatar" alt="">
               </div>
               <div>
-                <p class="capitalize text-xl font-semibold text-blue-600 font-bold-italic">Nguyễn Văn Tèo</p>
+                <p class="capitalize text-xl font-semibold text-blue-600 font-bold-italic">{{userInfo.name}}</p>
                 <p class="font-thin italic text-right">
                   <i class="fas fa-user-clock"></i>
-                  Lần truy cập gần nhất: 15:30 18/06/2021
+                  Lần truy cập gần nhất: {{userInfo.last_login}}
                 </p>
                 <a href="javascript:void(0)" class="upload-avatar">
                   <i class="fas fa-camera"></i>
@@ -28,25 +28,25 @@
               <table>
                 <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Họ & tên:</td>
-                  <td class="pl-2 font-light">Nguyễn Văn Tèo</td>
+                  <td class="pl-2 font-light">{{userInfo.name}}</td>
                 </tr>
                 <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Email:</td>
-                  <td class="pl-2 font-light">nguyenvanteo@gmail.com</td>
+                  <td class="pl-2 font-light">{{userInfo.email}}</td>
                 </tr>
                 <tr class="col-end-2 lg:h-10">
                   <td class="text-green-pt font-bold-italic">Giới tính:</td>
-                  <td class="pl-2 font-light">Nam</td>
+                  <td class="pl-2 font-light">{{userInfo.gender==1?'Nam':'Nữ'}}</td>
                   <td class="text-green-pt font-bold-italic">Ngày sinh:</td>
-                  <td class="pl-2 font-light">05-01-1997</td>
+                  <td class="pl-2 font-light">{{userInfo.birthday}}</td>
                 </tr>
                 <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Số điện thoại:</td>
-                  <td class="pl-2 font-light">0916214477</td>
+                  <td class="pl-2 font-light">{{userInfo.phone}}</td>
                 </tr>
                 <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Địa chỉ:</td>
-                  <td class="pl-2 font-light">Số 01 Thạnh Xuân, Quận 12</td>
+                  <td class="pl-2 font-light">{{userInfo.address}}</td>
                 </tr>
               </table>
               <router-link to="/update-info" class="update-info">
@@ -62,11 +62,11 @@
               <table>
                 <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">IP Đăng Nhập:</td>
-                  <td class="pl-2 font-light">192.168.1.1</td>
+                  <td class="pl-2 font-light">{{userInfo.factory?userInfo.factory.ip:''}}</td>
                 </tr>
                 <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Nhà máy:</td>
-                  <td class="pl-2 font-light">Hà Thanh</td>
+                  <td class="pl-2 font-light">{{userInfo.factory?userInfo.factory.name:''}}</td>
                 </tr>
                 <tr class="lg:h-10">
                   <td class="text-green-pt font-bold-italic">Mật khẩu:</td>
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-
+import {mapActions, mapGetters} from 'vuex';
 export default {
   name: "AccountInformation",
   data() {
@@ -118,14 +118,19 @@ export default {
       userInfo:[]
     }
   },
+  computed: {
+    ...mapGetters({
+      user:'auth/user',
+    }),
+  },
   mounted() {
     this.getUserInfo();
   },
   methods: {
     getUserInfo(){// eslint-disable-line
       let avatar = require('../assets/img/factory.png');
-      let obj = { avatar: avatar }
-      this.userInfo = obj;
+      this.userInfo = this.user;
+      this.userInfo.avatar = avatar;
     },
   }
 }
@@ -166,7 +171,7 @@ export default {
   border-radius: 10px;
   margin: auto;
   display: block;
-  width: 35%;
+  width: 40%;
   margin-top: 20px;
   text-align: center;
 }

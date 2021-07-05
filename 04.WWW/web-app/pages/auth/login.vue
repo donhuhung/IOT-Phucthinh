@@ -65,7 +65,8 @@ export default {
       }),
     defaultPage() {
       const { groupUser } = this
-      return groupUser === 'super_admin_app' ? '/factory' : '/overview'
+      let factoryID = this.user.factory.id;
+      return groupUser === 'super_admin_app' ? '/factory' : '/factory/'+factoryID+'/overview'
     },
   },
   methods: {
@@ -97,7 +98,11 @@ export default {
 
     },
     authSuccess() {
-      let path = this.$route.query['redirect'] || this.defaultPage
+      let path;
+      if(this.$route.query['redirect'] !='/')
+        path = this.$route.query['redirect']
+      else
+        path = this.defaultPage
       this.$router.replace({ path })
     },
   }

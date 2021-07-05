@@ -26,13 +26,13 @@
             <p class="">{{ item.name }}</p>
           </div>
           <div class="body">
-            <p><span class="xl:font-bold">Address: </span>{{ item.address }}
+            <p><span class="xl:font-bold">Địa chỉ: </span>{{ item.address }}
             </p>
             <p><span class="xl:font-bold">IP: </span>{{ item.ip }}</p>
             <img :src="`${item.thumbnail}`" class="w-full mt-4">
           </div>
           <div class="footer">
-            <router-link :to="`/factory/${item.id}`">
+            <router-link :to="`/factory/${item.factory_id}`">
               Truy cập
             </router-link>
           </div>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-
+import {mapActions, mapGetters} from 'vuex';
 export default {
   name: "ListFactory",
   props: {
@@ -58,12 +58,22 @@ export default {
       items: []
     }
   },
-  computed: {},
-  async mounted() {
-    const res = await fetch('/json/factory.json')
-    const json = await res.json()
-    this.items = json
+  computed: {
   },
+
+  methods: {
+    getListFactory,
+    testGetListFactory() {
+      this.getListFactory()
+    }
+  }
+
+  /*methods: {
+    async getListFactory(){
+      let obj = await this.$axios.$get('/api/v1/factory/list')
+      this.items = obj.data;
+    }
+  },*/
 
 }
 </script>

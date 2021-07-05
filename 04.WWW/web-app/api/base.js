@@ -65,9 +65,8 @@ async function sleep(time = 500) {
 
 function showMessage(e) {
     try {
-        store.commit("snackbar/setMessages", e.response.data);
     } catch (e) {
-        store.commit("snackbar/setMessages", e);
+
     }
 }
 

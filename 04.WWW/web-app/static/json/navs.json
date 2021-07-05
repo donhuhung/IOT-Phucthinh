@@ -50,9 +50,9 @@
   {
     "label": "layout.navSetting",
     "icon": "/img/settings.svg",
+    "inFactory": true,
     "to": {
       "path": "setting"
-    },
-    "isSuperAdminApp": true
+    }
   }
 ]

@@ -14,48 +14,14 @@
           <option value="tphcm">Tp.HCM</option>
         </select>
         <div>
-          <div class="item">
-            <p class="factory">Hà Thanh</p>
+
+          <div class="item" v-for="item in items">
+            <p class="factory">{{item.name}}</p>
             <p class="address">
-              Xã Thượng Lâm, Huyện Lâm Bình, Tuyên Quang, Việt Nam
+              {{ item.address }}
             </p>
           </div>
-          <div class="item">
-            <p class="factory">Hà Thanh</p>
-            <p class="address">
-              Xã Thượng Lâm, Huyện Lâm Bình, Tuyên Quang, Việt Nam
-            </p>
-          </div>
-          <div class="item">
-            <p class="factory">Hà Thanh</p>
-            <p class="address">
-              Xã Thượng Lâm, Huyện Lâm Bình, Tuyên Quang, Việt Nam
-            </p>
-          </div>
-          <div class="item">
-            <p class="factory">Hà Thanh</p>
-            <p class="address">
-              Xã Thượng Lâm, Huyện Lâm Bình, Tuyên Quang, Việt Nam
-            </p>
-          </div>
-          <div class="item">
-            <p class="factory">Hà Thanh</p>
-            <p class="address">
-              Xã Thượng Lâm, Huyện Lâm Bình, Tuyên Quang, Việt Nam
-            </p>
-          </div>
-          <div class="item">
-            <p class="factory">Hà Thanh</p>
-            <p class="address">
-              Xã Thượng Lâm, Huyện Lâm Bình, Tuyên Quang, Việt Nam
-            </p>
-          </div>
-          <div class="item">
-            <p class="factory">Hà Thanh</p>
-            <p class="address">
-              Xã Thượng Lâm, Huyện Lâm Bình, Tuyên Quang, Việt Nam
-            </p>
-          </div>
+
         </div>
       </div>
     </div>
@@ -68,18 +34,17 @@ export default {
   name: "Maps",
   data() {
     return {
-      userInfo:[]
+      items:[]
     }
   },
   mounted() {
-    this.getUserInfo();
+    this.getListFactory();
   },
   methods: {
-    getUserInfo(){// eslint-disable-line
-      let avatar = require('../assets/img/factory.png');
-      let obj = { avatar: avatar }
-      this.userInfo = obj;
-    },
+    async getListFactory(){
+      let obj = await this.$axios.$get('/api/v1/factory/list')
+      this.items = obj.data;
+    }
   }
 }
 </script>
@@ -108,5 +73,8 @@ select{
   padding: 10px 0;
   border-top: 1px solid silver;
   width: 90%;
+}
+iframe{
+  min-height: 600px;
 }
 </style>

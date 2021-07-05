@@ -5,7 +5,7 @@ export default {
       return await res.json()
     },
     async fetchFactory() {
-      const res = await fetch('/json/factory.json')
+      const res = await fetch('/api/v1/factory/list')
       return await res.json()
     },
   }

@@ -1,7 +1,7 @@
 <template>
   <v-list nav dense>
     <template v-for="(nav, index) in navsCombined">
-      <v-list-item link :key="index" :to="`/${nav.to.path}`">
+      <v-list-item link :key="index" :to="`/factory`">
         <v-list-item-icon>
           <v-img :src="`${nav.icon}`"/>
         </v-list-item-icon>
