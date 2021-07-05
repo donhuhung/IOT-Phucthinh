@@ -1,21 +1,20 @@
 <template>
   <v-app>
     <v-navigation-drawer app permanent expand-on-hover>
-      <SideBarProfile />
+      <SideBarProfile/>
       <v-divider></v-divider>
       <SideBarNavs/>
       <div class="mb-2"></div>
       <template v-slot:append>
-        <LinkSignOut class="px-2" />
+        <LinkSignOut class="px-2"/>
       </template>
     </v-navigation-drawer>
-    <v-app-bar app flat color="white">
+    <v-app-bar app dense flat class="v-bar--underline">
       <TheTopBar/>
     </v-app-bar>
-    <v-main class="grey lighten-3">
-      <v-container fluid>
-        <Nuxt/>
-      </v-container>
+<!--    <v-toolbar outlined ap></v-toolbar>-->
+    <v-main class="">
+      <Nuxt class="px-2"/>
     </v-main>
   </v-app>
 </template>
@@ -41,7 +40,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 @font-face {
   font-family: RobotoMedium;
   src: url(~/assets/fonts/Roboto-Medium.ttf);
@@ -66,32 +65,8 @@ export default {
   font-family: RobotoBoldItalic;
   src: url(~/assets/fonts/Roboto-BoldItalic.ttf);
 }
+.v-bar--underline {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.12) !important;
 
-h3.title {
-  font-family: 'RobotoLight', sans-serif;
-  font-size: 35px;
-  padding-left: 15px;
-}
-
-h2 {
-  font-family: 'RobotoBold', sans-serif;
-}
-
-.box-logo img {
-  width: 50% !important;
-  margin: auto;
-  display: block;
-}
-
-.text-green-pt {
-  color: #1ABB9C;
-}
-
-.font-bold-italic {
-  font-family: 'RobotoBoldItalic', sans-serif;
-}
-
-.font-light {
-  font-family: 'RobotoLight', sans-serif;
 }
 </style>

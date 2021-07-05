@@ -18,6 +18,7 @@ export const getters = {
   token: (state) => state.token,
   groupUser: (state) => state.groupUser,
   isSuperAdminApp: (state) => state.groupUser === 'super_admin_app',
+
   // isSuperAdminApp: (state) => false
 }
 

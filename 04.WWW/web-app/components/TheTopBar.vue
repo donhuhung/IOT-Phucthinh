@@ -1,14 +1,14 @@
 <template>
   <div class="flex items-center">
-    <div class="w-60">
-      <v-text-field filled
-                    flat
-                    rounded
+    <v-spacer />
+    <div class="w-60 opacity-0">
+      <v-text-field solo
                     hide-details
                     single-line
-                    dense prepend-inner-icon="fa-search">
+                    placeholder="Search in factory"
+                    dense prepend-inner-icon="fa-search" class="rounded-lg">
         <template v-slot:prepend-inner>
-          <div class="icon-fix" style="transform: translate(-8px, 4px)">
+          <div class="icon-fix">
             <v-icon small>fa-search</v-icon>
           </div>
         </template>

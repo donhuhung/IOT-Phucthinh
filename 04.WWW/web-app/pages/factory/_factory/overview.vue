@@ -10,26 +10,17 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import {mapGetters} from 'vuex';
 export default {
-  data() {
-    return {
-      info: [],
-    }
-  },
   computed: {
     ...mapGetters({
       user:'auth/user',
     }),
+    info() {
+      const { factory } = this.user
+      return factory || {}
+    }
   },
-  mounted() {
-    this.getDetail();
-  },
-  methods: {
-    getDetail() {
-        this.info = this.user.factory;
-    },
-  }
 }
 </script>
 
