@@ -47,24 +47,17 @@ export default {
   },
   computed: {},
   mounted() {
-    this.testGetListFactory()
+    this.listFactory()
   },
   methods: {
     getListFactory,
-    async testGetListFactory() {
+    async listFactory() {
       const res = await this.getListFactory()
       console.error('FACTORY', res)
       const {data} = res
       this.items = data
     }
   }
-
-  /*methods: {
-    async getListFactory(){
-      let obj = await this.$axios.$get('/api/v1/factory/list')
-      this.items = obj.data;
-    }
-  },*/
 
 }
 </script>
