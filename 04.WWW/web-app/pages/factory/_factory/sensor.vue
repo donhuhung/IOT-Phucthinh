@@ -4,46 +4,48 @@
       HA THANH WATER SUPPLY FACTORY, 30.000m3 Capacity
     </h3>
     <p class="mt-1 text-lg text-gray-500">MONITORING & SCALLING SENSOR</p>
-    <div id="tabs" class="mt-6">
-      <div class="tabs bg-blue-200 p-2">
-        <a v-for="(item,index) in items" href="javascript:void(0)"  class="m-0 px-4 text-blue-600"  v-on:click="activetab=(index+1)" v-bind:class="[ activetab == (index+1) ? 'active' : '' ]">
-          <i class="fas fa-map-marked-alt"></i>
-          {{ item.title }}
-        </a>
-
-      </div>
-
-      <div class="content group-table bg-white mt-4">
-        <div v-for="(item,index) in items" v-if="activetab == (index+1)" class="tabcontent">
-          <div class="flex items-start flex-wrap p-2">
-            <template v-for="(tb, index) in item.data">
-              <TableInformationSensor :key="(index+1)"
-                                      class="w-80 m-2"
-                                      disabled-title
-                                      v-bind="tb"/>
+    <v-btn-toggle v-model="activetab" class="border-b w-full">
+      <template v-for="(tab, index) in items">
+        <v-btn :key="index" class="capitalize"
+               active-class="primary--text"
+               style="margin-bottom: -1px;">
+          <i class="fas fa-map-marked-alt mr-2"></i>
+          {{ tab.title }}
+        </v-btn>
+      </template>
+    </v-btn-toggle>
+    <div class="mt-2">
+      <template v-if="items[activetab]">
+        <div class="-mx-2">
+          <div class="flex flex-wrap">
+            <template v-for="(data, index) in items[activetab]['data']">
+              <div :key="index" class="px-2 mb-2 row-item-table">
+                <GridOfSensor :name="data.name"
+                              :symbol="data.symbol"
+                              :dataSensor="data.data_sensor"/>
+              </div>
             </template>
           </div>
         </div>
-
-      </div>
-
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-import TableInformationSensor from "@/components/TableInformationSensor";
 import {getListSensor} from "@/api/app"
+import GridOfSensor from "../../../components/GridOfSensor";
+
 export default {
-  components: {TableInformationSensor},
+  components: {GridOfSensor},
   props: [
     'title'
   ],
   data() {
     return {
       active: false,
-      activetab: '1',
-      items: []
+      activetab: 0,
+      items: [],
     }
   },
   mounted() {
@@ -61,11 +63,7 @@ export default {
 </script>
 
 <style scoped>
-.tabs a.active{
-  color:#1ABB9C;
-  font-family: 'RobotoBold',sans-serif;
-}
-.tabs a{
-  font-size: 18px;
+.row-item-table {
+  min-width: 350px;
 }
 </style>
