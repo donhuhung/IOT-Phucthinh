@@ -20,6 +20,7 @@ class JwtMiddleware extends BaseMiddleware {
      */
     public function handle($request, \Closure $next)
     {
+		
         if (! $token = $this->auth->setRequest($request)->getToken()) {
             return $this->respondWithError("Account does not exist. Please try again!", Response::HTTP_BAD_REQUEST);
         }

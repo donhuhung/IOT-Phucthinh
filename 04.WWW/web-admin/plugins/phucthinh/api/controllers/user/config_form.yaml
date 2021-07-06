@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: User
+
+# Model Form Field configuration
+form: $/phucthinh/api/models/user/fields.yaml
+
+# Model Class name
+modelClass: PhucThinh\API\Models\User
+
+# Default redirect location
+defaultRedirect: phucthinh/api/user
+
+# Create page
+create:
+    title: Create User
+    redirect: phucthinh/api/user/update/:id
+    redirectClose: phucthinh/api/user
+
+# Update page
+update:
+    title: Edit User
+    redirect: phucthinh/api/user
+    redirectClose: phucthinh/api/user
+
+# Preview page
+preview:
+    title: Preview User

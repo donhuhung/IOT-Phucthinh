@@ -21,7 +21,7 @@ fields:
         type: text
     thumbnail:
         label: Thumbnail
-        mode: file
+        mode: image
         useCaption: true
         thumbOptions:
             mode: crop
@@ -34,10 +34,19 @@ fields:
         type: switch
     overview:
         label: Overview
-        mode: file
+        mode: image
         useCaption: true
         thumbOptions:
             mode: crop
             extension: auto
         span: auto
         type: fileupload
+    factory_id:
+        label: 'Factory Id'
+        span: auto
+        type: number
+    address:
+        label: Address
+        size: ''
+        span: auto
+        type: textarea

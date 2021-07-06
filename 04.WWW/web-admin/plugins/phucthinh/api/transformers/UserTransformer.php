@@ -16,6 +16,9 @@ class UserTransformer extends Fractal\TransformerAbstract {
             'username' => (string) $user->last_name,
             'email' => (string) $user->email,                        
             'factory' => $this->getFactoryByUser($user->factory_id),
+			'phone' => $user->phone,
+			'address' => $user->address,
+			'birthday' => $user->birthday,
             'group' => $user->groups,
             'last_login' => Carbon::parse($user->last_login)->format('Y-m-d H:i:s'),
             'createdAt' => Carbon::parse($user->created_at)->format('Y-m-d'),
@@ -28,8 +31,11 @@ class UserTransformer extends Fractal\TransformerAbstract {
         $dataFactory = [];
         $dataFactory['id'] = $factory->id;
         $dataFactory['name'] = $factory->name;
-        $dataFactory['thumbnail'] = $factory->thumbnail->getPath();
-        $dataFactory['overview'] = $factory->overview->getPath();        
+        $dataFactory['thumbnail'] = $factory->thumbnail?$factory->thumbnail->getPath():'';
+        $dataFactory['overview'] = $factory->overview?$factory->overview->getPath():'';        
+		$dataFactory['factory_id'] = $factory->factory_id;        
+		$dataFactory['address'] = $factory->address;        
+		$dataFactory['ip'] = $factory->ip;
         return $dataFactory;
     }
 
