@@ -1,6 +1,6 @@
 <template>
-  <v-row no-gutters>
-    <v-col cols="2" v-if="isSuperAdminApp">
+  <v-row no-gutters class="h-full">
+    <v-col cols="2" class="min-h-full" v-if="isSuperAdminApp">
       <v-sheet class="nav-detail-factory" height="100%">
         <v-list nav dense>
           <template v-for="(nav, index) in navs">
@@ -53,8 +53,9 @@ export default {
 .nav-detail-factory {
   //position: sticky;
   //top: 60px;
+  border-right: solid 1px rgba(0, 0, 0, 0.12);
 }
 .content-detail-factory {
-  border-left: solid 1px rgba(0, 0, 0, 0.12);
+  //border-left: solid 1px rgba(0, 0, 0, 0.12);
 }
 </style>

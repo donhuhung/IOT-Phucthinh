@@ -5,7 +5,7 @@
     </h3>
     <p>MONITORING & CONTROLLING DEVICES</p>
     <div class="mt-6"></div>
-    <v-expansion-panels multiple>
+    <v-expansion-panels multiple v-model="panel">
       <v-expansion-panel
           v-for="(text,i) in ['RAW PUMP STATION', 'PROCESS STATION', 'CHEMICAL STATION']"
           :key="i"
@@ -27,6 +27,11 @@ import GridOfDevice from "./GridOfDevice";
 export default {
   name: "DeviceTemplate",
   components: {GridOfDevice},
+  data() {
+    return {
+      panel: [0,1,2]
+    }
+  }
 }
 </script>
 
