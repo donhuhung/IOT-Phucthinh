@@ -67,6 +67,7 @@ class Device extends General {
         $dataSensor[0]['type'] = 'real';
         $dataSensor[0]['unit'] = 'm3/h';
         $dataSensor[0]['id'] = '1';
+        $dataSensor[0]['is_percent'] = 'false';
         $dataRawStation[0]['data_sensor'] = $dataSensor;
 
         $dataSensor = [];
@@ -76,6 +77,7 @@ class Device extends General {
         $dataSensor[0]['type'] = 'real';
         $dataSensor[0]['unit'] = 'm3/h';
         $dataSensor[0]['id'] = '2';
+        $dataSensor[0]['is_percent'] = 'false';
         $dataRawStation[1]['data_sensor'] = $dataSensor;
 
         $dataSensor = [];
@@ -85,6 +87,7 @@ class Device extends General {
         $dataSensor[0]['type'] = 'real';
         $dataSensor[0]['unit'] = 'm3/h';
         $dataSensor[0]['id'] = '3';
+        $dataSensor[0]['is_percent'] = 'false';
         $dataRawStation[2]['data_sensor'] = $dataSensor;
 
         $rawStation['title'] = 'Raw Station';
@@ -119,6 +122,7 @@ class Device extends General {
         $dataSensor[0]['type'] = 'real';
         $dataSensor[0]['unit'] = 'ppm';
         $dataSensor[0]['id'] = '4';
+        $dataSensor[0]['is_percent'] = 'false';
         $dataSupplyStation[0]['data_sensor'] = $dataSensor;
 
         $dataSensor = [];
@@ -128,6 +132,7 @@ class Device extends General {
         $dataSensor[0]['type'] = 'real';
         $dataSensor[0]['unit'] = 'pH';
         $dataSensor[0]['id'] = '5';
+        $dataSensor[0]['is_percent'] = 'false';
         $dataSupplyStation[1]['data_sensor'] = $dataSensor;
 
         $dataSensor = [];
@@ -137,6 +142,7 @@ class Device extends General {
         $dataSensor[0]['type'] = 'real';
         $dataSensor[0]['unit'] = 'ppm';
         $dataSensor[0]['id'] = '6';
+        $dataSensor[0]['is_percent'] = 'false';
         $dataSupplyStation[2]['data_sensor'] = $dataSensor;
 
         $dataSensor = [];
@@ -146,16 +152,19 @@ class Device extends General {
         $dataSensor[0]['type'] = 'real';
         $dataSensor[0]['unit'] = 'm';
         $dataSensor[0]['id'] = '7';
+        $dataSensor[0]['is_percent'] = 'false';
 
         $dataSensor[1]['value'] = $obj->lt05P2;
         $dataSensor[1]['type'] = 'real';
         $dataSensor[1]['unit'] = 'm3';
         $dataSensor[1]['id'] = '8';
+        $dataSensor[1]['is_percent'] = 'false';
 
-        $dataSensor[1]['value'] = $obj->lt05P3;
-        $dataSensor[1]['type'] = 'real';
-        $dataSensor[1]['unit'] = '%';
-        $dataSensor[1]['id'] = '9';
+        $dataSensor[2]['value'] = $obj->lt05P3;
+        $dataSensor[2]['type'] = 'real';
+        $dataSensor[2]['unit'] = '%';
+        $dataSensor[2]['id'] = '9';
+        $dataSensor[2]['is_percent'] = 'true';
         $dataSupplyStation[3]['data_sensor'] = $dataSensor;
 
         $dataSensor = [];
@@ -165,6 +174,7 @@ class Device extends General {
         $dataSensor[0]['type'] = 'real';
         $dataSensor[0]['unit'] = '';
         $dataSensor[0]['id'] = '10';
+        $dataSensor[0]['is_percent'] = 'false';
         $dataSupplyStation[4]['data_sensor'] = $dataSensor;
 
         $dataSensor = [];
@@ -174,16 +184,19 @@ class Device extends General {
         $dataSensor[0]['type'] = 'real';
         $dataSensor[0]['unit'] = 'm3/h';
         $dataSensor[0]['id'] = '11';
+        $dataSensor[0]['is_percent'] = 'false';
         
         $dataSensor[1]['value'] = $obj->ft05P2;
         $dataSensor[1]['type'] = 'real';
         $dataSensor[1]['unit'] = 'm3/d';
         $dataSensor[1]['id'] = '12';
+        $dataSensor[1]['is_percent'] = 'false';
         
         $dataSensor[2]['value'] = $obj->ft05P3;
         $dataSensor[2]['type'] = 'int';
         $dataSensor[2]['unit'] = 'm3';
         $dataSensor[2]['id'] = '13';
+        $dataSensor[2]['is_percent'] = 'false';
         $dataSupplyStation[5]['data_sensor'] = $dataSensor;
                         
 
