@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow: hidden;">
+  <div>
     <DeviceTemplate />
   </div>
 </template>

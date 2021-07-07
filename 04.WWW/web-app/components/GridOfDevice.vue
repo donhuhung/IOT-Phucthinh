@@ -1,26 +1,21 @@
 <template>
   <div>
-    <h2 v-if="!disabledTitle" class="m-0 px-4 py-2 text-sm bg-blue-200 text-blue-600">
-      {{ title }}
-    </h2>
-    <div class="bg-white overflow-x-auto">
-      <table class="min-w-max w-full table-auto border-gray-200 border-l border-r">
-        <thead>
-        <tr class="text-gray-600 border-b border-t border-gray-200 uppercase text-sm leading-normal">
+    <div class="tab__content bg-white rounded overflow-x-auto">
+      <table class="min-w-max w-full table-auto">
+        <tr class="text-gray-600 border-b border-gray-200 uppercase text-sm leading-normal">
           <template v-for="(field, index) in headers">
-            <th v-if="index === 0" class="py-3 px-3 text-center" :colspan="headers.length" :key="field.name">
+            <th class="py-3 px-3 text-left" :key="index">
               {{ field.label }}
             </th>
           </template>
         </tr>
-        </thead>
-        <tbody class="text-gray-600 text-sm font-light">
-        <template v-for="(row, index) in items">
-          <tr :key="index" class="border-b border-gray-200 hover:bg-gray-100 row-item">
-            <template v-for="field in headers">
-              <td :key="`${row.id}-${field.name}`" class="px-3 text-center whitespace-nowrap border-r">
+        <template v-for="(row, rowIndex) in items">
+          <tr :key="rowIndex" class="border-b border-gray-200 hover:bg-gray-100 row-item">
+            <template v-for="(field, fieldIndex) in headers">
+              <td :key="`${rowIndex}-${fieldIndex}`"
+                  class="px-3 text-left whitespace-nowrap text-gray-600 text-sm font-light">
                 <div class="content-cell">
-                  <tempate v-if="field.type === 'chips'">
+                  <template v-if="field.type === 'chips'">
                     <div class="-mx-1">
                       <template v-for="chip in row[field.name]">
                         <button :key="`${row.id}-${field.name}-${chip.id}`"
@@ -29,7 +24,7 @@
                         </button>
                       </template>
                     </div>
-                  </tempate>
+                  </template>
                   <div v-else class="font-medium p-2">
                     {{ row[field.name] }}
                   </div>
@@ -38,7 +33,6 @@
             </template>
           </tr>
         </template>
-        </tbody>
       </table>
     </div>
   </div>
@@ -47,15 +41,51 @@
 <script>
 
 export default {
-  name: "TableInformationSensor",
+  name: "GridOfDevice",
   props: {
     disabledTitle: {
       type: Boolean,
       default: () => false
     },
-    title: {
-      type: String,
-      default: () => 'RAW PUMP STATION'
+    headers: {
+      type: Array,
+      default: () => [
+        {
+          name: 'name',
+          label: 'name',
+          type: 'text'
+        },
+        {
+          name: 'status',
+          label: 'status',
+          type: 'chips'
+        },
+        {
+          name: 'process_control',
+          label: 'PROCESS CONTROL',
+          type: 'chips',
+        },
+        {
+          name: 'total_runtime',
+          label: 'Total Runtime(h)',
+          type: 'text'
+        },
+        {
+          name: 'total_trip',
+          label: 'Total Trip',
+          type: 'text'
+        },
+        {
+          name: 'sets',
+          label: 'Sets(Hz)',
+          type: 'text'
+        },
+        {
+          name: 'feedback',
+          label: 'Feedback (Hz)',
+          type: 'text'
+        }
+      ]
     },
     items: {
       type: Array,
@@ -145,48 +175,11 @@ export default {
           feedback: '45.5',
         },
       ]
-    },
-    headers: {
-      type: Array,
-      default: () => [
-        {
-          name: 'name',
-          label: 'name',
-          type: 'text'
-        },
-        {
-          name: 'status',
-          label: 'status',
-          type: 'chips'
-        },
-        {
-          name: 'process_control',
-          label: 'PROCESS CONTROL',
-          type: 'chips',
-        },
-        {
-          name: 'total_runtime',
-          label: 'Total Runtime(h)',
-          type: 'text'
-        },
-        {
-          name: 'total_trip',
-          label: 'Total Trip',
-          type: 'text'
-        },
-        {
-          name: 'sets',
-          label: 'Sets(Hz)',
-          type: 'text'
-        },
-        {
-          name: 'feedback',
-          label: 'Feedback (Hz)',
-          type: 'text'
-        }
-      ]
-    },
+    }
   },
+  mounted() {
+
+  }
 }
 </script>
 

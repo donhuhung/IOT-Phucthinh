@@ -1,23 +1,32 @@
 <template>
   <div>
-    <h3 class="inline-block text-xl font-semibold text-blue-600 tracking-tight">
-      HA THANH WATER SUPPLY FACTORY, 30.000m3 Capacity
+    <h3 class="text-sm text-h6 mb-2 capitalize">
+      Ha Thanh Water Supply Factory, 30.000m3 Capacity
     </h3>
-    <p class="mt-1 text-lg text-gray-500">MONITORING & CONTROLLING DEVICES</p>
+    <p>MONITORING & CONTROLLING DEVICES</p>
     <div class="mt-6"></div>
-    <TableInformationDevice index="1"/>
-    <div class="mt-6"></div>
-    <TableInformationDevice title="PROCESS STATION" index="2"/>
-    <div class="mt-6"></div>
-    <TableInformationDevice title="CHEMICAL STATION" index="3"/>
+    <v-expansion-panels multiple>
+      <v-expansion-panel
+          v-for="(text,i) in ['RAW PUMP STATION', 'PROCESS STATION', 'CHEMICAL STATION']"
+          :key="i"
+      >
+        <v-expansion-panel-header>
+          {{ text }}
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-divider></v-divider>
+          <GridOfDevice />
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </div>
 </template>
 
 <script>
-import TableInformationDevice from "./TableInformationDevice";
+import GridOfDevice from "./GridOfDevice";
 export default {
   name: "DeviceTemplate",
-  components: {TableInformationDevice},
+  components: {GridOfDevice},
 }
 </script>
 
