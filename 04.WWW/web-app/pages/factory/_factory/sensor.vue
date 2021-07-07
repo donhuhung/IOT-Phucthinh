@@ -1,12 +1,12 @@
 <template>
   <div>
     <h3 class="inline-block text-xl font-semibold text-blue-600 tracking-tight">
-      HA THANH WATER SUPPLY FACTORY, 30.000m3 Capacity
+      {{info.name}}
     </h3>
     <p class="mt-1 text-lg text-gray-500">MONITORING & SCALLING SENSOR</p>
     <v-btn-toggle v-model="activetab" class="border-b w-full">
       <template v-for="(tab, index) in items">
-        <v-btn :key="index" class="capitalize"
+        <v-btn :key="index" class="capitalize font-semibold text-blue-600"
                active-class="primary--text"
                style="margin-bottom: -1px;">
           <i class="fas fa-map-marked-alt mr-2"></i>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import {getListSensor} from "@/api/app"
 import GridOfSensor from "../../../components/GridOfSensor";
 
@@ -46,6 +47,15 @@ export default {
       active: false,
       activetab: 0,
       items: [],
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user:'auth/user',
+    }),
+    info() {
+      const { factory } = this.user
+      return factory || {}
     }
   },
   mounted() {

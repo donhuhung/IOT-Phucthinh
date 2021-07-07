@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
-    <table class="border border-primary w-full">
-      <tr>
+    <table class="border border-primary w-full mt-4">
+      <tr style="background-color: #f5f5f5">
         <th colspan="2" class="border-l cell-header">{{ name }} {{ symbol }}</th>
       </tr>
       <template v-for="(row, rowIndex) in dataSensor">

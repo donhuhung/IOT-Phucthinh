@@ -1,21 +1,24 @@
 <template>
   <div>
-    <h3 class="text-sm text-h6 mb-2 capitalize">
-      Ha Thanh Water Supply Factory, 30.000m3 Capacity
+    <h3 class="inline-block text-xl font-semibold text-blue-600 tracking-tight">
+      {{info.name}}
     </h3>
-    <p>MONITORING & CONTROLLING DEVICES</p>
+    <p class="mt-1 text-lg text-gray-500">MONITORING & CONTROLLING DEVICES</p>
     <div class="mt-6"></div>
     <v-expansion-panels multiple v-model="panel">
       <v-expansion-panel
-          v-for="(text,i) in ['RAW PUMP STATION', 'PROCESS STATION', 'CHEMICAL STATION']"
+          v-for="(item,i) in items"
           :key="i"
       >
         <v-expansion-panel-header>
-          {{ text }}
+          <div class="text-blue-600 font-semibold">
+            <i class="fas fa-map-marked-alt mr-2"></i>
+            {{ item.title }}
+          </div>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-divider></v-divider>
-          <GridOfDevice />
+          <GridOfDevice :dataDevice="item.data"/>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -23,13 +26,36 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import GridOfDevice from "./GridOfDevice";
+import {getListDevice} from "@/api/app"
 export default {
   name: "DeviceTemplate",
   components: {GridOfDevice},
+  computed: {
+    ...mapGetters({
+      user:'auth/user',
+    }),
+    info() {
+      const { factory } = this.user
+      return factory || {}
+    }
+  },
   data() {
     return {
-      panel: [0,1,2]
+      panel: [0,1,2],
+      items: [],
+    }
+  },
+  mounted() {
+    this.listDevice()
+  },
+  methods: {
+    getListDevice,
+    async listDevice() {
+      let factory_id = this.$route.params.factory;
+      const res = await this.getListDevice(factory_id)
+      this.items = res.data
     }
   }
 }

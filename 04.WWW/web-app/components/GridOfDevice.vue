@@ -9,28 +9,64 @@
             </th>
           </template>
         </tr>
-        <template v-for="(row, rowIndex) in items">
+        <template v-for="(row, rowIndex) in dataDevice">
           <tr :key="rowIndex" class="border-b border-gray-200 hover:bg-gray-100 row-item">
-            <template v-for="(field, fieldIndex) in headers">
-              <td :key="`${rowIndex}-${fieldIndex}`"
-                  class="px-3 text-left whitespace-nowrap text-gray-600 text-sm font-light">
-                <div class="content-cell">
-                  <template v-if="field.type === 'chips'">
-                    <div class="-mx-1">
-                      <template v-for="chip in row[field.name]">
-                        <button :key="`${row.id}-${field.name}-${chip.id}`"
-                                :class="chip.attr" class="w-20 mx-1">
-                          {{ chip.id }}
-                        </button>
-                      </template>
-                    </div>
-                  </template>
-                  <div v-else class="font-medium p-2">
-                    {{ row[field.name] }}
+            <td  class="px-3 text-left whitespace-nowrap text-gray-600 text-sm font-light">
+              <div class="content-cell">
+                <div  class="font-medium p-2">
+                  {{ row.name }} - {{row.symbol}}
+                </div>
+              </div>
+            </td>
+            <td  class="px-3 text-left whitespace-nowrap text-gray-600 text-sm font-light">
+              <div class="content-cell">
+                <div  class="font-medium p-2">
+                  <div class="-mx-1">
+                      <button  class="w-20 mx-1 bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
+                        STOP
+                      </button>
+                    <button  class="w-20 mx-1 bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+                      RUN
+                    </button>
                   </div>
                 </div>
-              </td>
-            </template>
+              </div>
+            </td>
+            <td  class="px-3 text-left whitespace-nowrap text-gray-600 text-sm font-light">
+              <div class="content-cell">
+                <div  class="font-medium p-2">
+                  {{ row.forces_control }}
+                </div>
+              </div>
+            </td>
+            <td  class="px-3 text-left whitespace-nowrap text-gray-600 text-sm font-light">
+              <div class="content-cell">
+                <div  class="font-medium p-2">
+                  {{ row.total_runtime }}
+                </div>
+              </div>
+            </td>
+            <td  class="px-3 text-left whitespace-nowrap text-gray-600 text-sm font-light">
+              <div class="content-cell">
+                <div  class="font-medium p-2">
+                  {{ row.total_trip }}
+                </div>
+              </div>
+            </td>
+            <td  class="px-3 text-left whitespace-nowrap text-gray-600 text-sm font-light">
+              <div class="content-cell">
+                <div  class="font-medium p-2">
+                  {{ row.setz }}
+                </div>
+              </div>
+            </td>
+            <td  class="px-3 text-left whitespace-nowrap text-gray-600 text-sm font-light">
+              <div class="content-cell">
+                <div  class="font-medium p-2">
+                  {{ row.feedback }}
+                </div>
+              </div>
+            </td>
           </tr>
         </template>
       </table>
@@ -43,6 +79,10 @@
 export default {
   name: "GridOfDevice",
   props: {
+    dataDevice: {
+      type: Array,
+      default: () => []
+    },
     disabledTitle: {
       type: Boolean,
       default: () => false
