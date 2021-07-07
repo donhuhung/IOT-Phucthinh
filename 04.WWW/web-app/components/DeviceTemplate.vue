@@ -15,7 +15,8 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-divider></v-divider>
-          <GridOfDevice />
+<!--          <GridOfDevice />-->
+          <GridTable />
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -24,9 +25,10 @@
 
 <script>
 import GridOfDevice from "./GridOfDevice";
+import GridTable from "./GridTable";
 export default {
   name: "DeviceTemplate",
-  components: {GridOfDevice},
+  components: {GridTable, GridOfDevice},
   data() {
     return {
       panel: [0,1,2]
