@@ -5,13 +5,13 @@
     </h3>
     <p class="mt-1 text-lg text-gray-500">MONITORING & CONTROLLING DEVICES</p>
     <div class="mt-6"></div>
-    <v-expansion-panels multiple v-model="panel">
+    <v-expansion-panels focusable hover v-model="panel">
       <v-expansion-panel
           v-for="(item,i) in items"
           :key="i"
       >
         <v-expansion-panel-header>
-          <div class="text-blue-600 font-semibold">
+          <div class="uppercase font-semibold text-blue-600">
             <i class="fas fa-map-marked-alt mr-2"></i>
             {{ item.title }}
           </div>
@@ -19,7 +19,6 @@
         <v-expansion-panel-content>
           <v-divider></v-divider>
           <GridOfDevice :dataDevice="item.data"/>
-          <!--<GridTable />-->
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>

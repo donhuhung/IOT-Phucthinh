@@ -18,6 +18,19 @@
                     <template v-if="header.name === 'name'">
                       {{ row[header.name] }} - {{row.symbol}}
                     </template>
+                    <template v-if="header.name === 'forces_control'">
+                      <div class="-mx-1">
+                        <button  class="uppercase bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
+                          Start
+                        </button>
+                        <button  class="uppercase bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+                          Stop
+                        </button>
+                        <button  class="uppercase bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
+                          Reset
+                        </button>
+                      </div>
+                    </template>
                     <template v-if="header.name === 'status'">
                       <div class="-mx-1">
                         <button  class="w-20 mx-1 bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
@@ -29,7 +42,11 @@
                       </div>
                     </template>
                     <template v-else>
-                      {{ row[header.name] }}
+                      <template v-if="header.name != 'name'">
+                          <div class="text-center">
+                            {{ row[header.name] }}
+                          </div>
+                        </template>
                     </template>
                   </div>
                 </div>
@@ -61,14 +78,14 @@ export default {
           type: 'text'
         },
         {
-          name: 'status',
-          label: 'status',
-          type: 'chips'
-        },
-        {
           name: "forces_control",
           label: 'PROCESS CONTROL',
           type: 'chips',
+        },
+        {
+          name: 'status',
+          label: 'status',
+          type: 'chips'
         },
         {
           name: "total_runtime",
