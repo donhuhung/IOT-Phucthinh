@@ -19,6 +19,7 @@
         <v-expansion-panel-content>
           <v-divider></v-divider>
           <GridOfDevice :dataDevice="item.data"/>
+          <!--<GridTable />-->
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -29,22 +30,23 @@
 import {mapGetters} from 'vuex';
 import GridOfDevice from "./GridOfDevice";
 import {getListDevice} from "@/api/app"
+import GridTable from "./GridTable";
 export default {
   name: "DeviceTemplate",
-  components: {GridOfDevice},
-  computed: {
-    ...mapGetters({
-      user:'auth/user',
-    }),
-    info() {
-      const { factory } = this.user
-      return factory || {}
-    }
-  },
+  components: {GridTable, GridOfDevice},
   data() {
     return {
-      panel: [0,1,2],
+      panel: [0],
       items: [],
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+    }),
+    info() {
+      const {factory} = this.user
+      return factory || {}
     }
   },
   mounted() {
