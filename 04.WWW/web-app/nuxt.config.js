@@ -4,9 +4,11 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
   router: {
-    mode: 'hash'
+    // mode: 'hash'
   },
-
+  loading: {
+    color: '#007BFF',
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'PhucThinh-SPA',
@@ -34,6 +36,7 @@ export default {
   plugins: [
     '~/plugins/https',
     '~/plugins/i18n',
+    '~/plugins/ui.plugin',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

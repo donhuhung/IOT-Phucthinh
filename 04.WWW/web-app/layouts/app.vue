@@ -12,7 +12,6 @@
     <v-app-bar app dense flat class="v-bar--underline">
       <TheTopBar/>
     </v-app-bar>
-<!--    <v-toolbar outlined ap></v-toolbar>-->
     <v-main class="">
       <Nuxt class="px-2"/>
     </v-main>

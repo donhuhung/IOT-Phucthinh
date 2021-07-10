@@ -1,5 +1,5 @@
 async function login( { commit }, data) {
-  return new Promise(async (resolve) =>{
+  return new Promise(async (resolve, reject) =>{
     let form = new FormData();
     form.append("ip_factory", data.ip_factory);
     form.append("username", data.username);
@@ -11,8 +11,9 @@ async function login( { commit }, data) {
       resolve(res.data);
     }catch (e) {
       commit("authError", e);
+      reject(e)
     }finally {
-
+      resolve(true)
     }
   })
 
