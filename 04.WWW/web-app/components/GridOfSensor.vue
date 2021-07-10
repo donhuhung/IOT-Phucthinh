@@ -6,11 +6,14 @@
       </tr>
       <template v-for="(row, rowIndex) in dataSensor">
         <tr :key="rowIndex">
-          <td class="border-l border-t cell-row">
+          <td class="border-l border-t cell-row"
+              :style="styleCell(row)">
             {{ row.value }}
           </td>
           <td class="border-l border-t cell-row">
-            {{ row.unit }}
+            <v-chip label v-if="row.unit" :color="units[row.unit]" dark>
+              {{ row.unit }}
+            </v-chip>
           </td>
         </tr>
       </template>
@@ -19,6 +22,43 @@
 </template>
 
 <script>
+const colors = [
+  '#E3F2FD',
+  '#BBDEFB',
+  '#90CAF9',
+  '#64B5F6',
+  '#42A5F5',
+  '#2196F3',
+  '#1E88E5',
+  '#1976D2',
+  '#1565C0',
+  '#0D47A1',
+]
+const units = {
+  'ph': '#009688',
+  'ppm': '#00BCD4',
+  'm': '#03A9F4',
+  'm3': '#673AB7',
+  '%': '#9C27B0',
+  'm3/d': '#E91E63',
+  'm3/h': '#4CAF50',
+}
+const rangeColor = (percent) => {
+  const index = Math.ceil((percent / 100) * 10)
+  const isDark = index > 4
+  return {
+    color: colors[index],
+    isDark,
+  }
+}
+function styleCell(percent) {
+  const { color, isDark } = rangeColor(percent)
+  let style = {background: color}
+  if(isDark) {
+    style['color'] = 'white'
+  }
+  return  style
+}
 export default {
   name: "GridOfSensor",
   props: {
@@ -34,6 +74,18 @@ export default {
       type: Array,
       default: () => []
     }
+  },
+  computed: {
+    units() {
+      return units
+    },
+  },
+  methods: {
+    styleCell(row) {
+      console.error(row)
+      const is_percent = row.is_percent === 'true'
+      return is_percent ? styleCell(row.value) : {}
+    },
   }
 }
 </script>

@@ -4,7 +4,7 @@
       <table class="min-w-max w-full table-auto">
         <tr class="text-gray-600 border-b border-gray-100 uppercase text-sm leading-normal">
           <template v-for="(field, index) in headers">
-            <th class="py-1 px-3 border" :key="index">
+            <th class="py-2 px-3 border" :key="index">
               <div class="text-left">
                 {{ field.label }}
               </div>
@@ -41,7 +41,7 @@
                     </div>
                   </template>
                   <template v-else>
-                    <div class="text-center">
+                    <div class="text-left">
                       {{ row[header.name] }}
                     </div>
                   </template>
