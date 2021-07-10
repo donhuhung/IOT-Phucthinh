@@ -268,7 +268,7 @@ class Device extends General {
             }
             $dataProcessStation[$i]['name'] = 'Blower Fan';
             $dataProcessStation[$i]['symbol'] = $symbol;
-            $dataProcessStation[$i]['status'] = $param;
+            $dataProcessStation[$i]['status'] = $obj->$param;
             $dataProcessStation[$i]['forces_control'] = '';
             $dataProcessStation[$i]['total_runtime'] = '';
             $dataProcessStation[$i]['total_trip'] = '';
@@ -277,7 +277,7 @@ class Device extends General {
             $dataProcessStation[$i]['id'] = 2;
         }
         $dataProcessStation[6]['name'] = 'Reaction Stirrer';
-        $dataProcessStation[6]['symbol1'] = 'MK02.01A';
+        $dataProcessStation[6]['symbol'] = 'MK02.01A';
         $dataProcessStation[6]['status'] = $obj->mk0201aP1;
         $dataProcessStation[6]['forces_control'] = '';
         $dataProcessStation[6]['total_runtime'] = '';
@@ -287,7 +287,7 @@ class Device extends General {
         $dataProcessStation[6]['id'] = 3;
 
         $dataProcessStation[7]['name'] = 'Reaction Stirrer';
-        $dataProcessStation[7]['symbol1'] = 'MK02.01B';
+        $dataProcessStation[7]['symbol'] = 'MK02.01B';
         $dataProcessStation[7]['status'] = $obj->mk0201bP1;
         $dataProcessStation[7]['forces_control'] = '';
         $dataProcessStation[7]['total_runtime'] = '';
@@ -297,7 +297,7 @@ class Device extends General {
         $dataProcessStation[7]['id'] = 4;
 
         $dataProcessStation[8]['name'] = 'Reaction Stirrer';
-        $dataProcessStation[8]['symbol1'] = 'MK02.02A';
+        $dataProcessStation[8]['symbol'] = 'MK02.02A';
         $dataProcessStation[8]['status'] = $obj->mk0202aP1;
         $dataProcessStation[8]['forces_control'] = '';
         $dataProcessStation[8]['total_runtime'] = '';
@@ -307,7 +307,7 @@ class Device extends General {
         $dataProcessStation[8]['id'] = 5;
 
         $dataProcessStation[9]['name'] = 'Reaction Stirrer';
-        $dataProcessStation[9]['symbol1'] = 'MK02.02B';
+        $dataProcessStation[9]['symbol'] = 'MK02.02B';
         $dataProcessStation[9]['status'] = $obj->mk0202bP1;
         $dataProcessStation[9]['forces_control'] = '';
         $dataProcessStation[9]['total_runtime'] = '';
@@ -317,7 +317,7 @@ class Device extends General {
         $dataProcessStation[9]['id'] = 6;
 
         $dataProcessStation[10]['name'] = 'Reaction Stirrer';
-        $dataProcessStation[10]['symbol1'] = 'MK02.03A';
+        $dataProcessStation[10]['symbol'] = 'MK02.03A';
         $dataProcessStation[10]['status'] = $obj->mk0203aP1;
         $dataProcessStation[10]['forces_control'] = '';
         $dataProcessStation[10]['total_runtime'] = '';
@@ -327,14 +327,14 @@ class Device extends General {
         $dataProcessStation[10]['id'] = 7;
 
         $dataProcessStation[11]['name'] = 'Reaction Stirrer';
-        $dataProcessStation[11]['symbol1'] = 'MK02.03B';
+        $dataProcessStation[11]['symbol'] = 'MK02.03B';
         $dataProcessStation[11]['status'] = $obj->mk0203aP1;
         $dataProcessStation[11]['forces_control'] = '';
         $dataProcessStation[11]['total_runtime'] = '';
         $dataProcessStation[11]['total_trip'] = '';
         $dataProcessStation[11]['setz'] = '';
         $dataProcessStation[11]['feedback'] = $obj->mk0203aP2;
-        $dataProcessStation[12]['id'] = 7;
+        $dataProcessStation[11]['id'] = 8;
 
         $processStation['title'] = 'Process Station';
         $processStation['data'] = $dataProcessStation;

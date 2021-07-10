@@ -21,26 +21,26 @@ class User extends General {
     public function __construct(UserModel $user) {
         $this->userRepository = $user;
     }
-    
+
     public function login(Request $request) {
         try {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $now = date('Y-m-d H:i:s');
             $ipFactory = $request->get('ip_factory');
             $username = $request->get('username');
-            $password = $request->get('password');            
+            $password = $request->get('password');
             $credentials = $request->only('username', 'password');
             if (!$token = JWTAuth::attempt($credentials)) {
                 return $this->respondWithError('Username or password incorrect', self::HTTP_INTERNAL_SERVER_ERROR);
             }
-            $user = $this->userRepository->where('username', $username)->first();            
-                        
+            $user = $this->userRepository->where('username', $username)->first();
+
             if ($user->is_activated == 0) {
                 return $this->respondWithError('The account has not been activated. Please contact the admin', self::HTTP_INTERNAL_SERVER_ERROR);
             }
-            if($user->user_factory){
+            if ($user->user_factory) {
                 $IP = $user->user_factory->ip;
-                if($ipFactory != $IP)
+                if ($ipFactory != $IP)
                     return $this->respondWithError('IP Factory incorrect', self::HTTP_INTERNAL_SERVER_ERROR);
             }
             if (Hash::check($password, $user->password)) {
@@ -64,15 +64,13 @@ class User extends General {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
         }
     }
+
     public function logout(Request $request) {
         try {
             $token = $request->header('Authorization');
             $token = str_replace('Bearer ', '', $token);
             $user = JWTAuth::authenticate($token);
-            
-            //Store Log
-            $userId = $user->id;            
-            $dataPost = $request->all();        
+
             JWTAuth::invalidate();
             return $this->respondWithMessage('Logout succesful!');
         } catch (\Exception $ex) {
@@ -83,8 +81,8 @@ class User extends General {
     public function forgotPassWord(Request $request) {
         try {
             $username = $request->get('username');
-            $user = $this->userRepository->where('username', $username)->first();                      
-            
+            $user = $this->userRepository->where('username', $username)->first();
+
             $password = HelperClass::randomString(6);
             $user->password = $password;
             $user->password_confirmation = $password;
@@ -99,10 +97,8 @@ class User extends General {
         }
     }
 
-    
     public function changePassword(Request $request) {
         try {
-            
             $newPassword = $request->get('new_password');
             $confirmPassword = $request->get('confirm_password');
             $userToken = JWTAuth::parseToken()->authenticate();
@@ -112,20 +108,37 @@ class User extends General {
             }
             $user->password = $newPassword;
             $user->password_confirmation = $confirmPassword;
-            $user->change_password = 1;
             $user->save();
-            
-            //Store Log
-            $userId = $user->id;            
-            $dataPost = $request->all();            
-            HelperClass::storeLog('Change Password', $dataPost, $userId);
 
             return $this->respondWithMessage("Change Password succesfully!");
         } catch (\Exception $ex) {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
         }
     }
-       
-    
+
+    public function updateAccount(Request $request) {
+        try {
+            $name = $request->get('name');
+            $gender = $request->get('gender');
+            $email = $request->get('email');
+            $birthday = $request->get('birthday');
+            $phone = $request->get('phone');
+            $address = $request->get('address');
+            $userToken = JWTAuth::parseToken()->authenticate();
+            $user = $this->userRepository->find($userToken->id);
+            $user->name = $name;
+            $user->gender = $gender;
+            $user->email = $email;
+            $user->username = $email;
+            $user->birthday = $birthday;
+            $user->phone = $phone;
+            $user->address = $address;
+            $user->save();
+
+            return $this->respondWithMessage("Update Account succesfully!");
+        } catch (\Exception $ex) {
+            return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
+        }
+    }
 
 }

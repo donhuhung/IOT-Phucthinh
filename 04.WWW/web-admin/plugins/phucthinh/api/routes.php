@@ -11,6 +11,10 @@ Route::group([
         Route::post('forgot-password', 'Mtech\Api\Controllers\User@forgotPassWord');
         Route::post('logout', 'Mtech\Api\Controllers\User@logout');
     });
+    Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('user')->group(function () {    
+        Route::post('change-password', 'PhucThinh\Api\Controllers\User@changePassword');        
+        Route::post('update-account', 'PhucThinh\Api\Controllers\User@updateAccount'); 
+    });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('factory')->group(function () {    
         Route::get('list', 'PhucThinh\Api\Controllers\Factory@getList');        
     });
