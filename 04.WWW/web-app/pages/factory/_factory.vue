@@ -16,7 +16,7 @@
         </template>
       </v-toolbar-items>
     </v-app-bar>
-    <div class="px-2 py-2">
+    <div>
       <nuxt-child/>
     </div>
   </div>

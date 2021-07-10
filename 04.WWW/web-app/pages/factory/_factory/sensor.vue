@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-breadcrumbs :items="links"></v-breadcrumbs>
+    <v-breadcrumbs class="px-0" :items="links"></v-breadcrumbs>
     <v-app-bar height="40px" flat>
       <v-tabs v-model="activetab">
         <template v-for="(tab, index) in items">

@@ -36,10 +36,8 @@
                     </div>
                   </template>
                   <template v-else-if="header.name === 'status'">
-                    <div>
-                      <button class="status_link">
-                        {{ isRun(row[header.name]) ? 'RUN' : isStop(row[header.name]) ? 'STOP' : '-' }}
-                      </button>
+                    <div class="text-xs text-center">
+                      {{ isRun(row[header.name]) ? 'RUN' : isStop(row[header.name]) ? 'STOP' : '-' }}
                     </div>
                   </template>
                   <template v-else>
@@ -142,7 +140,7 @@ th {
 .row-item {
   @apply border-b border-gray-100 hover:bg-gray-100;
   &.row--stop {
-    @apply bg-gray-100;
+    @apply bg-gray-50;
     .row-item--cell-status {
       @apply bg-red-200 text-red-600;
     }

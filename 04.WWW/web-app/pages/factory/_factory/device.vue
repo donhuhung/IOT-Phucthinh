@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-breadcrumbs :items="links"></v-breadcrumbs>
+    <v-breadcrumbs class="px-0" :items="links"></v-breadcrumbs>
     <DeviceTemplate/>
   </div>
 </template>
