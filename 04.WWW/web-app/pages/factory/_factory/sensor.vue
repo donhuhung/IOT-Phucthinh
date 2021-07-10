@@ -1,19 +1,18 @@
 <template>
   <div>
-    <h3 class="inline-block text-xl font-semibold text-blue-600 tracking-tight">
-      {{info.name}}
-    </h3>
-    <p class="mt-1 text-lg text-gray-500">MONITORING & SCALLING SENSOR</p>
-    <v-btn-toggle v-model="activetab" class="border-b w-full">
-      <template v-for="(tab, index) in items">
-        <v-btn :key="index" class="capitalize font-semibold text-blue-600"
-               active-class="primary--text"
-               style="margin-bottom: -1px;">
-          <i class="fas fa-map-marked-alt mr-2"></i>
-          {{ tab.title }}
-        </v-btn>
-      </template>
-    </v-btn-toggle>
+    <v-breadcrumbs :items="links"></v-breadcrumbs>
+    <v-app-bar height="40px" flat>
+      <v-tabs v-model="activetab">
+        <template v-for="(tab, index) in items">
+          <v-tab :key="index">
+            <div class="text-xs df_text">
+              {{ tab.title }}
+            </div>
+          </v-tab>
+        </template>
+      </v-tabs>
+    </v-app-bar>
+
     <div class="mt-2">
       <template v-if="items[activetab]">
         <div class="-mx-2">
@@ -51,12 +50,28 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user:'auth/user',
+      factory: 'auth/factory',
     }),
-    info() {
-      const { factory } = this.user
-      return factory || {}
-    }
+    links() {
+      const { factory } = this
+      return [
+        {
+          text: 'Factory',
+          disabled: false,
+          href: '/factory',
+        },
+        {
+          text: factory.name,
+          disabled: false,
+          href: `/factory/${factory.id}`,
+        },
+        {
+          text: 'MONITORING & SCALLING SENSOR',
+          disabled: true,
+          href: 'breadcrumbs_link_2',
+        },
+      ]
+    },
   },
   mounted() {
     this.listSensor()
@@ -75,5 +90,8 @@ export default {
 <style scoped>
 .row-item-table {
   min-width: 350px;
+}
+.df_text {
+  letter-spacing: 0px;
 }
 </style>

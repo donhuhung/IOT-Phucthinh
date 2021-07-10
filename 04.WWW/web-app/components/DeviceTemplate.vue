@@ -1,10 +1,5 @@
 <template>
   <div>
-    <h3 class="inline-block text-xl font-semibold text-blue-600 tracking-tight">
-      {{info.name}}
-    </h3>
-    <p class="mt-1 text-lg text-gray-500">MONITORING & CONTROLLING DEVICES</p>
-    <div class="mt-6"></div>
     <v-expansion-panels focusable hover v-model="panel">
       <v-expansion-panel
           v-for="(item,i) in items"
@@ -17,7 +12,6 @@
           </div>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-divider></v-divider>
           <GridOfDevice :dataDevice="item.data"/>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -37,15 +31,6 @@ export default {
     return {
       panel: [0],
       items: [],
-    }
-  },
-  computed: {
-    ...mapGetters({
-      user: 'auth/user',
-    }),
-    info() {
-      const {factory} = this.user
-      return factory || {}
     }
   },
   mounted() {

@@ -1,5 +1,4 @@
 <template>
-  <div>Detail Index</div>
 </template>
 
 <script>

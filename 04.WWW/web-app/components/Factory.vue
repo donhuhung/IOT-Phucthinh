@@ -1,10 +1,5 @@
 <template>
   <div>
-    <div class="flex items-center justify-between">
-      <h3 class="inline-block text-xl font-semibold text-blue-600 tracking-tight">
-        {{ title }}
-      </h3>
-    </div>
     <div class="box-factory">
       <div class="flex flex-wrap">
         <div class="box-factory--item" v-for="item in items">
@@ -64,7 +59,6 @@ export default {
 
 <style scoped lang="scss">
 .box-factory {
-  padding: 40px 0;
   .box-factory--item {
     //max-width: 350px;
     width: calc(100% / 4);

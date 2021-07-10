@@ -6,7 +6,7 @@ export const state = () => {
   return {
     status: '',
     token: getSESSION(SESSION.TOKEN) || '',
-    user: getSESSION(SESSION.USER) || '',
+    user: getSESSION(SESSION.USER) || {},
     groupUser:getSESSION(SESSION.GROUPUSER) || '',
   }
 }
@@ -18,7 +18,7 @@ export const getters = {
   token: (state) => state.token,
   groupUser: (state) => state.groupUser,
   isSuperAdminApp: (state) => state.groupUser === 'super_admin_app',
-
+  factory: (state) => state.user.factory,
   // isSuperAdminApp: (state) => false
 }
 

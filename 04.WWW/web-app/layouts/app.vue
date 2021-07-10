@@ -9,9 +9,6 @@
         <LinkSignOut class="px-2"/>
       </template>
     </v-navigation-drawer>
-    <v-app-bar app dense flat class="v-bar--underline">
-      <TheTopBar/>
-    </v-app-bar>
     <v-main class="">
       <Nuxt class="px-2"/>
     </v-main>
@@ -19,13 +16,12 @@
 </template>
 
 <script>
-import TheTopBar from "../components/TheTopBar";
 import SideBarNavs from "../components/SideBarNavs";
 import SideBarProfile from "../components/SideBarProfile";
 import LinkSignOut from "../components/LinkSignOut";
 
 export default {
-  components: {LinkSignOut, SideBarProfile, SideBarNavs, TheTopBar},
+  components: {LinkSignOut, SideBarProfile, SideBarNavs},
   middleware({store, redirect, route}) {
     if (!store.getters['auth/isLoggedIn']) {
       let query = {redirect: route.fullPath}

@@ -1,34 +1,32 @@
 <template>
-  <v-row no-gutters class="h-full">
-    <v-col cols="2" class="min-h-full" v-if="isSuperAdminApp">
-      <v-sheet class="nav-detail-factory" height="100%">
-        <v-list nav dense>
-          <template v-for="(nav, index) in navs">
-            <v-list-item link :key="index" :to="`/factory/${$route.params.factory}/${nav.to.path}`">
-              <v-list-item-icon>
-                <v-img :src="`${nav.icon}`"/>
-              </v-list-item-icon>
-              <v-list-item-title>{{ $t(nav.label) }}</v-list-item-title>
-            </v-list-item>
-          </template>
-        </v-list>
-      </v-sheet>
-    </v-col>
-    <v-col class="col" :class="{'col-10': isSuperAdminApp, 'col-12': !isSuperAdminApp}">
-      <v-sheet
-        min-height="70vh" class="content-detail-factory">
-        <div class="px-2 py-2">
-          <nuxt-child/>
-        </div>
-      </v-sheet>
-    </v-col>
-  </v-row>
+  <div>
+    <v-app-bar app flat dense height="40px">
+      <div>
+        <v-icon small>mdi-home</v-icon>
+        <span class="primary--text lighten-4 text-xs font-bold">{{ factory.name }}</span>
+      </div>
+      <v-spacer/>
+      <v-toolbar-items>
+        <template v-for="(nav, index) in navs">
+          <v-btn active-class="text-primary"
+                 :key="index" class="link_item" :to="`/factory/${$route.params.factory}/${nav.to.path}`" depressed>
+            <img :src="`${nav.icon}`" alt="" class="icon_nav"/>
+            {{ $t(nav.label) }}
+          </v-btn>
+        </template>
+      </v-toolbar-items>
+    </v-app-bar>
+    <div class="px-2 py-2">
+      <nuxt-child/>
+    </div>
+  </div>
 </template>
 
 <script>
 
 import jsonMixin from "../../mixins/jsonMixin";
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
+
 export default {
   mixins: [jsonMixin],
   data() {
@@ -38,7 +36,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isSuperAdminApp: 'auth/isSuperAdminApp'
+      isSuperAdminApp: 'auth/isSuperAdminApp',
+      factory: 'auth/factory',
     }),
 
   },
@@ -49,13 +48,26 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .nav-detail-factory {
   //position: sticky;
   //top: 60px;
   border-right: solid 1px rgba(0, 0, 0, 0.12);
 }
+
 .content-detail-factory {
   //border-left: solid 1px rgba(0, 0, 0, 0.12);
+}
+
+.link_item {
+  .icon_nav {
+    display: block;
+    margin-right: 10px;
+  }
+
+  .v-btn__content {
+    letter-spacing: 0px;
+    text-transform: capitalize;
+  }
 }
 </style>

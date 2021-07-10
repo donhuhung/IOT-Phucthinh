@@ -71,7 +71,7 @@
                   <td class="pl-2 font-light">{{userInfo.address}}</td>
                 </tr>
               </table>
-              <router-link to="/update-info" class="update-info">
+              <router-link :to="`${rootFactory}/update-account`" class="update-info">
                 <i class="far fa-user-circle"></i>
                 Cập nhật thông tin cá nhân
               </router-link>
@@ -92,7 +92,7 @@
                     </tr>
                   </table>
                 </div>
-                <router-link to="/change-password" class="btn-change-password">
+                <router-link :to="`${rootFactory}/update-password`" class="btn-change-password">
                   <i class="fas fa-unlock-alt"></i>
                   Thay đổi mật khẩu
                 </router-link>
@@ -118,6 +118,9 @@ export default {
     ...mapGetters({
       user:'auth/user',
     }),
+    rootFactory() {
+      return `/factory/${this.$route.params.factory}`
+    }
   },
   mounted() {
     this.getUserInfo();
