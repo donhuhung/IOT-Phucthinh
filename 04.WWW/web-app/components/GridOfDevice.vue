@@ -4,7 +4,7 @@
       <table class="min-w-max w-full table-auto">
         <tr class="text-gray-600 border-b border-gray-200 uppercase text-sm leading-normal">
           <template v-for="(field, index) in headers">
-            <th class="py-3 px-3 text-center" :key="index">
+            <th class="py-3 px-3 text-center border" :key="index">
               {{ field.label }}
             </th>
           </template>
@@ -12,41 +12,42 @@
         <template v-for="(row, rowIndex) in dataDevice">
           <tr :key="rowIndex" class="border-b border-gray-200 hover:bg-gray-100 row-item">
             <template v-for="(header, cellIndex) in headers">
-              <td :key="`${rowIndex}-${cellIndex}`" class="px-3 text-left whitespace-nowrap text-gray-600 text-sm font-light">
+              <td :key="`${rowIndex}-${cellIndex}`"
+                  class="row-item--cell">
                 <div class="content-cell">
-                  <div  class="font-medium p-2">
+                  <div class="font-medium p-2">
                     <template v-if="header.name === 'name'">
-                      {{ row[header.name] }} - {{row.symbol}}
+                      {{ row[header.name] }} - {{ row.symbol }}
                     </template>
                     <template v-if="header.name === 'forces_control'">
                       <div class="-mx-1">
-                        <button  class="uppercase bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
+                        <button class="uppercase bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
                           Start
                         </button>
-                        <button  class="uppercase bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+                        <button class="uppercase bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
                           Stop
                         </button>
-                        <button  class="uppercase bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
+                        <button class="uppercase bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
                           Reset
                         </button>
                       </div>
                     </template>
                     <template v-if="header.name === 'status'">
                       <div class="-mx-1">
-                        <button  class="w-20 mx-1 bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
+                        <button class="w-20 mx-1 bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
                           STOP
                         </button>
-                        <button  class="w-20 mx-1 bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+                        <button class="w-20 mx-1 bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
                           RUN
                         </button>
                       </div>
                     </template>
                     <template v-else>
                       <template v-if="header.name != 'name'">
-                          <div class="text-center">
-                            {{ row[header.name] }}
-                          </div>
-                        </template>
+                        <div class="text-center">
+                          {{ row[header.name] }}
+                        </div>
+                      </template>
                     </template>
                   </div>
                 </div>
@@ -116,8 +117,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .row-item:nth-child(even) {
   @apply bg-gray-100;
+}
+
+th {
+  font-size: 10px;
+}
+
+.row-item {
+  .row-item--cell {
+    @apply border px-3 text-left whitespace-nowrap text-gray-600 text-sm;
+    @apply font-light;
+  }
 }
 </style>

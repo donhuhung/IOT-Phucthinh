@@ -1,26 +1,21 @@
 <template>
   <div>
-    <v-expansion-panels focusable hover v-model="panel">
-      <v-expansion-panel
-          v-for="(item,i) in items"
-          :key="i"
-      >
-        <v-expansion-panel-header>
-          <div class="uppercase font-semibold text-blue-600">
-            <i class="fas fa-map-marked-alt mr-2"></i>
-            {{ item.title }}
-          </div>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <GridOfDevice :dataDevice="item.data"/>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
+    <v-app-bar height="40px" flat>
+      <v-tabs v-model="panel">
+        <template v-for="(tab, index) in items">
+          <v-tab :key="index">
+            <div class="text-xs df_text">
+              {{ tab.title }}
+            </div>
+          </v-tab>
+        </template>
+      </v-tabs>
+    </v-app-bar>
+    <GridOfDevice :dataDevice="dataDevice" />
   </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
 import GridOfDevice from "./GridOfDevice";
 import {getListDevice} from "@/api/app"
 import GridTable from "./GridTable";
@@ -29,12 +24,18 @@ export default {
   components: {GridTable, GridOfDevice},
   data() {
     return {
-      panel: [0],
+      panel: 0,
       items: [],
     }
   },
   mounted() {
     this.listDevice()
+  },
+  computed: {
+    dataDevice() {
+      const { panel, items } = this
+      return items[panel] ? items[panel].data : []
+    }
   },
   methods: {
     getListDevice,

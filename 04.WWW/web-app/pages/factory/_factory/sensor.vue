@@ -12,8 +12,7 @@
         </template>
       </v-tabs>
     </v-app-bar>
-
-    <div class="mt-2">
+    <div class="">
       <template v-if="items[activetab]">
         <div class="-mx-2">
           <div class="flex flex-wrap">
