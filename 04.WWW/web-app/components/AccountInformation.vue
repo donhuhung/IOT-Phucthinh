@@ -22,6 +22,28 @@
           <div>
             <div class="box-info mt-4">
               <h4 class="inline-block text-xl font-semibold text-blue-600 tracking-tight capitalize pb-4">
+                <i class="fas fa-sign-in-alt "></i>
+                Thông tin đăng nhập
+              </h4>
+              <table>
+                <tr class="lg:h-10">
+                  <td class="text-green-pt font-bold-italic">IP Đăng Nhập:</td>
+                  <td class="pl-2 font-light">{{userInfo.factory?userInfo.factory.ip:''}}</td>
+                </tr>
+                <tr class="lg:h-10">
+                  <td class="text-green-pt font-bold-italic">Nhà máy:</td>
+                  <td class="pl-2 font-light">{{userInfo.factory?userInfo.factory.name:''}}</td>
+                </tr>
+                <tr class="lg:h-10">
+                  <td class="text-green-pt font-bold-italic">Mật khẩu:</td>
+                  <td class="pl-2 font-light">
+                    <input type="password" value="matkhaudangnhap"/>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="box-info">
+              <h4 class="inline-block text-xl font-semibold text-blue-600 tracking-tight capitalize pb-4">
                 <i class="far fa-id-card pr-3"></i>
                 Thông tin chung
               </h4>
@@ -52,32 +74,6 @@
               <router-link to="/update-info" class="update-info">
                 <i class="far fa-user-circle"></i>
                 Cập nhật thông tin cá nhân
-              </router-link>
-            </div>
-            <div class="box-info">
-              <h4 class="inline-block text-xl font-semibold text-blue-600 tracking-tight capitalize pb-4">
-                <i class="fas fa-sign-in-alt "></i>
-                Thông tin đăng nhập
-              </h4>
-              <table>
-                <tr class="lg:h-10">
-                  <td class="text-green-pt font-bold-italic">IP Đăng Nhập:</td>
-                  <td class="pl-2 font-light">{{userInfo.factory?userInfo.factory.ip:''}}</td>
-                </tr>
-                <tr class="lg:h-10">
-                  <td class="text-green-pt font-bold-italic">Nhà máy:</td>
-                  <td class="pl-2 font-light">{{userInfo.factory?userInfo.factory.name:''}}</td>
-                </tr>
-                <tr class="lg:h-10">
-                  <td class="text-green-pt font-bold-italic">Mật khẩu:</td>
-                  <td class="pl-2 font-light">
-                    <input type="password" value="matkhaudangnhap"/>
-                  </td>
-                </tr>
-              </table>
-              <router-link to="/update-info" class="update-info">
-                <i class="fas fa-sign-in-alt"></i>
-                Cập nhật thông tin đăng nhập
               </router-link>
             </div>
             <div class="box-info">
