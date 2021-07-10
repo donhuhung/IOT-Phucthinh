@@ -1,55 +1,52 @@
 <template>
   <div>
-    <div class="tab__content bg-white rounded overflow-x-auto">
+    <div class="tab__content bg-white overflow-x-auto">
       <table class="min-w-max w-full table-auto">
-        <tr class="text-gray-600 border-b border-gray-200 uppercase text-sm leading-normal">
+        <tr class="text-gray-600 border-b border-gray-100 uppercase text-sm leading-normal">
           <template v-for="(field, index) in headers">
-            <th class="py-3 px-3 text-center border" :key="index">
-              {{ field.label }}
+            <th class="py-1 px-3 border" :key="index">
+              <div class="text-left">
+                {{ field.label }}
+              </div>
             </th>
           </template>
         </tr>
         <template v-for="(row, rowIndex) in dataDevice">
-          <tr :key="rowIndex" class="border-b border-gray-200 hover:bg-gray-100 row-item">
+          <tr :key="rowIndex" class="row-item" :class="row.status | statusRow">
             <template v-for="(header, cellIndex) in headers">
               <td :key="`${rowIndex}-${cellIndex}`"
-                  class="row-item--cell">
-                <div class="content-cell">
-                  <div class="font-medium p-2">
-                    <template v-if="header.name === 'name'">
+                  class="row-item--cell h-full" :class="`row-item--cell-${header.name}`">
+                <div class="content-cell h-full">
+                  <template v-if="header.name === 'name'">
+                    <div class="text-show">
                       {{ row[header.name] }} - {{ row.symbol }}
-                    </template>
-                    <template v-if="header.name === 'forces_control'">
-                      <div class="-mx-1">
-                        <button class="uppercase bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
-                          Start
-                        </button>
-                        <button class="uppercase bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
-                          Stop
-                        </button>
-                        <button class="uppercase bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-                          Reset
-                        </button>
-                      </div>
-                    </template>
-                    <template v-if="header.name === 'status'">
-                      <div class="-mx-1">
-                        <button class="w-20 mx-1 bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-                          STOP
-                        </button>
-                        <button class="w-20 mx-1 bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
-                          RUN
-                        </button>
-                      </div>
-                    </template>
-                    <template v-else>
-                      <template v-if="header.name != 'name'">
-                        <div class="text-center">
-                          {{ row[header.name] }}
-                        </div>
-                      </template>
-                    </template>
-                  </div>
+                    </div>
+                  </template>
+                  <template v-else-if="header.name === 'forces_control'">
+                    <div class="py-1">
+                      <button class="uppercase bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
+                        Start
+                      </button>
+                      <button class="uppercase bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+                        Stop
+                      </button>
+                      <button class="uppercase bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
+                        Reset
+                      </button>
+                    </div>
+                  </template>
+                  <template v-else-if="header.name === 'status'">
+                    <div>
+                      <button class="status_link">
+                        {{ isRun(row[header.name]) ? 'RUN' : isStop(row[header.name]) ? 'STOP' : '-' }}
+                      </button>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <div class="text-center">
+                      {{ row[header.name] }}
+                    </div>
+                  </template>
                 </div>
               </td>
             </template>
@@ -62,9 +59,24 @@
 </template>
 
 <script>
+const isRun = (status) => {
+  return [2,4,40].includes(status)
+}
+const isStop = (status) => {
+  return [0].includes(status)
+}
 
 export default {
   name: "GridOfDevice",
+  filters: {
+    statusRow(status) {
+      return {
+        'row--stop': isStop(status),
+        'row--run': isRun(status),
+      }
+    },
+
+  },
   props: {
     dataDevice: {
       type: Array,
@@ -111,15 +123,16 @@ export default {
       ]
     }
   },
-  mounted() {
-
-  }
+  methods: {
+    isRun,
+    isStop,
+  },
 }
 </script>
 
 <style scoped lang="scss">
 .row-item:nth-child(even) {
-  @apply bg-gray-100;
+  //@apply bg-gray-100;
 }
 
 th {
@@ -127,9 +140,34 @@ th {
 }
 
 .row-item {
-  .row-item--cell {
-    @apply border px-3 text-left whitespace-nowrap text-gray-600 text-sm;
-    @apply font-light;
+  @apply border-b border-gray-100 hover:bg-gray-100;
+  &.row--stop {
+    @apply bg-gray-100;
+    .row-item--cell-status {
+      @apply bg-red-200 text-red-600;
+    }
   }
+  &.row--run {
+    @apply bg-green-100;
+    .row-item--cell {
+      .text-show {
+        @apply text-green-600;
+      }
+    }
+    .row-item--cell-status {
+      @apply bg-green-200 text-green-600;
+    }
+  }
+  .row-item--cell {
+    @apply border border-gray-200 px-3 text-left whitespace-nowrap text-gray-600 text-sm h-full;
+    @apply font-light;
+    .content-cell {
+      font-weight: bold;
+    }
+  }
+}
+.status_link {
+  @apply w-full py-1 px-3 text-xs h-full block;
+
 }
 </style>
