@@ -5,7 +5,7 @@
         <tr class="text-gray-600 border-b border-gray-100 uppercase text-sm leading-normal">
           <template v-for="(field, index) in headers">
             <th class="py-2 px-3 border" :key="index">
-              <div class="text-left">
+              <div class="text-center">
                 {{ field.label }}
               </div>
             </th>
@@ -41,7 +41,7 @@
                     </div>
                   </template>
                   <template v-else>
-                    <div class="text-left">
+                    <div class="text-center">
                       {{ row[header.name] }}
                     </div>
                   </template>

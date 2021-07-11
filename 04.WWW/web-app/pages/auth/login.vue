@@ -44,8 +44,8 @@ export default {
   layout: 'auth',
   data() {
     return {
-      username: 'adminhathanh@mail1.com',
-      password: '12345678',
+      username: 'phucthinh@gmail.com',
+      password: '123456789',
       ip_factory: '197.168.0.12',
       error_login: false,
       submitting: false,
@@ -93,12 +93,12 @@ export default {
       }
     },
     authSuccess() {
-      /*let path;
+      let path;
       if(this.$route.query['redirect'] !='/')
         path = this.$route.query['redirect']
       else
-        path = this.defaultPage*/
-      const path = this.$route.query['redirect'] || this.defaultPage
+        path = this.defaultPage
+      //const path = this.$route.query['redirect'] || this.defaultPage
       this.$router.replace({path})
     },
   }
