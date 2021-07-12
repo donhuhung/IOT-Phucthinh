@@ -4,7 +4,7 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
   router: {
-    // mode: 'hash'
+    mode: 'hash'
   },
   loading: {
     color: '#007BFF',

@@ -1,5 +1,5 @@
 <template>
-  <div style="position: fixed; right: 0px; top: 0px;" @click="$emit('confirm')">
+  <div style="position: fixed; right: 0px; top: 30px;" @click="$emit('confirm')">
     <template v-for="(ms, index) in items">
       <v-alert color="error" :key="index" text>
         {{ message }}

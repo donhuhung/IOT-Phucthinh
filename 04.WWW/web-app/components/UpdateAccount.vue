@@ -19,7 +19,6 @@
           >
             <v-text-field
               v-model="name"
-              :counter="10"
               :error-messages="errors"
               label="Họ & tên"
               prepend-icon="mdi-account"
@@ -29,15 +28,12 @@
 
           <validation-provider
             v-slot="{ errors }"
-            name="phoneNumber"
-            :rules="{
-          required: true,
-          digits: 12,
-        }"
+            name="Số điện thoại"
+            rules="required"
           >
             <v-text-field
               v-model="phoneNumber"
-              :counter="7"
+              :counter="12"
               :error-messages="errors"
               label="Số Điện thoại"
               prepend-icon="mdi-cellphone"
@@ -74,6 +70,21 @@
 
           <validation-provider
             v-slot="{ errors }"
+            name="Ngày sinh"
+            rules="required"
+          >
+            <v-text-field
+              v-model="birthday"
+              :error-messages="errors"
+              label="Ngày sinh"
+              type="date"
+              prepend-icon="mdi-calendar-today"
+              required
+            ></v-text-field>
+          </validation-provider>
+
+          <validation-provider
+            v-slot="{ errors }"
             rules="required"
             name="Giới tính"
           >
@@ -83,7 +94,7 @@
               value="Nam"
               label="Nam"
               type="checkbox"
-              required
+              checked="gender=='Nam'?'true':'false'"
             ></v-checkbox>
             <v-checkbox
               v-model="gender"
@@ -91,7 +102,7 @@
               value="Nữ"
               label="Nữ"
               type="checkbox"
-              required
+              checked="gender=='Nữ'?'true':'false'"
             ></v-checkbox>
           </validation-provider>
           <v-btn
@@ -112,8 +123,10 @@
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex';
+import {updateAccount} from "../api/auth";
 import { required, email } from 'vee-validate/dist/rules';
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate';
+import {getListFactory} from "../api/app";
 setInteractionMode('eager')
 extend('required', {
   ...required,
@@ -135,26 +148,67 @@ export default {
       phoneNumber: '',
       email: '',
       gender:'',
-      address:''
+      address:'',
+      birthday:''
     }
   },
   computed: {
     ...mapGetters({
       user:'auth/user',
+      statusAPI:'auth/status_api',
+      messageError:'auth/messageError'
     }),
   },
   mounted() {
+    this.getInfoUser();
   },
   methods: {
-    submit () {
-      this.$refs.observer.validate()
+    getInfoUser(){
+      this.name = this.user.name;
+      this.email = this.user.email;
+      this.phoneNumber = this.user.phone;
+      this.address = this.user.address;
+      this.birthday = this.user.birthday;
+      this.gender = this.user.gender;
+    },
+    updateAccount,
+    async submit (e) {
+      const isValid = this.$refs.observer.validate();
+      if (isValid) {
+        let name = this.name;
+        let email = this.email;
+        let phone = this.phoneNumber;
+        let address = this.address;
+        let birthday = this.birthday;
+        let gender = this.gender;
+        const res = await this.updateAccount({name,gender,email,phone, birthday, address});
+        if(this.statusAPI === 'error'){
+          const message = this.messageError;
+          this.showDialog(message)
+        }
+        else{
+          const message = 'Cập nhật thông tin thành công!';
+          this.showDialog(message)
+          this.redirectSetting()
+        }
+      }
+    },
+    showDialog(message){
+      this.$nuxt.$emit('success', message)
+      this.$notify({message})
+    },
+    redirectSetting() {
+      const path = '/factory/'+this.$route.params.factory+'/setting'
+      setTimeout(() => this.$router.replace({path})
+        , 2000);
     },
     clear () {
       this.name = ''
       this.phoneNumber = ''
       this.email = ''
-      this.select = null
-      this.checkbox = null
+      this.gender = null
+      this.address = ''
+      this.birthday = ''
       this.$refs.observer.reset()
     },
   }

@@ -8,6 +8,8 @@ export const state = () => {
     token: getSESSION(SESSION.TOKEN) || '',
     user: getSESSION(SESSION.USER) || {},
     groupUser:getSESSION(SESSION.GROUPUSER) || '',
+    messageError:'',
+    status_api:'',
   }
 }
 
@@ -19,6 +21,9 @@ export const getters = {
   groupUser: (state) => state.groupUser,
   isSuperAdminApp: (state) => state.groupUser === 'super_admin_app',
   factory: (state) => state.user.factory,
+  dataStatus: (state) => state.status,
+  messageError: (state) => state.messageError,
+  status_api: (state) => state.status_api,
   // isSuperAdminApp: (state) => false
 }
 
@@ -56,6 +61,14 @@ export const mutations = {
   },
   authError(state) {
     state.status = 'error'
+  },
+  authErrorAPI(state, data) {
+    state.status_api = 'error'
+    state.messageError = data.message
+  },
+  authSuccessAPI(state, data){
+    state.status_api = 'success'
+    state.messageError = ''
   },
   logout(state) {
     state.status = ''

@@ -1,6 +1,6 @@
 <template>
   <v-list dense>
-    <v-list-item class="px-2" to="/">
+    <v-list-item class="px-2">
       <v-list-item-avatar>
         <v-img src="/img/logo-phuc-thinh-22.png"></v-img>
       </v-list-item-avatar>

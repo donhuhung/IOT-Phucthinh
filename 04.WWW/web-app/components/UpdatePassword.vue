@@ -15,11 +15,10 @@
           <validation-provider
             v-slot="{ errors }"
             name="Mật khẩu mới"
-            rules="required"
+            rules="required|min:8"
           >
             <v-text-field
               v-model="new_password"
-              :counter="10"
               :error-messages="errors"
               label="Mật khẩu mới"
               prepend-icon="mdi-lock"
@@ -30,11 +29,10 @@
           <validation-provider
             v-slot="{ errors }"
             name="Nhập lại mật khẩu"
-            rules="required|confirmed:new_password"
+            rules="required|min:8"
           >
             <v-text-field
               v-model="confirm_password"
-              :counter="10"
               :error-messages="errors"
               label="Nhập lại mật khẩu"
               required
@@ -59,16 +57,17 @@
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex';
-import { required, confirmed } from 'vee-validate/dist/rules';
+import { required, min } from 'vee-validate/dist/rules';
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate';
+import {changePassword} from "../api/auth";
 setInteractionMode('eager')
 extend('required', {
   ...required,
   message: 'Vui lòng nhập {_field_}',
 })
-extend('confirmed', {
-  ...confirmed,
-  message: '{_field_} không trùng khớp',
+extend('min', {
+  ...min,
+  message: '{_field_} tối thiểu từ {length} kí tự trợ lên',
 })
 export default {
   components: {
@@ -85,20 +84,43 @@ export default {
   computed: {
     ...mapGetters({
       user:'auth/user',
+      statusAPI:'auth/status_api',
+      messageError:'auth/messageError'
     }),
   },
   mounted() {
   },
   methods: {
-    submit () {
-      this.$refs.observer.validate()
+    changePassword,
+    async submit () {
+      const isValid = this.$refs.observer.validate();
+      if (isValid) {
+        let new_password = this.new_password;
+        let confirm_password = this.confirm_password;
+        const res = await this.changePassword({new_password,confirm_password});
+        if(this.statusAPI === 'error'){
+          const message = this.messageError;
+          this.showDialog(message)
+        }
+        else{
+          const message = 'Cập nhật mật khẩu thành công!';
+          this.showDialog(message)
+          this.redirectSetting()
+        }
+      }
+    },
+    showDialog(message){
+      this.$nuxt.$emit('success', message)
+      this.$notify({message})
+    },
+    redirectSetting() {
+      const path = '/factory/'+this.$route.params.factory+'/setting'
+      setTimeout(() => this.$router.replace({path})
+        , 2000);
     },
     clear () {
-      this.name = ''
-      this.phoneNumber = ''
-      this.email = ''
-      this.select = null
-      this.checkbox = null
+      this.new_password = ''
+      this.confirm_password = ''
       this.$refs.observer.reset()
     },
   }

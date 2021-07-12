@@ -1,3 +1,4 @@
+import { getSESSION, removeSESSION, SESSION, setSESSION } from '~/helpers/sessions'
 async function login( { commit }, data) {
   return new Promise(async (resolve, reject) =>{
     let form = new FormData();
@@ -33,10 +34,21 @@ async function resetPassword(data) {
 }
 
 async function changePassword(data) {
-  let form = new FormData();
-  form.append("current_password", data.current_password);
-  form.append("new_password", data.new_password);
-  return await this.$axios.$post('/api/v1/user/changePassword', form);
+  return new Promise(async (resolve, reject) =>{
+    let form = new FormData();
+    form.append("new_password", data.new_password);
+    form.append("confirm_password", data.confirm_password);
+    try {
+      const res = await this.$axios.$post('/api/v1/user/change-password', form);
+      this.$store.commit("auth/authSuccessAPI", res);
+      resolve(res);
+    }catch (e) {
+      const {data = {}} = e.response
+      this.$store.commit("auth/authErrorAPI", data);
+    }finally {
+      resolve(true)
+    }
+  })
 }
 
 async function logout(code) {
@@ -44,14 +56,27 @@ async function logout(code) {
 }
 
 async function updateAccount(data) {
-  let form = new FormData();
-  form.append("username", data.username);
-  form.append("email", data.email);
-  form.append("gender", data.gender);
-  form.append("dob", data.dob);
-  form.append("zil_address", data.zil_address);
-  form.append("eth_address", data.eth_address);
-  return await this.$axios.$post('/api/v1/user/edit', form);
+  return new Promise(async (resolve, reject) =>{
+    let form = new FormData();
+    form.append("name", data.name);
+    form.append("email", data.email);
+    form.append("gender", data.gender);
+    form.append("birthday", data.birthday);
+    form.append("phone", data.phone);
+    form.append("address", data.address);
+    try {
+      const res = await this.$axios.$post('/api/v1/user/update-account', form);
+      setSESSION(SESSION.USER,res.data)
+      this.$store.commit("auth/authSuccessAPI", res);
+      resolve(res.data);
+    }catch (e) {
+      const {data = {}} = e.response
+      this.$store.commit("auth/authErrorAPI", data);
+      reject(e)
+    }finally {
+      resolve(true)
+    }
+  })
 }
 
 export {
@@ -59,5 +84,6 @@ export {
   logout,
   forgotPassword,
   resetPassword,
-  changePassword
+  changePassword,
+  updateAccount
 };
