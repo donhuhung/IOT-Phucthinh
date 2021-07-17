@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app flat dense height="40px">
+    <v-app-bar app dense height="40px">
       <div>
         <v-icon small>mdi-home</v-icon>
         <span class="primary--text lighten-4 text-xs font-bold">{{ factory.name }}</span>
@@ -9,8 +9,10 @@
       <v-toolbar-items>
         <template v-for="(nav, index) in navs">
           <v-btn active-class="text-primary"
-                 :key="index" class="link_item" :to="`/factory/${$route.params.factory}/${nav.to.path}`" depressed>
-            <img :src="`${nav.icon}`" alt="" class="icon_nav"/>
+                 :key="index"
+                 class="link_item"
+                 :to="`/factory/${$route.params.factory}/${nav.to.path}`" depressed>
+            <img :src="`${nav.icon}`" width="15" alt="" class="icon_nav"/>
             {{ $t(nav.label) }}
           </v-btn>
         </template>

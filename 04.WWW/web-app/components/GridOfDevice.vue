@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="space-y-2">
     <div class="tab__content bg-white overflow-x-auto">
       <table class="min-w-max w-full table-auto">
-        <tr class="text-gray-600 border-b border-gray-100 uppercase text-sm leading-normal">
+        <tr class="text-gray-600 uppercase text-sm leading-normal">
           <template v-for="(field, index) in headers">
-            <th class="py-2 px-3 border" :key="index">
-              <div class="text-center">
+            <th :key="index">
+              <div>
                 {{ field.label }}
               </div>
             </th>
@@ -15,8 +15,8 @@
           <tr :key="rowIndex" class="row-item" :class="row.status | statusRow">
             <template v-for="(header, cellIndex) in headers">
               <td :key="`${rowIndex}-${cellIndex}`"
-                  class="row-item--cell h-full" :class="`row-item--cell-${header.name}`">
-                <div class="content-cell h-full">
+                  class="row-item--cell" :class="`row-item--cell-${header.name}`">
+                <div class="content-cell">
                   <template v-if="header.name === 'name'">
                     <div class="text-show">
                       {{ row[header.name] }} - {{ row.symbol }}
@@ -24,24 +24,27 @@
                   </template>
                   <template v-else-if="header.name === 'forces_control'">
                     <div class="py-1">
-                      <button class="uppercase bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
-                        Start
-                      </button>
-                      <button class="uppercase bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
-                        Stop
-                      </button>
-                      <button class="uppercase bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-                        Reset
-                      </button>
+                      <v-btn class="link_item" small shaped color="primary">
+                        START
+                      </v-btn>
+                      <v-btn class="link_item" small shaped color="red" dark>
+                        STOP
+                      </v-btn>
+                      <v-btn class="link_item" small shaped color="orange" dark>
+                        RESET
+                      </v-btn>
                     </div>
                   </template>
                   <template v-else-if="header.name === 'status'">
-                    <div class="text-xs text-center">
+                    <v-btn label
+                           block
+                           depressed
+                           :color="isRun(row[header.name]) ? 'green' : ''" dark>
                       {{ isRun(row[header.name]) ? 'RUN' : isStop(row[header.name]) ? 'STOP' : '-' }}
-                    </div>
+                    </v-btn>
                   </template>
                   <template v-else>
-                    <div class="text-center">
+                    <div class="text-show">
                       {{ row[header.name] }}
                     </div>
                   </template>
@@ -51,14 +54,13 @@
           </tr>
         </template>
       </table>
-
     </div>
   </div>
 </template>
 
 <script>
 const isRun = (status) => {
-  return [2,4,40].includes(status)
+  return [2, 4, 40].includes(status)
 }
 const isStop = (status) => {
   return [0].includes(status)
@@ -73,7 +75,6 @@ export default {
         'row--run': isRun(status),
       }
     },
-
   },
   props: {
     dataDevice: {
@@ -129,43 +130,56 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.row-item:nth-child(even) {
-  //@apply bg-gray-100;
+.row-item:nth-of-type(odd) {
+  background: #e9e9e9;
 }
 
 th {
   font-size: 10px;
+  background: #2980b9;
+  color: white;
+  text-align: left;
+  padding: 6px 12px;
 }
 
 .row-item {
-  @apply border-b border-gray-100 hover:bg-gray-100;
+  //@apply border-b border-gray-100 hover:bg-gray-100;
+  background: #f6f6f6;
+
   &.row--stop {
-    @apply bg-gray-50;
     .row-item--cell-status {
-      @apply bg-red-200 text-red-600;
+      //@apply bg-red-200 text-red-600;
     }
   }
+
   &.row--run {
-    @apply bg-green-100;
+    //@apply bg-blue-100;
     .row-item--cell {
       .text-show {
-        @apply text-green-600;
       }
     }
+
     .row-item--cell-status {
-      @apply bg-green-200 text-green-600;
+      //@apply bg-green-200 text-green-600;
     }
   }
+
   .row-item--cell {
-    @apply border border-gray-200 px-3 text-left whitespace-nowrap text-gray-600 text-sm h-full;
-    @apply font-light;
+    //@apply border border-gray-200;
+    @apply text-left whitespace-nowrap h-full;
+    padding: 6px 12px;
+    font-size: 14px;
+
     .content-cell {
-      font-weight: bold;
+      //font-weight: bold;
+      .text-show {
+        font-size: 14px;
+      }
     }
   }
 }
+
 .status_link {
   @apply w-full py-1 px-3 text-xs h-full block;
-
 }
 </style>
