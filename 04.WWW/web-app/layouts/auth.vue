@@ -36,23 +36,4 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-  font-family: RobotoMedium;
-  src: url(~/assets/fonts/Roboto-Medium.ttf);
-}
-@font-face {
-  font-family: RobotoRegular;
-  src: url(~/assets/fonts/Roboto-Regular.ttf);
-}
-@font-face {
-  font-family: RobotoBold;
-  src: url(~/assets/fonts/Roboto-Bold.ttf);
-}
-html{
-  font-family: 'RobotoRegular',sans-serif;
-  font-size: 16px;
-}
-.snack_custom {
-  border: solid 1px red;
-}
 </style>

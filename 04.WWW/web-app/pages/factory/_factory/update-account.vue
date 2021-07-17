@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <UpdateAccount/>
+  <div class="h-screen">
+    <v-container fluid>
+      <UpdateAccount/>
+    </v-container>
   </div>
 </template>
 

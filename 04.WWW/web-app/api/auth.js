@@ -1,4 +1,5 @@
 import { getSESSION, removeSESSION, SESSION, setSESSION } from '~/helpers/sessions'
+import { axios } from '../plugins/https'
 async function login( { commit }, data) {
   return new Promise(async (resolve, reject) =>{
     let form = new FormData();
@@ -65,13 +66,9 @@ async function updateAccount(data) {
     form.append("phone", data.phone);
     form.append("address", data.address);
     try {
-      const res = await this.$axios.$post('/api/v1/user/update-account', form);
-      setSESSION(SESSION.USER,res.data)
-      this.$store.commit("auth/authSuccessAPI", res);
+      const res = await axios.post('/api/v1/user/update-account', form);
       resolve(res.data);
     }catch (e) {
-      const {data = {}} = e.response
-      this.$store.commit("auth/authErrorAPI", data);
       reject(e)
     }finally {
       resolve(true)

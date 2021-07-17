@@ -1,132 +1,120 @@
 <template>
   <div>
-    <div>
-      <v-img class="md:w-1/6 m-auto block" src="/img/logo-phuc-thinh-22.png"></v-img>
-    </div>
-    <h3 class="text-center text-xl font-semibold text-blue-600 tracking-tight">
-      Cập nhật thông tin cá nhân
-    </h3>
-    <div class="box-form m-auto">
-      <validation-observer
-        ref="observer"
-        v-slot="{ invalid }"
-      >
-        <form @submit.prevent="submit">
-          <validation-provider
-            v-slot="{ errors }"
-            name="Họ & tên"
-            rules="required"
-          >
-            <v-text-field
-              v-model="name"
-              :error-messages="errors"
-              label="Họ & tên"
-              prepend-icon="mdi-account"
-              required
-            ></v-text-field>
-          </validation-provider>
+    <v-card width="450px" :disabled="submitting" :loading="submitting">
+      <v-card-title class="text-center">Cập nhật thông tin cá nhân</v-card-title>
+      <v-card-text>
+        <validation-observer
+          ref="observer"
+          v-slot="{ invalid }"
+        >
+          <form @submit.prevent="submit">
+            <validation-provider
+              v-slot="{ errors }"
+              name="Họ & tên"
+              rules="required"
+            >
+              <v-text-field
+                v-model="name"
+                :error-messages="errors"
+                label="Họ & tên"
+                prepend-icon="mdi-account"
+                required
+              ></v-text-field>
+            </validation-provider>
 
-          <validation-provider
-            v-slot="{ errors }"
-            name="Số điện thoại"
-            rules="required"
-          >
-            <v-text-field
-              v-model="phoneNumber"
-              :counter="12"
-              :error-messages="errors"
-              label="Số Điện thoại"
-              prepend-icon="mdi-cellphone"
-              required
-            ></v-text-field>
-          </validation-provider>
-          <validation-provider
-            v-slot="{ errors }"
-            name="email"
-            rules="required|email"
-          >
-            <v-text-field
-              v-model="email"
-              :error-messages="errors"
-              label="E-mail"
-              prepend-icon="mdi-email"
-              required
-            ></v-text-field>
-          </validation-provider>
+            <validation-provider
+              v-slot="{ errors }"
+              name="Số điện thoại"
+              rules="required"
+            >
+              <v-text-field
+                v-model="phoneNumber"
+                :counter="12"
+                :error-messages="errors"
+                label="Số Điện thoại"
+                prepend-icon="mdi-cellphone"
+                required
+              ></v-text-field>
+            </validation-provider>
+            <validation-provider
+              v-slot="{ errors }"
+              name="email"
+              rules="required|email"
+            >
+              <v-text-field
+                v-model="email"
+                :error-messages="errors"
+                label="E-mail"
+                prepend-icon="mdi-email"
+                required
+              ></v-text-field>
+            </validation-provider>
 
-          <validation-provider
-            v-slot="{ errors }"
-            name="Địa chỉ"
-            rules="required"
-          >
-            <v-text-field
-              v-model="address"
-              :error-messages="errors"
-              label="Địa chỉ"
-              prepend-icon="mdi-office-building-marker"
-              required
-            ></v-text-field>
-          </validation-provider>
+            <validation-provider
+              v-slot="{ errors }"
+              name="Địa chỉ"
+              rules="required"
+            >
+              <v-text-field
+                v-model="address"
+                :error-messages="errors"
+                label="Địa chỉ"
+                prepend-icon="mdi-office-building-marker"
+                required
+              ></v-text-field>
+            </validation-provider>
 
-          <validation-provider
-            v-slot="{ errors }"
-            name="Ngày sinh"
-            rules="required"
-          >
-            <v-text-field
-              v-model="birthday"
-              :error-messages="errors"
-              label="Ngày sinh"
-              type="date"
-              prepend-icon="mdi-calendar-today"
-              required
-            ></v-text-field>
-          </validation-provider>
+            <validation-provider
+              v-slot="{ errors }"
+              name="Ngày sinh"
+              rules="required"
+            >
+              <v-text-field
+                v-model="birthday"
+                :error-messages="errors"
+                label="Ngày sinh"
+                type="date"
+                prepend-icon="mdi-calendar-today"
+                required
+              ></v-text-field>
+            </validation-provider>
 
-          <validation-provider
-            v-slot="{ errors }"
-            rules="required"
-            name="Giới tính"
-          >
-            <v-checkbox
-              v-model="gender"
-              :error-messages="errors"
-              value="Nam"
-              label="Nam"
-              type="checkbox"
-              checked="gender=='Nam'?'true':'false'"
-            ></v-checkbox>
-            <v-checkbox
-              v-model="gender"
-              :error-messages="errors"
-              value="Nữ"
-              label="Nữ"
-              type="checkbox"
-              checked="gender=='Nữ'?'true':'false'"
-            ></v-checkbox>
-          </validation-provider>
-          <v-btn
-            class="mr-4"
-            type="submit"
-            :disabled="invalid"
-          >
-            Cập nhật
-          </v-btn>
-          <v-btn @click="clear">
-            Xóa
-          </v-btn>
-        </form>
-      </validation-observer>
-    </div>
-
+            <validation-provider
+              v-slot="{ errors }"
+              rules="required"
+              name="Giới tính"
+            >
+              <v-radio-group v-model="gender" label="Giới tính"
+                             prepend-icon="fa-transgender">
+                <v-radio :ripple="false" value="Nam" name="gender" label="Nam"/>
+                <v-radio :ripple="false" value="Nữ" name="gender" label="Nữ"/>
+              </v-radio-group>
+            </validation-provider>
+            <div class="flex space-x-2">
+              <v-spacer />
+              <v-btn @click="clear" width="120">
+                Xóa
+              </v-btn>
+              <v-btn color="primary"
+                     width="120"
+                     type="submit"
+                     :disabled="invalid">
+                Cập nhật
+              </v-btn>
+              <v-spacer />
+            </div>
+          </form>
+        </validation-observer>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import {mapGetters} from 'vuex';
 import {updateAccount} from "../api/auth";
-import { required, email } from 'vee-validate/dist/rules';
-import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate';
-import {getListFactory} from "../api/app";
+import {required, email} from 'vee-validate/dist/rules';
+import {extend, ValidationObserver, ValidationProvider, setInteractionMode} from 'vee-validate';
+
 setInteractionMode('eager')
 extend('required', {
   ...required,
@@ -147,23 +135,23 @@ export default {
       name: '',
       phoneNumber: '',
       email: '',
-      gender:'',
-      address:'',
-      birthday:''
+      gender: '',
+      address: '',
+      birthday: '',
+      submitting: false,
+
     }
   },
   computed: {
     ...mapGetters({
-      user:'auth/user',
-      statusAPI:'auth/status_api',
-      messageError:'auth/messageError'
+      user: 'auth/user',
     }),
   },
   mounted() {
     this.getInfoUser();
   },
   methods: {
-    getInfoUser(){
+    getInfoUser() {
       this.name = this.user.name;
       this.email = this.user.email;
       this.phoneNumber = this.user.phone;
@@ -171,8 +159,7 @@ export default {
       this.birthday = this.user.birthday;
       this.gender = this.user.gender;
     },
-    updateAccount,
-    async submit (e) {
+    async submit(e) {
       const isValid = this.$refs.observer.validate();
       if (isValid) {
         let name = this.name;
@@ -181,28 +168,32 @@ export default {
         let address = this.address;
         let birthday = this.birthday;
         let gender = this.gender;
-        const res = await this.updateAccount({name,gender,email,phone, birthday, address});
-        if(this.statusAPI === 'error'){
-          const message = this.messageError;
-          this.showDialog(message)
+
+        this.submitting = true
+        try {
+          const res = await updateAccount({name, gender, email, phone, birthday, address});
+          this.$store.commit("auth/updateUser", res.data);
+          const text = 'Cập nhật thông tin thành công!'
+          this.$notify({text, title: this.$t('layout.titleMess'), type: 'notify_success',})
+        } catch (e) {
+          // const {data = {}} = e.response
+          this.$notify({text: e.message, title: this.$t('layout.titleMess'), type: 'error'})
+        } finally {
+
         }
-        else{
-          const message = 'Cập nhật thông tin thành công!';
-          this.showDialog(message)
-          this.redirectSetting()
-        }
+        this.submitting = false
       }
     },
-    showDialog(message){
-      this.$nuxt.$emit('success', message)
-      this.$notify({message})
-    },
     redirectSetting() {
-      const path = '/factory/'+this.$route.params.factory+'/setting'
-      setTimeout(() => this.$router.replace({path})
-        , 2000);
+      const route = {
+        name: 'factory-factory-setting',
+        params: {
+          factory: this.$route.params.factory
+        }
+      }
+      this.$router.replace(route)
     },
-    clear () {
+    clear() {
       this.name = ''
       this.phoneNumber = ''
       this.email = ''
@@ -215,9 +206,4 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.box-form{
-  padding: 30px;
-  width: 70%;
-  margin-top: 30px;
-}
 </style>

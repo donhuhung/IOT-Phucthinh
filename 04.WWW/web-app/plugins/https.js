@@ -1,16 +1,16 @@
 import axiosRetry from 'axios-retry'
+let axios = require('axios').default
+
 export default function (
-  {$axios, route, store, redirect, error },
-  inject
-) {
+  {$axios, route, store, redirect, error}) {
   // const source = $axios.CancelToken.source()
-  axiosRetry($axios, { retries: 2 })
+  axiosRetry($axios, {retries: 2})
   $axios.onError((errors) => {
     if (errors.response.status === 401) {
       store.dispatch('auth/logout').then(() => {
         console.log('401', route)
-        let query = { redirect: route.fullPath }
-        redirect({ path: '/auth/login', query })
+        let query = {redirect: route.fullPath}
+        redirect({path: '/auth/login', query})
       })
     }
     if (errors.response.status === 500) {
@@ -51,4 +51,8 @@ export default function (
       `color: ${color}; font-size: x-large`
     )
   })
+  axios = $axios
 }
+export { axios }
+
+

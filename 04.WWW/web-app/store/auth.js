@@ -53,10 +53,8 @@ export const mutations = {
     state.token = data.access_token
     state.user = data
     state.groupUser = data.group[0].code
-    //this.$axios.setToken(`Bearer ${token}`)
      this.$axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`
     setSESSION(SESSION.TOKEN, data.access_token)
-    setSESSION(SESSION.GROUPUSER,data.group[0].code)
     setSESSION(SESSION.USER,data)
   },
   authError(state) {
@@ -69,6 +67,10 @@ export const mutations = {
   authSuccessAPI(state, data){
     state.status_api = 'success'
     state.messageError = ''
+  },
+  updateUser(state, data) {
+    state.user = data
+    setSESSION(SESSION.USER, data)
   },
   logout(state) {
     state.status = ''

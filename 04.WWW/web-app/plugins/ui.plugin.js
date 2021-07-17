@@ -1,9 +1,11 @@
 import Vue from 'vue'
-import Dialog from "./Dialog.vue";
+import Notifications from 'vue-notification'
+
+// import Dialog from "./Dialog.vue";
 export default function ({$axios, route, store, redirect, error, app }, inject) {
 
 }
-const Notify = {}
+/*const Notify = {}
 Notify.install = function(Vue) {
   const notify = ({title, message}) => {
     return new Promise((resolve, reject) => {
@@ -37,6 +39,7 @@ Notify.install = function(Vue) {
   }
   Vue.prototype.$notify = notify
 }
-Vue.use(Notify, {})
+Vue.use(Notify, {})*/
+Vue.use(Notifications)
 
 
