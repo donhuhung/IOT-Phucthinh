@@ -74,7 +74,7 @@ class User extends General {
             JWTAuth::invalidate();
             return $this->respondWithMessage('Logout succesful!');
         } catch (\Exception $ex) {
-            return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
+            return $this->respondWithError($ex->getMessage(), self::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -93,7 +93,7 @@ class User extends General {
 
             return $this->respondWithMessage("Reset Password succesfully!");
         } catch (\Exception $ex) {
-            return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
+            return $this->respondWithError($ex->getMessage(), self::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -104,15 +104,15 @@ class User extends General {
             $userToken = JWTAuth::parseToken()->authenticate();
             $user = $this->userRepository->find($userToken->id);
             if ($newPassword != $confirmPassword) {
-                return $this->respondWithError('Password confirmation does not match!', self::HTTP_BAD_REQUEST);
+                return $this->respondWithError('Mật khẩu nhập lại không trùng khớp!', self::HTTP_INTERNAL_SERVER_ERROR);
             }
             $user->password = $newPassword;
             $user->password_confirmation = $confirmPassword;
             $user->save();
 
-            return $this->respondWithMessage("Change Password succesfully!");
+            return $this->respondWithMessage("Cập nhật mật khẩu thành công!");
         } catch (\Exception $ex) {
-            return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
+            return $this->respondWithError($ex->getMessage(), self::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -134,8 +134,8 @@ class User extends General {
             $user->phone = $phone;
             $user->address = $address;
             $user->save();
-
-            return $this->respondWithMessage("Update Account succesfully!");
+			$results = fractal($user, new UserTransformer())->toArray();
+			return $this->respondWithSuccess($results, "Update Account succesfully!");
         } catch (\Exception $ex) {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
         }

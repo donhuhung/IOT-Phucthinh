@@ -21,8 +21,11 @@ Route::group([
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('sensor')->group(function () {    
         Route::post('list', 'PhucThinh\Api\Controllers\Device@getListSenSor');        
     });
-    Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('device')->group(function () {    
-        Route::post('list', 'PhucThinh\Api\Controllers\Device@getListDevice');        
+    Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('motor')->group(function () {    
+        Route::post('list', 'PhucThinh\Api\Controllers\Device@getListMotor');        
+    });
+    Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('valve')->group(function () {    
+        Route::post('list', 'PhucThinh\Api\Controllers\Device@getListValve');        
     });
     
 });

@@ -19,6 +19,7 @@ class UserTransformer extends Fractal\TransformerAbstract {
 			'phone' => $user->phone,
 			'address' => $user->address,
 			'birthday' => $user->birthday,
+			'gender' => $user->gender,
             'group' => $user->groups,
             'last_login' => Carbon::parse($user->last_login)->format('Y-m-d H:i:s'),
             'createdAt' => Carbon::parse($user->created_at)->format('Y-m-d'),
