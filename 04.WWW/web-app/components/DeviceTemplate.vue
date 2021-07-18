@@ -24,7 +24,7 @@
       </v-tabs>
     </v-app-bar>
     <template v-if="dataDevice.length">
-      <GridOfDevice :dataDevice="dataDevice"/>
+      <GridOfDevice :data-device="dataDevice" :is-valve="isValve"/>
     </template>
     <template v-else>
       <v-card flat color="blue-grey lighten-5">
@@ -61,32 +61,33 @@ export default {
     }
   },
   mounted() {
-    this.listMotor();
+    this.listMotor()
     this.listValve()
   },
   computed: {
     dataDevice() {
-      const {panel, itemMotors, itemValves, child} = this
-      const isMotor = child === 0
+      const {panel, itemMotors, itemValves, isValve} = this
       // todo: handle items with type device: valve || motor
       const itemsMotor = itemMotors[panel] ? itemMotors[panel].data : []
       const itemsValve = itemValves[panel] ? itemValves[panel].data : []
-      return isMotor ? itemsMotor : itemsValve
+      return isValve ? itemsValve : itemsMotor
+    },
+    factoryId() {
+      return this.$route.params.factory
+    },
+    isValve() {
+      return this.child === 1
     }
   },
   methods: {
-    getListMotor,
     async listMotor() {
-      let factory_id = this.$route.params.factory;
-      const res = await this.getListMotor(factory_id)
-      this.itemMotors = res.data
+      const res = await getListMotor(this.factoryId)
+      this.itemMotors = res.data.data
     },
 
-    getListValve,
     async listValve() {
-      let factory_id = this.$route.params.factory;
-      const res = await this.getListValve(factory_id)
-      this.itemValves = res.data
+      const res = await getListValve(this.factoryId)
+      this.itemValves = res.data.data
     }
 
   }

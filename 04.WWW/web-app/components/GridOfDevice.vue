@@ -3,7 +3,7 @@
     <div class="tab__content bg-white overflow-x-auto">
       <table class="min-w-max w-full table-auto">
         <tr class="text-gray-600 uppercase text-sm leading-normal">
-          <template v-for="(field, index) in headers">
+          <template v-for="(field, index) in fieldsCombined">
             <th :key="index">
               <div>
                 {{ field.label }}
@@ -13,7 +13,7 @@
         </tr>
         <template v-for="(row, rowIndex) in dataDevice">
           <tr :key="rowIndex" class="row-item" :class="row.status | statusRow">
-            <template v-for="(header, cellIndex) in headers">
+            <template v-for="(header, cellIndex) in fieldsCombined">
               <td :key="`${rowIndex}-${cellIndex}`"
                   class="row-item--cell" :class="`row-item--cell-${header.name}`">
                 <div class="content-cell">
@@ -29,20 +29,24 @@
                   </template>
                   <template v-else-if="header.name === 'status_name'">
                     <div class="py-1">
-                      <v-btn class="link_item text-center" small shaped color="primary">
+                      <v-btn class="link_item text-center" small shaped
+                             :color="row.status | statusOperating">
                         {{ row[header.name] }}
                       </v-btn>
                     </div>
                   </template>
                   <template v-else-if="header.name === 'operation_status_name'">
                     <div class="py-1">
-                      <v-btn class="link_item" small shaped color="primary">
+                      <v-btn class="link_item"
+                             small
+                             shaped
+                             :color="row.operation_status | statusOperating">
                         {{ row[header.name] }}
                       </v-btn>
                     </div>
                   </template>
                   <template v-else>
-                    <div class="text-show text-center">
+                    <div class="text-show">
                       {{ row[header.name] }}
                     </div>
                   </template>
@@ -57,6 +61,8 @@
 </template>
 
 <script>
+import { getOperatingStatusMotorValve } from "../constants"
+
 const isRun = (status) => {
   return [2, 4, 40].includes(status)
 }
@@ -73,15 +79,24 @@ export default {
         'row--run': isRun(status),
       }
     },
+    statusOperating(status) {
+      const [val, label, color] =  getOperatingStatusMotorValve(status)
+      return color
+    }
   },
   props: {
     dataDevice: {
       type: Array,
       default: () => []
     },
-    headers: {
-      type: Array,
-      default: () => [
+    isValve: {
+      type: Boolean,
+      default: () => false,
+    }
+  },
+  computed: {
+    fieldsMotor() {
+      return [
         {
           name: 'no',
           label: 'No',
@@ -118,6 +133,49 @@ export default {
           type: 'text'
         }
       ]
+    },
+    fieldsValve() {
+      return [
+        {
+          name: 'no',
+          label: 'No',
+          type: 'text'
+        },
+        {
+          name: 'name',
+          label: 'name',
+          type: 'text'
+        },
+        {
+          name: 'status_name',
+          label: 'Status',
+          type: 'chips'
+        },
+        {
+          name: "operation_status_name",
+          label: 'Operating Status',
+          type: 'chips',
+        },
+        {
+          name: "totalfc",
+          label: 'Total FC',
+          type: 'text'
+        },
+        {
+          name: 'totalfo',
+          label: 'Total FO',
+          type: 'text'
+        },
+        {
+          name: "totaloc",
+          label: 'Total OC',
+          type: 'text'
+        }
+      ]
+    },
+    fieldsCombined() {
+      const { isValve, fieldsMotor, fieldsValve } = this
+      return isValve ? fieldsValve : fieldsMotor
     }
   },
   methods: {

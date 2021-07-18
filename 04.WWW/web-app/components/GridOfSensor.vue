@@ -82,7 +82,6 @@ export default {
   },
   methods: {
     styleCell(row) {
-      console.error(row)
       const is_percent = row.is_percent === 'true'
       return is_percent ? styleCell(row.value) : {}
     },

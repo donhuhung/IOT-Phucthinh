@@ -76,11 +76,10 @@ export default {
     this.listSensor()
   },
   methods: {
-    getListSensor,
     async listSensor() {
       let factory_id = this.$route.params.factory;
-      const res = await this.getListSensor(factory_id)
-      this.items = res.data
+      const res = await getListSensor(factory_id)
+      this.items = res.data.data
     }
   }
 }

@@ -9,7 +9,7 @@
         <LinkSignOut class="px-2"/>
       </template>
     </v-navigation-drawer>
-    <v-main class="">
+    <v-main>
       <Nuxt class="px-2"/>
     </v-main>
     <notifications :speed="500" />
