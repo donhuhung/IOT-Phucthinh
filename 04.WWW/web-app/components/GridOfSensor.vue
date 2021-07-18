@@ -6,11 +6,11 @@
       </tr>
       <template v-for="(row, rowIndex) in dataSensor">
         <tr :key="rowIndex">
-          <td class="border-l border-t cell-row"
+          <td class="border-l border-t cell-row text-center"
               :style="styleCell(row)">
             {{ row.value }}
           </td>
-          <td class="border-l border-t cell-row">
+          <td class="border-l border-t cell-row text-center">
             <v-chip label v-if="row.unit" :color="units[row.unit]" dark>
               {{ row.unit }}
             </v-chip>

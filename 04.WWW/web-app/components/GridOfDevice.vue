@@ -17,34 +17,32 @@
               <td :key="`${rowIndex}-${cellIndex}`"
                   class="row-item--cell" :class="`row-item--cell-${header.name}`">
                 <div class="content-cell">
+                  <template v-if="header.name === 'no'">
+                    <div class="text-show">
+                      {{ rowIndex + 1}}
+                    </div>
+                  </template>
                   <template v-if="header.name === 'name'">
                     <div class="text-show">
                       {{ row[header.name] }} - {{ row.symbol }}
                     </div>
                   </template>
-                  <template v-else-if="header.name === 'forces_control'">
+                  <template v-else-if="header.name === 'status_name'">
                     <div class="py-1">
-                      <v-btn class="link_item" small shaped color="primary">
-                        START
-                      </v-btn>
-                      <v-btn class="link_item" small shaped color="red" dark>
-                        STOP
-                      </v-btn>
-                      <v-btn class="link_item" small shaped color="orange" dark>
-                        RESET
+                      <v-btn class="link_item text-center" small shaped color="primary">
+                        {{ row[header.name] }}
                       </v-btn>
                     </div>
                   </template>
-                  <template v-else-if="header.name === 'status'">
-                    <v-btn label
-                           block
-                           depressed
-                           :color="isRun(row[header.name]) ? 'green' : ''" dark>
-                      {{ isRun(row[header.name]) ? 'RUN' : isStop(row[header.name]) ? 'STOP' : '-' }}
-                    </v-btn>
+                  <template v-else-if="header.name === 'operation_status_name'">
+                    <div class="py-1">
+                      <v-btn class="link_item" small shaped color="primary">
+                        {{ row[header.name] }}
+                      </v-btn>
+                    </div>
                   </template>
                   <template v-else>
-                    <div class="text-show">
+                    <div class="text-show text-center">
                       {{ row[header.name] }}
                     </div>
                   </template>
@@ -85,38 +83,38 @@ export default {
       type: Array,
       default: () => [
         {
+          name: 'no',
+          label: 'No',
+          type: 'text'
+        },
+        {
           name: 'name',
           label: 'name',
           type: 'text'
         },
         {
-          name: "forces_control",
-          label: 'PROCESS CONTROL',
-          type: 'chips',
-        },
-        {
-          name: 'status',
-          label: 'status',
+          name: 'status_name',
+          label: 'Status',
           type: 'chips'
         },
         {
-          name: "total_runtime",
-          label: 'Total Runtime(h)',
+          name: "operation_status_name",
+          label: 'Operating Status',
+          type: 'chips',
+        },
+        {
+          name: "totalovl",
+          label: 'Total OVL',
           type: 'text'
         },
         {
-          name: 'total_trip',
-          label: 'Total Trip',
+          name: 'totalnrf',
+          label: 'Total NRF',
           type: 'text'
         },
         {
-          name: "setz",
-          label: 'Sets(Hz)',
-          type: 'text'
-        },
-        {
-          name: 'feedback',
-          label: 'Feedback (Hz)',
+          name: "totalrt",
+          label: 'Total RT',
           type: 'text'
         }
       ]

@@ -2,7 +2,7 @@
   <div class="space-y-2">
     <v-app-bar height="40px" flat>
       <v-tabs v-model="panel">
-        <template v-for="(tab, index) in items">
+        <template v-for="(tab, index) in itemMotors">
           <v-tab :key="index">
             <div class="text-xs df_text">
               {{ tab.title }}
@@ -45,7 +45,7 @@
 
 <script>
 import GridOfDevice from "./GridOfDevice";
-import {getListDevice} from "@/api/app"
+import {getListMotor,getListValve} from "@/api/app"
 import GridTable from "./GridTable";
 
 export default {
@@ -54,31 +54,41 @@ export default {
   data() {
     return {
       panel: 0,
-      items: [],
+      itemMotors: [],
+      itemValves: [],
       children: ['motor', 'valve'],
       child: 0,
     }
   },
   mounted() {
-    this.listDevice()
+    this.listMotor();
+    this.listValve()
   },
   computed: {
     dataDevice() {
-      const {panel, items, child} = this
+      const {panel, itemMotors, itemValves, child} = this
       const isMotor = child === 0
       // todo: handle items with type device: valve || motor
-      const itemsMotor = items[panel] ? items[panel].data : []
-      const itemsValve = []
+      const itemsMotor = itemMotors[panel] ? itemMotors[panel].data : []
+      const itemsValve = itemValves[panel] ? itemValves[panel].data : []
       return isMotor ? itemsMotor : itemsValve
     }
   },
   methods: {
-    getListDevice,
-    async listDevice() {
+    getListMotor,
+    async listMotor() {
       let factory_id = this.$route.params.factory;
-      const res = await this.getListDevice(factory_id)
-      this.items = res.data
+      const res = await this.getListMotor(factory_id)
+      this.itemMotors = res.data
+    },
+
+    getListValve,
+    async listValve() {
+      let factory_id = this.$route.params.factory;
+      const res = await this.getListValve(factory_id)
+      this.itemValves = res.data
     }
+
   }
 }
 </script>
