@@ -22,17 +22,23 @@ export default {
         {
           text: 'Factory',
           disabled: false,
-          href: '/factory',
+          link: true,
+          exact: true,
+          to: '/factory',
         },
         {
           text: factory.name,
           disabled: false,
-          href: `/factory/${factory.id}`,
+          link: true,
+          exact: true,
+          to: `/factory/${factory.id}`,
         },
         {
           text: 'MONITORING & CONTROLLING DEVICES',
           disabled: true,
-          href: 'breadcrumbs_link_2',
+          link: true,
+          exact: true,
+          to: 'breadcrumbs_link_2',
         },
       ]
     },

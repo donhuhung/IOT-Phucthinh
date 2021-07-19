@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-app-bar app dense height="40px">
-      <div>
-        <v-icon small>mdi-home</v-icon>
-        <span class="primary--text lighten-4 text-xs font-bold">{{ factory.name }}</span>
-      </div>
+    <v-app-bar app dense>
+      <v-app-bar-nav-icon>
+        <v-icon>mdi-home</v-icon>
+      </v-app-bar-nav-icon>
+      <v-app-bar-title class="primary--text">{{ factory.name }}</v-app-bar-title>
       <v-spacer/>
       <v-toolbar-items>
         <template v-for="(nav, index) in navs">

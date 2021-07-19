@@ -1,7 +1,8 @@
 <template>
   <v-list nav dense>
     <template v-for="(nav, index) in navsCombined">
-      <v-list-item link :key="index" :to="isSuperAdminApp?`/factory`:`/factory/${$route.params.factory}/${nav.to.path}`">
+      <v-list-item link :key="index"
+                   :to="isSuperAdminApp?`/factory`:`/factory/${factoryId}/${nav.to.path}`">
         <v-list-item-icon>
           <v-img :src="`${nav.icon}`"/>
         </v-list-item-icon>
@@ -25,6 +26,7 @@ export default {
   computed: {
     ...mapGetters({
       isSuperAdminApp:'auth/isSuperAdminApp',
+      factory:'auth/factory',
     }),
     navsCombined() {
       const { isSuperAdminApp, navs } = this
@@ -33,6 +35,9 @@ export default {
       }
       return navs.filter(_filter)
     },
+    factoryId() {
+      return this.factory.factory_id
+    }
   },
   async mounted() {
     const navs = await this.fetchNavs()
