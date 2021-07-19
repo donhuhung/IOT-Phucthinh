@@ -13,12 +13,16 @@ class Device extends General {
         
     }
 
+    //API Get List Sensor
     public function getListSenSor(Request $request) {
         try {
             $factoryID = $request->get('factory_id');
 
             //Get Station
             $stations = $this->getStation($factoryID);
+
+            //Get Info Select
+            $selects = $this->getInfoSelect($factoryID);
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -27,7 +31,7 @@ class Device extends General {
                 CURLOPT_SSL_VERIFYPEER => false, //Bỏ kiểm SSL
             ));
             $resp = curl_exec($curl);
-            $return = $this->parseContentSensor($resp, $stations);
+            $return = $this->parseContentSensor($resp, $stations, $selects);
             curl_close($curl);
             return $this->respondWithSuccess($return, "Get List Sensor succesful!");
         } catch (\Exception $ex) {
@@ -35,6 +39,7 @@ class Device extends General {
         }
     }
 
+    //API Get List Motor
     public function getListMotor(Request $request) {
         try {
             $factoryID = $request->get('factory_id');
@@ -52,12 +57,13 @@ class Device extends General {
             $return = $this->parseContentMotor($resp, $stations);
 
             curl_close($curl);
-            return $this->respondWithSuccess($return, "Get List Device succesful!");
+            return $this->respondWithSuccess($return, "Get List Motor succesful!");
         } catch (\Exception $ex) {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
         }
     }
-    
+
+    //API Get List Valve
     public function getListValve(Request $request) {
         try {
             $factoryID = $request->get('factory_id');
@@ -81,7 +87,36 @@ class Device extends General {
         }
     }
 
-    private function parseContentSensor($data, $stations) {
+    //API Update Setpoint Sensor
+    public function updateSetPoint(Request $request) {
+        try {
+            $factoryID = $request->get('id_set_point');
+            $fieldSetPoint = $request->get('field_set_point');
+            $valueSetPoint = $request->get('value_set_point');
+            $now = date('Y-m-d H:i:s');
+            $curl = curl_init();
+
+            $data = array("id" => (int)$factoryID, "timeStamp" => $now, $fieldSetPoint => (int)$valueSetPoint);            
+            $postdata = json_encode($data);
+
+            curl_setopt_array($curl, array(
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_POST => 1,
+                CURLOPT_POSTFIELDS => $postdata,
+                CURLOPT_URL => 'http://115.78.130.60:41440/api/SelectsTableSensors',
+                CURLOPT_HTTPHEADER => array('Content-Type:application/json'),
+                CURLOPT_SSL_VERIFYPEER => false, //Bỏ kiểm SSL
+            ));
+            curl_exec($curl);
+
+            curl_close($curl);
+            return $this->respondWithMessage("Update Setpoint succesful!");
+        } catch (\Exception $ex) {
+            return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
+        }
+    }
+
+    private function parseContentSensor($data, $stations, $selectTable) {
         //Get Info Device
         $deviceName = $this->getDeviceName();
 
@@ -90,6 +125,7 @@ class Device extends General {
         $objData = $objData[0];
         $objStation = json_decode($stations);
         $deviceName = json_decode($deviceName);
+        $selectTable = json_decode($selectTable);
         $return = [];
 
         //Parse Data               
@@ -110,14 +146,18 @@ class Device extends General {
                     for ($k = 0; $k < 3; $k++) {
                         $isPercent = 'false';
                         $field = "sensor" . $numberStart . "Value" . ($k + 1);
+                        $fieldSetPoint = "sensor" . $numberStart . "SetPer";
                         $paramSensor = "sensorUnit" . ($k + 1);
                         if ($deviceName[$numberStart - 1]->$paramSensor == '%')
                             $isPercent = 'true';
-                        $dataSensor[$k]['value'] = trim($objData->$field);
-                        $dataSensor[$k]['unit'] = trim($deviceName[$numberStart - 1]->$paramSensor);
+                        $dataSensor[$k]['value'] = isset($objData->$field) ? trim($objData->$field) : 0;
+                        $dataSensor[$k]['unit'] = isset($deviceName[$numberStart - 1]->$paramSensor) ? trim($deviceName[$numberStart - 1]->$paramSensor) : '';
                         $dataSensor[$k]['is_percent'] = $isPercent;
-                        $dataSensor[$k]['set_point'] = trim($deviceName[$numberStart - 1]->setpoint);
-                        $dataSensor[$k]['field'] = $field;
+                        $dataSensor[$k]['set_point'] = isset($selectTable->$fieldSetPoint) ? trim($selectTable->$fieldSetPoint) : 0;
+                        $dataSensor[$k]['edit_set_point'] = trim($deviceName[$numberStart - 1]->setpoint) == 1 ? 'true' : 'false';
+                        $dataSensor[$k]['field_set_point'] = $fieldSetPoint;
+                        $dataSensor[$k]['id_set_point'] = trim($selectTable->id);
+                        ;
                     }
                     $dataStationArr[$j]['data_sensor'] = $dataSensor;
                     $numberStart++;
@@ -177,7 +217,7 @@ class Device extends General {
         }
         return $return;
     }
-    
+
     private function parseContentValve($data, $stations) {
         //Get Info Device
         $deviceName = $this->getDeviceName();
@@ -237,17 +277,17 @@ class Device extends General {
                 break;
             case 2:
                 $result = "Manu";
-                break;  
+                break;
             case 3:
                 $result = "Auto";
-                break;  
+                break;
             case 4:
                 $result = "Udf";
-                break;  
+                break;
         }
         return $result;
     }
-    
+
     private function parseOperationStatusMotor($status) {
         $result;
         switch ($status) {
@@ -259,23 +299,23 @@ class Device extends General {
                 break;
             case 2:
                 $result = "Run";
-                break;  
+                break;
             case 3:
                 $result = "F.OVL";
-                break;  
+                break;
             case 4:
                 $result = "F.NRF";
-                break;          
+                break;
             case 5:
                 $result = "Ack";
-                break;  
+                break;
             case 6:
                 $result = "Udf";
-                break;  
+                break;
         }
         return $result;
     }
-    
+
     private function parseOperationStatusValve($status) {
         $result;
         switch ($status) {
@@ -287,22 +327,22 @@ class Device extends General {
                 break;
             case 2:
                 $result = "Mid";
-                break;  
+                break;
             case 3:
                 $result = "Open";
-                break;  
+                break;
             case 4:
                 $result = "F.O";
-                break;          
+                break;
             case 5:
                 $result = "F.C";
-                break;  
+                break;
             case 6:
                 $result = "Ack";
-                break;  
+                break;
             case 7:
                 $result = "Udf";
-                break;  
+                break;
         }
         return $result;
     }
@@ -348,6 +388,23 @@ class Device extends General {
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_URL => 'http://115.78.130.60:41440/api/TableMotorValveSensors',
+                CURLOPT_SSL_VERIFYPEER => false, //Bỏ kiểm SSL
+            ));
+            $resp = curl_exec($curl);
+            curl_close($curl);
+            return $resp;
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+
+    private function getInfoSelect($factoryId) {
+        try {
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => 'http://115.78.130.60:41440/api/SelectsTableSensors/' . $factoryId,
                 CURLOPT_SSL_VERIFYPEER => false, //Bỏ kiểm SSL
             ));
             $resp = curl_exec($curl);

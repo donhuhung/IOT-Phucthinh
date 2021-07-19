@@ -140,5 +140,6 @@ class User extends General {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
         }
     }
+        
 
 }

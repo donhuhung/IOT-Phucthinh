@@ -14,12 +14,14 @@ Route::group([
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('user')->group(function () {    
         Route::post('change-password', 'PhucThinh\Api\Controllers\User@changePassword');        
         Route::post('update-account', 'PhucThinh\Api\Controllers\User@updateAccount'); 
+        Route::post('update-avatar', 'PhucThinh\Api\Controllers\User@updateAvatar'); 
     });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('factory')->group(function () {    
         Route::get('list', 'PhucThinh\Api\Controllers\Factory@getList');        
     });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('sensor')->group(function () {    
         Route::post('list', 'PhucThinh\Api\Controllers\Device@getListSenSor');        
+        Route::post('update-set-point', 'PhucThinh\Api\Controllers\Device@updateSetPoint');        
     });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('motor')->group(function () {    
         Route::post('list', 'PhucThinh\Api\Controllers\Device@getListMotor');        
