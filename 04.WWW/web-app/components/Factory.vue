@@ -45,11 +45,9 @@ export default {
     this.listFactory()
   },
   methods: {
-    getListFactory,
     async listFactory() {
-      const res = await this.getListFactory()
-      console.error('FACTORY', res)
-      const {data} = res
+      const res = await getListFactory()
+      const {data} = res.data
       this.items = data
     }
   }

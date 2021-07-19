@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card width="450px" :disabled="submitting" :loading="submitting">
+    <v-card width="450px" class="m-auto" :disabled="submitting" :loading="submitting">
       <v-card-title class="text-center">Cập nhật thông tin cá nhân</v-card-title>
       <v-card-text>
         <validation-observer
