@@ -57,12 +57,14 @@ export default {
         {
           text: 'Factory',
           disabled: false,
-          href: '/factory',
+          exact: true,
+          to: '/factory',
         },
         {
           text: factory.name,
           disabled: false,
-          href: `/factory/${factory.id}`,
+          exact: true,
+          to: `/factory/${factory.id}`,
         },
         {
           text: 'MONITORING & SCALLING SENSOR',
