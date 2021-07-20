@@ -34,7 +34,7 @@
             </v-chip>
           </td>
           <td class="cell-table cell-row text-left">
-            {{ row.set_point }}
+            <edit-set-point :value="row.set_point"/>
           </td>
         </tr>
       </template>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import EditSetPoint from "./EditSetPoint";
 const colors = [
   '#E3F2FD',
   '#BBDEFB',
@@ -89,6 +90,7 @@ function styleCell(percent) {
 
 export default {
   name: "GridOfSensor",
+  components: {EditSetPoint},
   props: {
     name: {
       type: String,
@@ -151,7 +153,6 @@ export default {
 }
 .cell-table {
   position: relative;
-  cursor: pointer;
   padding: 10px 20px 10px 0;
   text-align: left;
   font-size: 14px;
