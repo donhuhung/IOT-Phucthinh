@@ -14,17 +14,22 @@
     </v-app-bar>
     <div class="">
       <template v-if="items[activetab]">
-        <div class="-mx-2">
-          <div class="flex flex-wrap">
-            <template v-for="(data, index) in items[activetab]['data_list']">
-              <div :key="index" class="px-2 mb-2 row-item-table">
-                <GridOfSensor :name="data.name"
-                              :symbol="data.symbol"
-                              :dataSensor="data.data_sensor"/>
-              </div>
-            </template>
+        <template v-if="items[activetab]['data_list'].length">
+          <div class="-mx-2 py-2">
+            <div class="flex flex-wrap">
+              <template v-for="(data, index) in items[activetab]['data_list']">
+                <div :key="index" class="row-item-table px-2 py-2">
+                  <GridOfSensor :name="data.name"
+                                :symbol="data.symbol"
+                                :dataSensor="data.data_sensor"/>
+                </div>
+              </template>
+            </div>
           </div>
-        </div>
+        </template>
+        <template v-else>
+          <NotFoundData/>
+        </template>
       </template>
     </div>
   </div>
@@ -34,9 +39,10 @@
 import {mapGetters} from 'vuex';
 import {getListSensor} from "@/api/app"
 import GridOfSensor from "../../../components/GridOfSensor";
+import NotFoundData from "../../../components/NotFoundData";
 
 export default {
-  components: {GridOfSensor},
+  components: {NotFoundData, GridOfSensor},
   props: [
     'title'
   ],
@@ -52,7 +58,7 @@ export default {
       factory: 'auth/factory',
     }),
     links() {
-      const { factory } = this
+      const {factory} = this
       return [
         {
           text: 'Factory',
@@ -91,6 +97,7 @@ export default {
 .row-item-table {
   min-width: 350px;
 }
+
 .df_text {
   letter-spacing: 0px;
 }

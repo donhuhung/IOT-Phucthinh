@@ -27,18 +27,7 @@
       <GridOfDevice :data-device="dataDevice" :is-valve="isValve"/>
     </template>
     <template v-else>
-      <v-card flat color="blue-grey lighten-5">
-        <v-card-text class="text-center">
-          <div class="flex justify-center items-center space-x-2">
-            <div>
-              <v-icon>mdi-folder-open</v-icon>
-            </div>
-            <div>
-              Data not found
-            </div>
-          </div>
-        </v-card-text>
-      </v-card>
+      <NotFoundData />
     </template>
   </div>
 </template>
@@ -47,10 +36,11 @@
 import GridOfDevice from "./GridOfDevice";
 import {getListMotor,getListValve} from "@/api/app"
 import GridTable from "./GridTable";
+import NotFoundData from "./NotFoundData";
 
 export default {
   name: "DeviceTemplate",
-  components: {GridTable, GridOfDevice},
+  components: {NotFoundData, GridTable, GridOfDevice},
   data() {
     return {
       panel: 0,

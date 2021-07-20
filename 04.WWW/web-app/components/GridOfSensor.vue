@@ -1,24 +1,48 @@
 <template>
-  <div class="w-full">
-    <table class="border border-primary w-full mt-4">
-      <tr style="background-color: #f5f5f5">
-        <th colspan="2" class="border-l cell-header">{{ name }} {{ symbol }}</th>
+  <v-card class="w-full box-sensor space-y-2" flat>
+    <h3>
+      {{ name }} {{ symbol }}
+    </h3>
+    <table class="w-full mt-4">
+      <tr>
+        <template v-for="field in fields">
+          <th :key="field.name" class="cell-table cell-header">
+            {{ field.label }}
+          </th>
+        </template>
       </tr>
       <template v-for="(row, rowIndex) in dataSensor">
-        <tr :key="rowIndex">
-          <td class="border-l border-t cell-row text-center"
-              :style="styleCell(row)">
-            {{ row.value }}
+        <tr :key="rowIndex" class="grid-row">
+          <td class="cell-table cell-row">
+            <template v-if="row.unit === '%fds'">
+              <v-progress-linear
+                  :value="Number(row.value)"
+                  height="25">
+                <strong>{{ Math.ceil(Number(row.value)) }}%</strong>
+              </v-progress-linear>
+            </template>
+            <template v-else>
+              {{ row.value }}
+            </template>
           </td>
-          <td class="border-l border-t cell-row text-center">
-            <v-chip label v-if="row.unit" :color="units[row.unit]" dark>
+          <td class="cell-table cell-row text-left">
+            <v-chip label
+                    style="width: 60px;"
+                    v-if="row.unit"
+                    :color="units[row.unit]" dark>
               {{ row.unit }}
             </v-chip>
+          </td>
+          <td class="cell-table cell-row text-left">
+            {{ row.set_point }}
           </td>
         </tr>
       </template>
     </table>
-  </div>
+    <p class="mb-0 text-tiny">
+      Cập nhật: {{ Date.now() }}
+    </p>
+  </v-card>
 </template>
 
 <script>
@@ -46,19 +70,23 @@ const units = {
 const rangeColor = (percent) => {
   const index = Math.ceil((percent / 100) * 10)
   const isDark = index > 4
+  console.error(index, percent, colors[index])
+  const flIndex = index < 10 && index || 9
   return {
-    color: colors[index],
+    color: colors[flIndex],
     isDark,
   }
 }
+
 function styleCell(percent) {
-  const { color, isDark } = rangeColor(percent)
+  const {color, isDark} = rangeColor(percent)
   let style = {background: color}
-  if(isDark) {
+  if (isDark) {
     style['color'] = 'white'
   }
-  return  style
+  return style
 }
+
 export default {
   name: "GridOfSensor",
   props: {
@@ -79,21 +107,76 @@ export default {
     units() {
       return units
     },
+    fields() {
+      return [
+        {
+          name: "value",
+          label: 'Value',
+          type: 'text'
+        },
+        {
+          name: "unit",
+          label: 'Unit',
+          type: 'text'
+        },
+        {
+          name: "set_point",
+          label: 'Set Point',
+          type: 'text'
+        },
+      ]
+    },
   },
   methods: {
     styleCell(row) {
-      const is_percent = row.is_percent === 'true'
-      return is_percent ? styleCell(row.value) : {}
+      const is_percent = row.is_percent === 'true' || row.unit === "%"
+      const percent = Number(row.value)
+      return is_percent ? styleCell(percent) : {}
     },
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .cell-header {
-    @apply px-4 py-2;
+.box-sensor {
+  border: 2px solid #E5E5E5;
+  padding: 20px;
+  border-radius: 10px;
+  background: #fff;
+  h3 {
+    font-size: 22px;
+    color: #222;
+    font-weight: bold;
   }
-  .cell-row {
-    @apply px-4 py-2;
+}
+.cell-table {
+  position: relative;
+  cursor: pointer;
+  padding: 10px 20px 10px 0;
+  text-align: left;
+  font-size: 14px;
+  &.cell-header {
+    //@apply px-4 py-2;
+    color: #222;
+    border-bottom: 1px solid #222222;
+    font-weight: bold;
   }
+  &.cell-row {
+    //padding: 6px 12px;
+    //border-color: #2980b9;
+    border-bottom: 1px solid #EFEFEF;
+  }
+}
+.text-tiny {
+  font-size: 12px;
+  color: #757575;
+  margin-top: 10px;
+}
+.grid-row {
+  &:last-child {
+    td.cell-row {
+      border-color: transparent;
+    }
+  }
+}
 </style>
