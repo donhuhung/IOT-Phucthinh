@@ -68,8 +68,8 @@ export default {
     dataDevice() {
       const {panel, itemMotors, itemValves, isValve} = this
       // todo: handle items with type device: valve || motor
-      const itemsMotor = itemMotors[panel] ? itemMotors[panel].data : []
-      const itemsValve = itemValves[panel] ? itemValves[panel].data : []
+      const itemsMotor = itemMotors[panel] ? itemMotors[panel].data_motor : []
+      const itemsValve = itemValves[panel] ? itemValves[panel].data_valve : []
       return isValve ? itemsValve : itemsMotor
     },
     factoryId() {
