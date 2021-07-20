@@ -58,7 +58,11 @@ class Device extends General {
 
             //Get Station
             $stations = $this->getStation($factoryID);
-            $return = $this->parseContentMotor($resp, $stations);
+			
+			//Get Info Device
+			$deviceName = $this->getDeviceName($factoryID);
+		
+            $return = $this->parseContentMotor($resp, $stations, $deviceName);
 
             curl_close($curl);
             return $this->respondWithSuccess($return, "Get List Motor succesful!");
@@ -82,7 +86,11 @@ class Device extends General {
 
             //Get Station
             $stations = $this->getStation($factoryID);
-            $return = $this->parseContentValve($resp, $stations);
+			
+			//Get Info Device
+			$deviceName = $this->getDeviceName($factoryID);
+		
+            $return = $this->parseContentValve($resp, $stations, $deviceName);
 
             curl_close($curl);
             return $this->respondWithSuccess($return, "Get List Valve succesful!");
@@ -143,23 +151,26 @@ class Device extends General {
             //Loop Item Sensor            
             for ($j = 0; $j < $numberSensor; $j++) {
                 if (isset($deviceName[$numberStart - 1]->sensorName)) {
-                    $dataStationArr[$j]['name'] = trim($deviceName[$numberStart - 1]->sensorName);
+					$sensorName = $this->translateAuto(trim($deviceName[$numberStart - 1]->sensorName));
+                    $dataStationArr[$j]['name'] = $sensorName;
                     $dataStationArr[$j]['symbol'] = trim($deviceName[$numberStart - 1]->sensorSymbol);
                     for ($k = 0; $k < 3; $k++) {
-                        $isPercent = 'false';
-                        $field = "sensor" . $numberStart . "Value" . ($k + 1);
-                        $fieldSetPoint = "sensor" . $numberStart . "SetPer";
-                        $paramSensor = "sensorUnit" . ($k + 1);
-                        if ($deviceName[$numberStart - 1]->$paramSensor == '%')
-                            $isPercent = 'true';
-                        $dataSensor[$k]['value'] = isset($objData->$field) ? trim($objData->$field) : 0;
-                        $dataSensor[$k]['unit'] = isset($deviceName[$numberStart - 1]->$paramSensor) ? trim($deviceName[$numberStart - 1]->$paramSensor) : '';
-                        $dataSensor[$k]['is_percent'] = $isPercent;
-                        $dataSensor[$k]['set_point'] = isset($selectTable->$fieldSetPoint) ? trim($selectTable->$fieldSetPoint) : 0;
-                        $dataSensor[$k]['edit_set_point'] = trim($deviceName[$numberStart - 1]->setpoint) == 1 ? 'true' : 'false';
-                        $dataSensor[$k]['field_set_point'] = $fieldSetPoint;
-                        $dataSensor[$k]['id_set_point'] = trim($selectTable->id);
-                        ;
+						$isPercent = 'false';
+						$field = "sensor" . $numberStart . "Value" . ($k + 1);
+						$fieldSetPoint = "sensor" . $numberStart . "SetPer";
+						$paramSensor = "sensorUnit" . ($k + 1);
+						if(isset($objData->$field) && $objData->$field > 0){							
+							if ($deviceName[$numberStart - 1]->$paramSensor == '%')
+								$isPercent = 'true';
+							$dataSensor[$k]['value'] = isset($objData->$field) ? trim($objData->$field) : 0;
+							$dataSensor[$k]['unit'] = isset($deviceName[$numberStart - 1]->$paramSensor) ? trim($deviceName[$numberStart - 1]->$paramSensor) : '';
+							$dataSensor[$k]['is_percent'] = $isPercent;
+							$dataSensor[$k]['set_point'] = isset($selectTable->$fieldSetPoint) ? trim($selectTable->$fieldSetPoint) : 0;
+							$dataSensor[$k]['edit_set_point'] = trim($deviceName[$numberStart - 1]->setpoint) == 1 ? 'true' : 'false';
+							$dataSensor[$k]['field_set_point'] = $fieldSetPoint;
+							$dataSensor[$k]['id_set_point'] = trim($selectTable->id);
+						}
+                                               
                     }
                     $dataStationArr[$j]['data_sensor'] = $dataSensor;
                     $numberStart++;
@@ -172,9 +183,7 @@ class Device extends General {
         return $return;
     }
 
-    private function parseContentMotor($data, $stations) {
-        //Get Info Device
-        $deviceName = $this->getDeviceName();
+    private function parseContentMotor($data, $stations, $deviceName) {        
 
         //Parse Json
         $objData = json_decode($data);
@@ -209,7 +218,8 @@ class Device extends General {
                     $operationStatusName = $dataOperationStatus['name'];
                     $operationStatusColor = $dataOperationStatus['color'];
 
-                    $dataStationArr[$j]['name'] = trim($deviceName[$numberStart - 1]->motorName);
+					$motorName = $this->translateAuto(trim($deviceName[$numberStart - 1]->motorName));
+                    $dataStationArr[$j]['name'] = $motorName;
                     $dataStationArr[$j]['symbol'] = trim($deviceName[$numberStart - 1]->motorSymbol);
                     $dataStationArr[$j]['status'] = $objData->$fieldStatus;
                     $dataStationArr[$j]['status_name'] = $statusName;
@@ -224,15 +234,13 @@ class Device extends General {
                 }
             }
             $stationArr['title'] = trim($station->stationName);
-            $stationArr['data'] = $dataStationArr;
+            $stationArr['data_motor'] = $dataStationArr;
             $return[$index] = $stationArr;
         }
         return $return;
     }
 
-    private function parseContentValve($data, $stations) {
-        //Get Info Device
-        $deviceName = $this->getDeviceName();
+    private function parseContentValve($data, $stations, $deviceName) {        
 
         //Parse Json
         $objData = json_decode($data);
@@ -267,7 +275,8 @@ class Device extends General {
                     $operationStatusName = $dataOperationStatus['name'];
                     $operationStatusColor = $dataOperationStatus['color'];
 
-                    $dataStationArr[$j]['name'] = trim($deviceName[$numberStart - 1]->valveName);
+					$valveName = $this->translateAuto(trim($deviceName[$numberStart - 1]->valveName));
+                    $dataStationArr[$j]['name'] = $valveName;
                     $dataStationArr[$j]['symbol'] = trim($deviceName[$numberStart - 1]->valveSymbol);
                     $dataStationArr[$j]['status'] = $objData->$fieldStatus;
                     $dataStationArr[$j]['status_name'] = $statusName;
@@ -282,7 +291,7 @@ class Device extends General {
                 }
             }
             $stationArr['title'] = trim($station->stationName);
-            $stationArr['data'] = $dataStationArr;
+            $stationArr['data_valve'] = $dataStationArr;
             $return[$index] = $stationArr;
         }
         return $return;
@@ -456,5 +465,11 @@ class Device extends General {
             return $ex->getMessage();
         }
     }
+	
+	private function translateAuto($string){
+		$original = ["Luu","luong","Muc","Ap","suat","Bom", "gieng", "Quat", "hoa", "Khuay","Hut","xa","bun","hoi","gio","rua","loc","nuoc","sach","vao","cap","khi"];
+		$modify   = ["Lưu","lượng","Mực","Áp","suất","Bơm", "Giếng", "Quạt", "hóa", "Khuấy","Hút","xả","bùn","hồi","gió","rửa","lọc","nước","sạch","vào","cấp","khí"];
+		return str_replace($original, $modify, $string);        
+	}
 
 }
