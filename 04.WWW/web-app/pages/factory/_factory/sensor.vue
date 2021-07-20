@@ -81,7 +81,7 @@ export default {
     async listSensor() {
       let factory_id = this.$route.params.factory;
       const res = await getListSensor(factory_id)
-      this.items = res.data.data
+      this.items = res.data.data_list
     }
   }
 }
