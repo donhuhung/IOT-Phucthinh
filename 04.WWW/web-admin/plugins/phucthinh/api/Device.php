@@ -58,7 +58,11 @@ class Device extends General {
 
             //Get Station
             $stations = $this->getStation($factoryID);
-            $return = $this->parseContentMotor($resp, $stations);
+			
+			//Get Info Device
+			$deviceName = $this->getDeviceName($factoryID);
+		
+            $return = $this->parseContentMotor($resp, $stations, $deviceName);
 
             curl_close($curl);
             return $this->respondWithSuccess($return, "Get List Motor succesful!");
@@ -82,7 +86,11 @@ class Device extends General {
 
             //Get Station
             $stations = $this->getStation($factoryID);
-            $return = $this->parseContentValve($resp, $stations);
+			
+			//Get Info Device
+			$deviceName = $this->getDeviceName($factoryID);
+		
+            $return = $this->parseContentValve($resp, $stations, $deviceName);
 
             curl_close($curl);
             return $this->respondWithSuccess($return, "Get List Valve succesful!");
@@ -172,9 +180,7 @@ class Device extends General {
         return $return;
     }
 
-    private function parseContentMotor($data, $stations) {
-        //Get Info Device
-        $deviceName = $this->getDeviceName();
+    private function parseContentMotor($data, $stations, $deviceName) {        
 
         //Parse Json
         $objData = json_decode($data);
@@ -230,9 +236,7 @@ class Device extends General {
         return $return;
     }
 
-    private function parseContentValve($data, $stations) {
-        //Get Info Device
-        $deviceName = $this->getDeviceName();
+    private function parseContentValve($data, $stations, $deviceName) {        
 
         //Parse Json
         $objData = json_decode($data);
