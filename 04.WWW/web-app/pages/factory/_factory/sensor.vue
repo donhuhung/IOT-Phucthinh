@@ -16,7 +16,7 @@
       <template v-if="items[activetab]">
         <div class="-mx-2">
           <div class="flex flex-wrap">
-            <template v-for="(data, index) in items[activetab]['data']">
+            <template v-for="(data, index) in items[activetab]['data_list']">
               <div :key="index" class="px-2 mb-2 row-item-table">
                 <GridOfSensor :name="data.name"
                               :symbol="data.symbol"
@@ -81,7 +81,7 @@ export default {
     async listSensor() {
       let factory_id = this.$route.params.factory;
       const res = await getListSensor(factory_id)
-      this.items = res.data.data_list
+      this.items = res.data.data
     }
   }
 }
