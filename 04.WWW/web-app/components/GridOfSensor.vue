@@ -33,20 +33,28 @@
               {{ row.unit }}
             </v-chip>
           </td>
-          <td class="cell-table cell-row text-left">
-            <edit-set-point :value="row.set_point"/>
+          <template v-if="rowIndex === 0">
+            <td class="cell-table text-center text-3xl" :rowspan="dataSensor.length">
+            <template v-if="dataList.edit_set_point == 'true'">
+                <edit-set-point :value="dataList.set_point"/>
+            </template>
+            <template v-else>
+              <label class="text-gray-400">No Update</label>
+            </template>
           </td>
+          </template>
         </tr>
       </template>
     </table>
     <p class="mb-0 text-tiny">
-      Cập nhật: {{ Date.now() }}
+      Cập nhật: {{ formatDateSync(dateSync) }}
     </p>
   </v-card>
 </template>
 
 <script>
 import EditSetPoint from "./EditSetPoint";
+import moment from 'moment';
 const colors = [
   '#E3F2FD',
   '#BBDEFB',
@@ -103,6 +111,14 @@ export default {
     dataSensor: {
       type: Array,
       default: () => []
+    },
+    dataList: {
+      type: Object,
+      default: () => []
+    },
+    dateSync:{
+      type: Number,
+      default: () => '',
     }
   },
   computed: {
@@ -127,7 +143,7 @@ export default {
           type: 'text'
         },
       ]
-    },
+    }
   },
   methods: {
     styleCell(row) {
@@ -135,6 +151,9 @@ export default {
       const percent = Number(row.value)
       return is_percent ? styleCell(percent) : {}
     },
+    formatDateSync(date){
+      return moment(date).format("DD-MM-YYYY HH:m:ss");
+    }
   }
 }
 </script>

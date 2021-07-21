@@ -21,7 +21,9 @@
                 <div :key="index" class="row-item-table px-2 py-2">
                   <GridOfSensor :name="data.name"
                                 :symbol="data.symbol"
-                                :dataSensor="data.data_sensor"/>
+                                :dataSensor="data.data_sensor"
+                                :dataList="data"
+                                :dateSync="dateSync"/>
                 </div>
               </template>
             </div>
@@ -51,6 +53,7 @@ export default {
       active: false,
       activetab: 0,
       items: [],
+      dateSync:Date.now()
     }
   },
   computed: {
@@ -84,11 +87,21 @@ export default {
     this.listSensor()
   },
   methods: {
-    async listSensor() {
+    async listSensor(){
       let factory_id = this.$route.params.factory;
       const res = await getListSensor(factory_id)
       this.items = res.data.data
-    }
+      this.syncListSensor()
+    },
+    syncListSensor() {
+      setInterval(async () => {
+        let factory_id = this.$route.params.factory;
+        const res = await getListSensor(factory_id)
+        this.items = res.data.data
+        this.dateSync = Date.now()
+        console.log("Syncing Data")
+      }, 60000);
+    },
   }
 }
 </script>

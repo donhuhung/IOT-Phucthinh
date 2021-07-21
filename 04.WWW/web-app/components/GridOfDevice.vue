@@ -30,7 +30,7 @@
                   <template v-else-if="header.name === 'status_name'">
                     <div class="py-1">
                       <v-btn class="link_item text-center" small shaped
-                             :color="row.status | statusOperating">
+                             :color="row.status | statusDevice">
                         {{ row[header.name] }}
                       </v-btn>
                     </div>
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { getOperatingStatusMotorValve } from "../constants"
+import {getOperatingStatusMotorValve, getStatusDevice} from "../constants"
 
 const isRun = (status) => {
   return [2, 4, 40].includes(status)
@@ -81,6 +81,10 @@ export default {
     },
     statusOperating(status) {
       const [val, label, color] =  getOperatingStatusMotorValve(status)
+      return color
+    },
+    statusDevice(status) {
+      const [val, label, color] =  getStatusDevice(status)
       return color
     }
   },
