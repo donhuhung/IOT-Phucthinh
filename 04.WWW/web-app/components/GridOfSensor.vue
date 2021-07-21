@@ -152,7 +152,7 @@ export default {
       return is_percent ? styleCell(percent) : {}
     },
     formatDateSync(date){
-      return moment(date).format("DD-MM-YYYY HH:m:ss");
+      return moment(date).format("DD-MM-YYYY HH:mm:ss");
     }
   }
 }
