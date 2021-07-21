@@ -100,7 +100,7 @@ export default {
         this.items = res.data.data
         this.dateSync = Date.now()
         console.log("Syncing Data")
-      }, 60000);
+      }, 45000);
     },
   }
 }

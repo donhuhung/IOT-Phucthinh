@@ -36,7 +36,7 @@
           <template v-if="rowIndex === 0">
             <td class="cell-table text-center text-3xl" :rowspan="dataSensor.length">
             <template v-if="dataList.edit_set_point == 'true'">
-                <edit-set-point :value="dataList.set_point"/>
+                <edit-set-point :dataSensor="dataList" :value="dataList.set_point"/>
             </template>
             <template v-else>
               <label class="text-gray-400">No Update</label>

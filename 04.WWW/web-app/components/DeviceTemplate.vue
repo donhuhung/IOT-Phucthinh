@@ -34,7 +34,7 @@
 
 <script>
 import GridOfDevice from "./GridOfDevice";
-import {getListMotor,getListValve} from "@/api/app"
+import {getListMotor, getListSensor, getListValve} from "@/api/app"
 import GridTable from "./GridTable";
 import NotFoundData from "./NotFoundData";
 
@@ -73,12 +73,25 @@ export default {
     async listMotor() {
       const res = await getListMotor(this.factoryId)
       this.itemMotors = res.data.data
+      this.syncListMotor();
+    },
+    syncListMotor() {
+      setInterval(async () => {
+        const res = await getListMotor(this.factoryId)
+        this.itemMotors = res.data.data
+      }, 45000);
     },
 
     async listValve() {
       const res = await getListValve(this.factoryId)
       this.itemValves = res.data.data
-    }
+    },
+    syncListValve() {
+      setInterval(async () => {
+        const res = await getListValve(this.factoryId)
+        this.itemValves = res.data.data
+      }, 45000);
+    },
 
   }
 }
