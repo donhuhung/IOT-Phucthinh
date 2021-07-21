@@ -1,5 +1,5 @@
 <template>
-  <v-card class="w-full box-sensor space-y-2" flat>
+  <v-card class="w-full h-full box-sensor space-y-2" flat>
     <h3>
       {{ name }} {{ symbol }}
     </h3>
@@ -16,8 +16,8 @@
           <td class="cell-table cell-row">
             <template v-if="row.unit === '%fds'">
               <v-progress-linear
-                  :value="Number(row.value)"
-                  height="25">
+                :value="Number(row.value)"
+                height="25">
                 <strong>{{ Math.ceil(Number(row.value)) }}%</strong>
               </v-progress-linear>
             </template>
@@ -34,14 +34,14 @@
             </v-chip>
           </td>
           <template v-if="rowIndex === 0">
-            <td class="cell-table text-center text-3xl" :rowspan="dataSensor.length">
-            <template v-if="dataList.edit_set_point == 'true'">
+            <td class="cell-table text-3xl" :rowspan="dataSensor.length">
+              <template v-if="dataList.edit_set_point == 'true'">
                 <edit-set-point :dataSensor="dataList" :value="dataList.set_point"/>
-            </template>
-            <template v-else>
-              <label class="text-gray-400">No Update</label>
-            </template>
-          </td>
+              </template>
+              <template v-else>
+                <label class="text-gray-400">No Update</label>
+              </template>
+            </td>
           </template>
         </tr>
       </template>
@@ -55,6 +55,7 @@
 <script>
 import EditSetPoint from "./EditSetPoint";
 import moment from 'moment';
+
 const colors = [
   '#E3F2FD',
   '#BBDEFB',
@@ -116,7 +117,7 @@ export default {
       type: Object,
       default: () => []
     },
-    dateSync:{
+    dateSync: {
       type: Number,
       default: () => '',
     }
@@ -151,7 +152,7 @@ export default {
       const percent = Number(row.value)
       return is_percent ? styleCell(percent) : {}
     },
-    formatDateSync(date){
+    formatDateSync(date) {
       return moment(date).format("DD-MM-YYYY HH:mm:ss");
     }
   }
@@ -164,34 +165,40 @@ export default {
   padding: 20px;
   border-radius: 10px;
   background: #fff;
+
   h3 {
     font-size: 22px;
     color: #222;
     font-weight: bold;
   }
 }
+
 .cell-table {
   position: relative;
   padding: 10px 20px 10px 0;
   text-align: left;
   font-size: 14px;
+
   &.cell-header {
     //@apply px-4 py-2;
     color: #222;
     border-bottom: 1px solid #222222;
     font-weight: bold;
   }
+
   &.cell-row {
     //padding: 6px 12px;
     //border-color: #2980b9;
     border-bottom: 1px solid #EFEFEF;
   }
 }
+
 .text-tiny {
   font-size: 12px;
   color: #757575;
   margin-top: 10px;
 }
+
 .grid-row {
   &:last-child {
     td.cell-row {

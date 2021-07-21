@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer app permanent expand-on-hover>
+    <v-navigation-drawer color="#363636" dark app permanent expand-on-hover>
       <SideBarProfile/>
       <v-divider></v-divider>
       <SideBarNavs/>

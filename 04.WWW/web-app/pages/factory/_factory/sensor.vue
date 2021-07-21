@@ -109,6 +109,7 @@ export default {
 <style scoped>
 .row-item-table {
   min-width: 350px;
+  width: 33.333%;
 }
 
 .df_text {

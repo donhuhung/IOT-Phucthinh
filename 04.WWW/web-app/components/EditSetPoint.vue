@@ -8,7 +8,9 @@
     @open="open"
     @close="close"
   >
-    <div>{{ val }}</div>
+    <v-btn :loading="submitting" text input-value="true" color="primary">
+      {{ point | numberFormat }}
+    </v-btn>
     <template v-slot:input>
       <div class="mt-4 text-h6">
         Update SetPoint
@@ -26,11 +28,15 @@
 
 <script>
 import {updateSetPoint} from "@/api/app"
+import {numberFormat} from "../filters/number";
 export default {
   name: "EditSetPoint",
   props: {
     value: {},
     dataSensor:{}
+  },
+  filters: {
+    numberFormat,
   },
   data() {
     return {
@@ -38,41 +44,38 @@ export default {
       snackColor: false,
       snackText: false,
       val: '',
+      point: undefined,
+      submitting: false,
     }
   },
   mounted() {
     this.$watch('value', (value) => {
       this.val = value
+      this.point = value
     }, { immediate: true})
   },
   methods: {
     async save () {
-      this.snack = true
-      this.snackColor = 'success'
-      this.snackText = 'Data saved'
       try {
         const idSetPoint = this.dataSensor.id_set_point
         const fieldSetPoint = this.dataSensor.field_set_point
         const value = this.val
-        const res = await updateSetPoint({idSetPoint, fieldSetPoint, value})
+        this.submitting = true
+        await updateSetPoint({idSetPoint, fieldSetPoint, value})
         const text = 'Cập nhật Set Point thành công!'
         this.$notify({text, title: '', type: 'notify_success',})
+        this.point = value
       } catch (e) {
         this.$notify({text: e.message, title: this.$t('layout.titleMess'), type: 'error'})
-      } finally {}
+      } finally {
+        this.submitting = false
+      }
     },
     cancel () {
-      this.snack = true
-      this.snackColor = 'error'
-      this.snackText = 'Canceled'
     },
     open () {
-      this.snack = true
-      this.snackColor = 'info'
-      this.snackText = 'Dialog opened'
     },
     close () {
-      console.log('Dialog closed')
     },
   },
 }
