@@ -3,16 +3,16 @@
 # ===================================
 
 # Model List Column configuration
-list: $/phucthinh/api/models/factory/columns.yaml
+list: $/phucthinh/iot/models/customer/columns.yaml
 
 # Model Class name
-modelClass: Phucthinh\API\Models\Factory
+modelClass: PhucThinh\IOT\Models\Customer
 
 # List Title
-title: Manage Factories
+title: Manage Customers
 
 # Link URL for each record
-recordUrl: phucthinh/api/factory/update/:id
+recordUrl: phucthinh/iot/customers/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

@@ -54,8 +54,8 @@ class Plugin extends PluginBase {
             }
             //Add tab fields
             $widget->addTabFields([
-                'user_factory' => [
-                    'label' => 'Factory',
+                'user_customer' => [
+                    'label' => 'Customer',
                     'type' => 'relation',
                     'nameFrom' => 'name',
                     'tab' => 'rainlab.user::lang.user.account',
@@ -92,7 +92,7 @@ class Plugin extends PluginBase {
             ]);
         });
         User::extend(function($model) {
-            $model->belongsTo['user_factory'] = ['PhucThinh\IOT\Models\Factory', 'key' => 'factory_id', 'conditions' => 'status = 1'];
+            $model->belongsTo['user_customer'] = ['PhucThinh\IOT\Models\Customer', 'key' => 'customer_id', 'conditions' => 'status = 1'];
         });
     }
 
@@ -134,11 +134,18 @@ class Plugin extends PluginBase {
         return [
             'iot' => [
                 'label' => 'Phúc Thịnh - IOT',
-                'url' => Backend::url('phucthinh/iot/factory'),
+                'url' => Backend::url('phucthinh/iot/customers'),
                 'icon' => 'icon-desktop',
                 'permissions' => ['phucthinh.iot.*'],
                 'order' => 500,
                 'sideMenu' => [
+                    'customers' => [
+                        'label' => 'Customer',
+                        'icon' => 'icon-sitemap',
+                        'url' => Backend::url('phucthinh/iot/customers'),
+                        'permissions' => ['phucthinh.iot.customers'],
+                        'counterLabel' => 'General',
+                    ],
                     'factory' => [
                         'label' => 'Factory',
                         'icon' => 'icon-sitemap',

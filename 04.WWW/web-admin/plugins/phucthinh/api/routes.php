@@ -16,8 +16,11 @@ Route::group([
         Route::post('update-account', 'PhucThinh\Api\Controllers\User@updateAccount'); 
         Route::post('update-avatar', 'PhucThinh\Api\Controllers\User@updateAvatar'); 
     });
+    Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('customer')->group(function () {    
+        Route::get('list', 'PhucThinh\Api\Controllers\Customer@getList');        
+    });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('factory')->group(function () {    
-        Route::get('list', 'PhucThinh\Api\Controllers\Factory@getList');        
+        Route::post('list', 'PhucThinh\Api\Controllers\Factory@getList');        
     });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('sensor')->group(function () {    
         Route::post('list', 'PhucThinh\Api\Controllers\Device@getListSenSor');        

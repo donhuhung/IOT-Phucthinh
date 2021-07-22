@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Customer
+
+# Model Form Field configuration
+form: $/phucthinh/iot/models/customer/fields.yaml
+
+# Model Class name
+modelClass: PhucThinh\IOT\Models\Customer
+
+# Default redirect location
+defaultRedirect: phucthinh/iot/customers
+
+# Create page
+create:
+    title: Create Customer
+    redirect: phucthinh/iot/customers/update/:id
+    redirectClose: phucthinh/iot/customers
+
+# Update page
+update:
+    title: Edit Customer
+    redirect: phucthinh/iot/customers
+    redirectClose: phucthinh/iot/customers
+
+# Preview page
+preview:
+    title: Preview Customer

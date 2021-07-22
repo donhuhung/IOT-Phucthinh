@@ -3,14 +3,13 @@
 use Schema;
 use October\Rain\Database\Updates\Migration;
 
-class BuilderTableUpdatePhucthinhIotFactory2 extends Migration
+class BuilderTableUpdatePhucthinhIotFactory4 extends Migration
 {
     public function up()
     {
         Schema::table('phucthinh_iot_factory', function($table)
         {
-            $table->dropColumn('thumbnail');
-            $table->dropColumn('overview');
+            $table->integer('customer_id');
         });
     }
     
@@ -18,8 +17,7 @@ class BuilderTableUpdatePhucthinhIotFactory2 extends Migration
     {
         Schema::table('phucthinh_iot_factory', function($table)
         {
-            $table->string('thumbnail', 191)->nullable();
-            $table->string('overview', 191)->nullable();
+            $table->dropColumn('customer_id');
         });
     }
 }

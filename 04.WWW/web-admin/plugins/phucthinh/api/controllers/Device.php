@@ -108,7 +108,7 @@ class Device extends General {
             $now = date('Y-m-d H:i:s');
             $curl = curl_init();
 
-            $data = array("id" => (int)$factoryID, "timeStamp" => $now, $fieldSetPoint => (int)$valueSetPoint);            
+            $data = array("id" => (int)$factoryID, "timeStamp" => $now, $fieldSetPoint => $valueSetPoint);            
             $postdata = json_encode($data);
 
             curl_setopt_array($curl, array(
@@ -141,8 +141,7 @@ class Device extends General {
         //Parse Data               
         foreach ($objStation as $index => $station) {
             //Define Variable
-            $stationArr = [];
-            $dataSensor = [];
+            $stationArr = [];            
             $dataStationArr = [];
 
             //Foreach Data
@@ -150,25 +149,30 @@ class Device extends General {
             $numberStart = $station->numberStartSensor;
             //Loop Item Sensor            
             for ($j = 0; $j < $numberSensor; $j++) {
+				$dataSensor = [];
                 if (isset($deviceName[$numberStart - 1]->sensorName)) {
+					$fieldSetPoint = "sensor" . $numberStart . "SetPer";
+					
 					$sensorName = $this->translateAuto(trim($deviceName[$numberStart - 1]->sensorName));
                     $dataStationArr[$j]['name'] = $sensorName;
                     $dataStationArr[$j]['symbol'] = trim($deviceName[$numberStart - 1]->sensorSymbol);
+					$dataStationArr[$j]['set_point'] = isset($selectTable->$fieldSetPoint) ? trim($selectTable->$fieldSetPoint) : 0;
+					$dataStationArr[$j]['edit_set_point'] = trim($deviceName[$numberStart - 1]->setpoint) == 1 ? 'true' : 'false';
+					$dataStationArr[$j]['field_set_point'] = $fieldSetPoint;
+					$dataStationArr[$j]['id_set_point'] = trim($selectTable->id);
                     for ($k = 0; $k < 3; $k++) {
 						$isPercent = 'false';
-						$field = "sensor" . $numberStart . "Value" . ($k + 1);
-						$fieldSetPoint = "sensor" . $numberStart . "SetPer";
+						$field = "sensor" . $numberStart . "Value" . ($k + 1);						
 						$paramSensor = "sensorUnit" . ($k + 1);
-						if(isset($objData->$field) && $objData->$field > 0){							
-							if ($deviceName[$numberStart - 1]->$paramSensor == '%')
+						if(isset($objData->$field) && $objData->$field > 0){
+							/*echo "<prev>";
+							echo $field;		
+							echo "</prev>";*/
+							if (trim($deviceName[$numberStart - 1]->$paramSensor) == '%')
 								$isPercent = 'true';
 							$dataSensor[$k]['value'] = isset($objData->$field) ? trim($objData->$field) : 0;
 							$dataSensor[$k]['unit'] = isset($deviceName[$numberStart - 1]->$paramSensor) ? trim($deviceName[$numberStart - 1]->$paramSensor) : '';
-							$dataSensor[$k]['is_percent'] = $isPercent;
-							$dataSensor[$k]['set_point'] = isset($selectTable->$fieldSetPoint) ? trim($selectTable->$fieldSetPoint) : 0;
-							$dataSensor[$k]['edit_set_point'] = trim($deviceName[$numberStart - 1]->setpoint) == 1 ? 'true' : 'false';
-							$dataSensor[$k]['field_set_point'] = $fieldSetPoint;
-							$dataSensor[$k]['id_set_point'] = trim($selectTable->id);
+							$dataSensor[$k]['is_percent'] = $isPercent;							
 						}
                                                
                     }
@@ -177,7 +181,7 @@ class Device extends General {
                 }
             }
             $stationArr['title'] = trim($station->stationName);
-            $stationArr['data'] = $dataStationArr;
+            $stationArr['data_list'] = $dataStationArr;
             $return[$index] = $stationArr;
         }
         return $return;
@@ -201,8 +205,11 @@ class Device extends General {
             //Foreach Data
             $numberMotor = $station->numberMotor;
             $numberStart = $station->numberStartMotor;
-            //Loop Item Sensor            
-            for ($j = 0; $j < $numberMotor; $j++) {
+			$start = ($numberStart - 1);
+			$end = ($numberMotor + $numberStart - 1);
+			$loop = 0;
+            //Loop Item Motor            
+            for ($j = $start; $j < $end; $j++) {
                 if (isset($deviceName[$numberStart - 1]->motorName)) {
                     $fieldStatus = 'motor' . ($j + 1) . 'ModeStatus';
                     $fieldOperationStatus = 'motor' . ($j + 1) . 'OperationStatus';
@@ -219,19 +226,21 @@ class Device extends General {
                     $operationStatusColor = $dataOperationStatus['color'];
 
 					$motorName = $this->translateAuto(trim($deviceName[$numberStart - 1]->motorName));
-                    $dataStationArr[$j]['name'] = $motorName;
-                    $dataStationArr[$j]['symbol'] = trim($deviceName[$numberStart - 1]->motorSymbol);
-                    $dataStationArr[$j]['status'] = $objData->$fieldStatus;
-                    $dataStationArr[$j]['status_name'] = $statusName;
-                    $dataStationArr[$j]['status_color'] = $statusColor;
-                    $dataStationArr[$j]['operation_status'] = $objData->$fieldOperationStatus;
-                    $dataStationArr[$j]['operation_status_name'] = $operationStatusName;
-                    $dataStationArr[$j]['operation_status_color'] = $operationStatusColor;
-                    $dataStationArr[$j]['totalovl'] = $objData->$fieldTotalOvl;
-                    $dataStationArr[$j]['totalnrf'] = $objData->$fieldTotalNrf;
-                    $dataStationArr[$j]['totalrt'] = $objData->$fieldTotalRt;
-                    $numberStart++;
+                    $dataStationArr[$loop]['name'] = $motorName;
+                    $dataStationArr[$loop]['symbol'] = trim($deviceName[$numberStart - 1]->motorSymbol);
+                    $dataStationArr[$loop]['status'] = $objData->$fieldStatus;
+					$dataStationArr[$loop]['status_identity'] = $fieldStatus;
+                    $dataStationArr[$loop]['status_name'] = $statusName;
+                    $dataStationArr[$loop]['status_color'] = $statusColor;
+                    $dataStationArr[$loop]['operation_status'] = $objData->$fieldOperationStatus;
+                    $dataStationArr[$loop]['operation_status_name'] = $operationStatusName;
+                    $dataStationArr[$loop]['operation_status_color'] = $operationStatusColor;
+                    $dataStationArr[$loop]['totalovl'] = $objData->$fieldTotalOvl;
+                    $dataStationArr[$loop]['totalnrf'] = $objData->$fieldTotalNrf;
+                    $dataStationArr[$loop]['totalrt'] = $objData->$fieldTotalRt;                    
                 }
+				$numberStart++;
+				$loop++;
             }
             $stationArr['title'] = trim($station->stationName);
             $stationArr['data_motor'] = $dataStationArr;
@@ -258,8 +267,11 @@ class Device extends General {
             //Foreach Data
             $numberValve = $station->numberValve;
             $numberStart = $station->numberStartValve;
-            //Loop Item Sensor            
-            for ($j = 0; $j < $numberValve; $j++) {
+			$start = ($numberStart - 1);
+			$end = ($numberValve + $numberStart - 1);
+			$loop = 0;
+            //Loop Item Valve            
+            for ($j = $start; $j < $end; $j++) {
                 if (isset($deviceName[$numberStart - 1]->valveName)) {
                     $fieldStatus = 'valve' . ($j + 1) . 'ModeStatus';
                     $fieldOperationStatus = 'valve' . ($j + 1) . 'OperationStatus';
@@ -276,19 +288,20 @@ class Device extends General {
                     $operationStatusColor = $dataOperationStatus['color'];
 
 					$valveName = $this->translateAuto(trim($deviceName[$numberStart - 1]->valveName));
-                    $dataStationArr[$j]['name'] = $valveName;
-                    $dataStationArr[$j]['symbol'] = trim($deviceName[$numberStart - 1]->valveSymbol);
-                    $dataStationArr[$j]['status'] = $objData->$fieldStatus;
-                    $dataStationArr[$j]['status_name'] = $statusName;
-                    $dataStationArr[$j]['status_color'] = $statusColor;
-                    $dataStationArr[$j]['operation_status'] = $objData->$fieldOperationStatus;
-                    $dataStationArr[$j]['operation_status_name'] = $operationStatusName;
-                    $dataStationArr[$j]['operation_status_color'] = $operationStatusColor;
-                    $dataStationArr[$j]['totalfo'] = $objData->$fieldTotalFO;
-                    $dataStationArr[$j]['totalfc'] = $objData->$fieldTotalFC;
-                    $dataStationArr[$j]['totaloc'] = $objData->$fieldTotalOC;
-                    $numberStart++;
+                    $dataStationArr[$loop]['name'] = $valveName;
+                    $dataStationArr[$loop]['symbol'] = trim($deviceName[$numberStart - 1]->valveSymbol);
+                    $dataStationArr[$loop]['status'] = $objData->$fieldStatus;
+                    $dataStationArr[$loop]['status_name'] = $statusName;
+                    $dataStationArr[$loop]['status_color'] = $statusColor;
+                    $dataStationArr[$loop]['operation_status'] = $objData->$fieldOperationStatus;
+                    $dataStationArr[$loop]['operation_status_name'] = $operationStatusName;
+                    $dataStationArr[$loop]['operation_status_color'] = $operationStatusColor;
+                    $dataStationArr[$loop]['totalfo'] = $objData->$fieldTotalFO;
+                    $dataStationArr[$loop]['totalfc'] = $objData->$fieldTotalFC;
+                    $dataStationArr[$loop]['totaloc'] = $objData->$fieldTotalOC;
                 }
+				$numberStart++;
+				$loop++;
             }
             $stationArr['title'] = trim($station->stationName);
             $stationArr['data_valve'] = $dataStationArr;

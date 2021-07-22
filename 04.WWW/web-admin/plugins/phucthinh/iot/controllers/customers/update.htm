@@ -1,6 +1,6 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('phucthinh/api/device') ?>">Device</a></li>
+        <li><a href="<?= Backend::url('phucthinh/iot/customers') ?>">Customers</a></li>
         <li><?= e($this->pageTitle) ?></li>
     </ul>
 <?php Block::endPut() ?>
@@ -18,22 +18,30 @@
                 <button
                     type="submit"
                     data-request="onSave"
+                    data-request-data="redirect:0"
                     data-hotkey="ctrl+s, cmd+s"
-                    data-load-indicator="Creating Device..."
+                    data-load-indicator="Saving Customer..."
                     class="btn btn-primary">
-                    Create
+                    <u>S</u>ave
                 </button>
                 <button
                     type="button"
                     data-request="onSave"
                     data-request-data="close:1"
                     data-hotkey="ctrl+enter, cmd+enter"
-                    data-load-indicator="Creating Device..."
+                    data-load-indicator="Saving Customer..."
                     class="btn btn-default">
-                    Create and Close
+                    Save and Close
+                </button>
+                <button
+                    type="button"
+                    class="oc-icon-trash-o btn-icon danger pull-right"
+                    data-request="onDelete"
+                    data-load-indicator="Deleting Customer..."
+                    data-request-confirm="Delete this customer?">
                 </button>
                 <span class="btn-text">
-                    or <a href="<?= Backend::url('phucthinh/api/device') ?>">Cancel</a>
+                    or <a href="<?= Backend::url('phucthinh/iot/customers') ?>">Cancel</a>
                 </span>
             </div>
         </div>
@@ -43,6 +51,6 @@
 <?php else: ?>
 
     <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('phucthinh/api/device') ?>" class="btn btn-default">Return to device list</a></p>
+    <p><a href="<?= Backend::url('phucthinh/iot/customers') ?>" class="btn btn-default">Return to customers list</a></p>
 
 <?php endif ?>

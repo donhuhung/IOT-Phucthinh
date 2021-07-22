@@ -5,9 +5,15 @@
 1.0.3:
     - 'Updated table phucthinh_iot_factory'
     - builder_table_update_phucthinh_iot_factory.php
-1.0.4:
-    - 'Updated table phucthinh_iot_factory'
-    - builder_table_update_phucthinh_iot_factory_2.php
 1.0.5:
     - 'Updated table phucthinh_iot_factory'
     - builder_table_update_phucthinh_iot_factory_3.php
+1.0.6:
+    - 'Created table phucthinh_iot_customer'
+    - builder_table_create_phucthinh_iot_customer.php
+1.0.7:
+    - 'Updated table phucthinh_iot_factory'
+    - builder_table_update_phucthinh_iot_factory_4.php
+1.0.8:
+    - 'Updated table phucthinh_iot_customer'
+    - builder_table_update_phucthinh_iot_customer.php

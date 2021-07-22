@@ -21,7 +21,8 @@ class Factory extends General {
 
     public function getList(Request $request) {
         try {
-            $factories = FactoryModel::where('status', 1)->get();
+            $customerID = $request->get('customer_id');
+            $factories = FactoryModel::where('status', 1)->where('customer_id',$customerID)->get();
             $results = fractal($factories, new FactoryTransformer())->toArray();
             return $this->respondWithSuccess($results, "Get List Factory succesful!");
         } catch (\Exception $ex) {

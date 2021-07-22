@@ -38,11 +38,6 @@ class User extends General {
             if ($user->is_activated == 0) {
                 return $this->respondWithError('The account has not been activated. Please contact the admin', self::HTTP_INTERNAL_SERVER_ERROR);
             }
-            if ($user->user_factory) {
-                $IP = $user->user_factory->ip;
-                if ($ipFactory != $IP)
-                    return $this->respondWithError('IP Factory incorrect', self::HTTP_INTERNAL_SERVER_ERROR);
-            }
             if (Hash::check($password, $user->password)) {
                 $userModel = JWTAuth::authenticate($token);
                 $user->last_login = $now;

@@ -1,6 +1,7 @@
 <?php namespace PhucThinh\IOT\Models;
 
 use Model;
+use PhucThinh\IOT\Models\Customer;
 
 /**
  * Factory Model
@@ -74,4 +75,8 @@ class Factory extends Model
         'overview' => 'System\Models\File'
     ];
     public $attachMany = [];
+    
+    public function getCustomerIdOptions(){
+        return Customer::lists('name','id');
+    }
 }

@@ -1,0 +1,19 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    status:
+        label: 'Trạng Thái'
+        span: auto
+        type: switch
+        default: true
+    logo:
+        label: Logo
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
