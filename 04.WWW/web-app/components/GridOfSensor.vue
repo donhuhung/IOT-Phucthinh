@@ -36,7 +36,12 @@
           <template v-if="rowIndex === 0">
             <td class="cell-table text-3xl" :rowspan="dataSensor.length">
               <template v-if="dataList.edit_set_point == 'true'">
-                <edit-set-point :dataSensor="dataList" :value="dataList.set_point"/>
+                <template v-if="checkPermission">
+                  <edit-set-point :dataSensor="dataList" :value="dataList.set_point"/>
+                </template>
+                <template v-else>
+                  <label>{{dataList.set_point}}</label>
+                </template>
               </template>
               <template v-else>
                 <label class="text-gray-400">No Update</label>
@@ -54,6 +59,7 @@
 
 <script>
 import EditSetPoint from "./EditSetPoint";
+import {mapActions, mapGetters} from 'vuex';
 import moment from 'moment';
 
 const colors = [
@@ -144,7 +150,20 @@ export default {
           type: 'text'
         },
       ]
-    }
+    },
+    ...mapGetters({
+      user:'auth/user'
+    }),
+    checkPermission() {
+      const updateSetPoint = false;
+      if(this.user){
+        const group = this.user.group[0].code;
+        if(group !== 'viewer')
+          this.updateSetPoint = true;
+      }
+      return this.updateSetPoint;
+
+    },
   },
   methods: {
     styleCell(row) {
