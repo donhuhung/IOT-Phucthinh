@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import {mapGetters} from 'vuex';
+import {login} from "../../api/auth";
 
 export default {
   layout: 'auth',
@@ -65,7 +66,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions("auth", ["login"]),
     async submit(e) {
       e.preventDefault();
       if (this.submitting) {
@@ -75,17 +75,15 @@ export default {
       try {
         if (ip_factory && username && password) {
           this.submitting = true
-          await this.login({ip_factory, username, password});
-          if (this.isLoggedIn) {
-            this.authSuccess()
-          }
+          const res = await login({ip_factory, username, password})
+          this.$store.commit("auth/authSuccess", res.data.data);
+          this.authSuccess()
         }
       } catch (err) {
         if (err.response) {
           const {data = {}} = err.response
           const message = data.message
           this.error_login = message
-          this.$nuxt.$emit('notify', message)
           this.$notify({message})
         }
       } finally {
@@ -94,7 +92,7 @@ export default {
     },
     authSuccess() {
       let path;
-      if(this.$route.query['redirect'] !='/')
+      if (this.$route.query['redirect'] != '/')
         path = this.$route.query['redirect']
       else
         path = this.defaultPage

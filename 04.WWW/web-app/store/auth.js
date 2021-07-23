@@ -1,15 +1,13 @@
-import { getSESSION, removeSESSION, SESSION, setSESSION } from '~/helpers/sessions'
-import { login } from "../api/auth";
-
+import {getSESSION, removeSESSION, SESSION, setSESSION} from '~/helpers/sessions'
 
 export const state = () => {
   return {
     status: '',
     token: getSESSION(SESSION.TOKEN) || '',
     user: getSESSION(SESSION.USER) || {},
-    groupUser:getSESSION(SESSION.GROUPUSER) || '',
-    messageError:'',
-    status_api:'',
+    groupUser: getSESSION(SESSION.GROUPUSER) || '',
+    messageError: '',
+    status_api: '',
   }
 }
 
@@ -28,13 +26,12 @@ export const getters = {
 }
 
 export const actions = {
-  getUser({ commit }) {
+  getUser({commit}) {
     return new Promise((resolve, reject) => {
 
     })
   },
-  login,
-  logout({ commit }) {
+  logout({commit}) {
     return new Promise((resolve) => {
       commit('logout')
       resolve()
@@ -53,9 +50,9 @@ export const mutations = {
     state.token = data.access_token
     state.user = data
     state.groupUser = data.group[0].code
-     this.$axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`
+    this.$axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`
     setSESSION(SESSION.TOKEN, data.access_token)
-    setSESSION(SESSION.USER,data)
+    setSESSION(SESSION.USER, data)
   },
   authError(state) {
     state.status = 'error'
@@ -64,7 +61,7 @@ export const mutations = {
     state.status_api = 'error'
     state.messageError = data.message
   },
-  authSuccessAPI(state, data){
+  authSuccessAPI(state, data) {
     state.status_api = 'success'
     state.messageError = ''
   },

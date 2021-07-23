@@ -3,12 +3,6 @@ export const SESSION = {
   GROUPUSER:'group_user',
   USER:'user',
 }
-export const SETTINGS = {
-  CAF_TYPE_DEFAULT: 'default',
-  CAF_ACTIVATE: 'activate',
-  CAF_FEATURED: 'featured',
-  CAF_DEMO: 'demo',
-}
 export const setSESSION = (session_name, data) => {
   // eslint-disable-next-line no-undef
   let storage = typeof data === 'object' ? JSON.stringify(data) : data
