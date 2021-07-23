@@ -1,0 +1,22 @@
+.h-full {
+  height: 100%;
+}
+.page-enter-active,
+.page-leave-active {
+}
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.4s, transform 0.4s;
+  backface-visibility: hidden;
+  opacity: 1;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0.5;
+}
+.center-abs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
