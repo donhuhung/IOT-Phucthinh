@@ -4,7 +4,7 @@ const state = () => ({
     { value: 'vi', label: 'VI' },
     { value: 'en', label: 'EN' },
   ],
-  locale: 'vi',
+  locale: process.env.VUE_APP_LOCATE || 'vi',
 })
 const getters = {
   locale: (state) => state.locale

@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="submitting" elevation="20" width="300px">
+  <v-card :loading="submitting" elevation="20" width="350px" class="px-4 pb-4">
     <form @submit.prevent="submit">
       <v-card-title class="justify-center">
         <h3>{{ $t('layout.login') }}</h3>
@@ -16,14 +16,11 @@
                         type="password"
                         :label="$t('layout.password')"/>
         </div>
-        <div class="text-left">
-          <router-link to="/auth/login">
-            {{ $t('layout.ForgotPassword') }}?
-          </router-link>
-        </div>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer/>
+        <!--        <div class="text-left">
+                  <router-link to="/auth/login">
+                    {{ $t('layout.ForgotPassword') }}?
+                  </router-link>
+                </div>-->
         <v-btn color="primary"
                depressed
                block
@@ -32,8 +29,8 @@
                :disabled="submitting">
           {{ submitting ? 'submitting...' : $t('layout.login') }}
         </v-btn>
-        <v-spacer/>
-      </v-card-actions>
+        <v-divider />
+      </v-card-text>
     </form>
   </v-card>
 </template>
@@ -102,6 +99,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

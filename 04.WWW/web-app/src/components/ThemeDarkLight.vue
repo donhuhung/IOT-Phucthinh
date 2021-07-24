@@ -10,7 +10,7 @@
         {{ $t('layout.labelTheme') }}
       </v-subheader>
       <div class="d-flex px-4 pb-4">
-        <template v-for="(mode, index) in themeModes">
+        <template v-for="(mode, index) in themeModes.modes">
           <v-list-item :key="index"
                        @click="mode.handler"
                        active-class="primary--text" v-bind="mode.option">
@@ -28,7 +28,7 @@ export default {
   name: "ThemeDarkLight",
   computed: {
     themeModes() {
-      return [
+      const modes = [
         {
           label: this.$t('layout.darkLabel'),
           icon: 'mdi-white-balance-sunny',
@@ -46,6 +46,12 @@ export default {
           },
         },
       ]
+      const [dark, light]  = modes
+      const mode = this.$vuetify.theme.dark ? dark : light
+      return {
+        modes,
+        mode,
+      }
     }
   },
   methods: {
