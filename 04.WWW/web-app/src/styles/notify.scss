@@ -1,0 +1,12 @@
+.notify-app {
+  &.v-snack__content {
+    //border: solid 1px red;
+    padding: 0px;
+  }
+}
+.notify-wrapper {
+  .theme--light.v-sheet--outlined {
+    border-color: transparent !important;
+  }
+}
+

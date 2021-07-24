@@ -19,7 +19,14 @@
     "labelTheme": "Chủ đề",
     "darkLabel": "Tối",
     "lightLabel": "Sáng",
-    "labelGetTheApp": "Tải ứng dụng."
+    "labelGetTheApp": "Tải ứng dụng.",
+    "labelUpdateInformation": "Cập nhật thông tin",
+    "btnUpdate": "Cập nhật",
+    "btnReset": "Xóa",
+    "confirmSignOutDescription": "Đăng xuất phiên làm việc?",
+    "confirmSignOutLabel": "Đăng xuất",
+    "labelCancel": "Hủy bỏ",
+    "signOut": "Đăng xuất"
   },
   "message": {
 

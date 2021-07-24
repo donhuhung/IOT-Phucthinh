@@ -19,7 +19,14 @@
     "labelTheme": "Theme",
     "darkLabel": "Dark",
     "lightLabel": "Light",
-    "labelGetTheApp": "Get the app."
+    "labelGetTheApp": "Get the app.",
+    "labelUpdateInformation": "Update info profile",
+    "btnUpdate": "Update",
+    "btnReset": "Reset",
+    "confirmSignOutDescription": "Log out session?",
+    "confirmSignOutLabel": "Log out",
+    "labelCancel": "Cancel",
+    "signOut": "Log out"
   },
   "message": {
 

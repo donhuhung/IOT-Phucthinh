@@ -26,9 +26,7 @@
     </v-navigation-drawer>
     <v-main color="#f5f7f9">
       <router-view/>
-      <v-snackbar v-model="showMessage" top right>
-        {{ message }}
-      </v-snackbar>
+      <NotifyFlash />
     </v-main>
   </v-app>
 </template>
@@ -38,32 +36,11 @@ import LinkSignOut from "../components/LinkSignOut"
 import SideBarProfile from "../components/SideBarProfile";
 import LocaleChange from "../components/LocaleChange";
 import ThemeDarkLight from "../components/ThemeDarkLight";
+import NotifyFlash from "../components/NotifyFlash";
 
 export default {
   name: "MainLayout",
-  components: {ThemeDarkLight, LocaleChange, SideBarProfile, LinkSignOut},
-  data() {
-    return {
-      message: undefined,
-      showMessage: false
-    }
-  },
-  mounted() {
-    this.$bus.$on('notify', ({message}) => {
-      this.message = message
-      this.showMessage = true
-    })
-  },
-  methods: {
-    logout() {
-      this.$store.commit('auth/logout')
-      this.redirectLogin()
-    },
-    redirectLogin() {
-      let query = {redirect: this.$route.fullPath}
-      this.$router.replace({path: '/auth/login', query})
-    },
-  }
+  components: {NotifyFlash, ThemeDarkLight, LocaleChange, SideBarProfile, LinkSignOut},
 }
 </script>
 

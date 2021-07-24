@@ -1,8 +1,14 @@
 <template>
   <div>
     <div>
+      <p>
+        {{ user }}
+      </p>
+      <p>
+        {{ userInfo }}
+      </p>
       <div class="mt-8 md:w-8/12 m-auto p-2">
-        <form accept-charset="UTF-8" v-on:submit.prevent="onSubmit()" method="POST">
+        <form accept-charset="UTF-8" method="POST">
             <div class="flex items-center justify-center">
               <div class="pr-12">
                 <img class="avatar" src="/assets/img/factory.png" alt="">
@@ -111,27 +117,19 @@ export default {
   name: "AccountInformation",
   data() {
     return {
-      userInfo:[]
     }
   },
   computed: {
     ...mapGetters({
       user:'auth/user',
     }),
+    userInfo() {
+      return this.user || {}
+    },
     rootFactory() {
       return `/customers/${this.$route.params.customer}`
     }
   },
-  mounted() {
-    this.getUserInfo();
-  },
-  methods: {
-    getUserInfo(){// eslint-disable-line
-      let avatar = '';
-      this.userInfo = this.user;
-      this.userInfo.avatar = avatar;
-    },
-  }
 }
 </script>
 <style scoped>

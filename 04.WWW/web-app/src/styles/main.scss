@@ -4,6 +4,9 @@
 .w-full {
   width: 100%;
 }
+.w-50 {
+  width: 50%;
+}
 .page-enter-active,
 .page-leave-active {
 }
@@ -26,3 +29,4 @@
 .cursor-pointer {
   cursor: pointer;
 }
+@import "./notify";
