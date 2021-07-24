@@ -38,5 +38,13 @@
     "to": {
       "path": "maps"
     }
+  },
+  {
+    "label": "layout.navSetting",
+    "icon": "/img/place.svg",
+    "inFactory": true,
+    "to": {
+      "path": "account"
+    }
   }
 ]

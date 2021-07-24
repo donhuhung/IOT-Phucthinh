@@ -30,3 +30,31 @@
   cursor: pointer;
 }
 @import "./notify";
+
+.border-b {
+  border-bottom: solid 1px;
+  &:last-child {
+    td {
+      border-color: transparent;
+    }
+  }
+  td {
+    //border-bottom: solid 1px rgba(0,0,0,0.1);
+    padding: 5px 0px;
+    &:first-child {
+      font-weight: bold;
+    }
+  }
+}
+.space-y-2 {
+  &>* {
+    margin-bottom: 20px;
+
+  }
+}
+.space-border {
+  &>* {
+    border: solid 1px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+}

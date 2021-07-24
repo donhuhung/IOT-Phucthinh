@@ -41,7 +41,13 @@ async function updateAccount(data) {
   form.append("address", data.address);
   return await axios.post('/api/v1/user/update-account', form);
 }
-
+export async function uploadAvatarAccount(data = {}) {
+  let form = new FormData()
+  for (let i in data) {
+    form.append(i, data[i])
+  }
+  return await axios.post('/api/v1/user/update-avatar', form);
+}
 export {
   login,
   logout,

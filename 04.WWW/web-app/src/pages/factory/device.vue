@@ -16,7 +16,7 @@ export default {
       factory: 'auth/factory',
     }),
     links() {
-      const {factory} = this
+      const {factory = {}} = this
       return [
         {
           text: 'Factory',

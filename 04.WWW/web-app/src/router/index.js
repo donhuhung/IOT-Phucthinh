@@ -38,30 +38,30 @@ const routes = [
         },
       },
       {
-        path: '/customers/:customer/account',
+        path: '/customers/:customer/factory/:factory/account',
         name: 'customers-customer-account',
         components: {
           'local-menu': () => import(/* webpackChunkName: "customers-local-menu" */ '../components/local-menu/LocalMenuCustomer'),
           'default': () => import(/* webpackChunkName: "account" */ '../pages/account'),
-          // 'local-toolbar': () => import(/* webpackChunkName: "customers-local-toolbar" */ '../components/local-toolbar/toolbar-factory'),
+          'local-toolbar': () => import(/* webpackChunkName: "customers-local-toolbar" */ '../components/local-toolbar/toolbar-factory'),
         },
       },
       {
-        path: '/customers/:customer/account-info',
+        path: '/customers/:customer/factory/:factory/account-info',
         name: 'customers-customer-account-info',
         components: {
           'local-menu': () => import(/* webpackChunkName: "customers-local-menu" */ '../components/local-menu/LocalMenuCustomer'),
           'default': () => import(/* webpackChunkName: "account-info" */ '../pages/account-info'),
-          // 'local-toolbar': () => import(/* webpackChunkName: "customers-local-toolbar" */ '../components/local-toolbar/toolbar-factory'),
+          'local-toolbar': () => import(/* webpackChunkName: "customers-local-toolbar" */ '../components/local-toolbar/toolbar-factory'),
         },
       },
       {
-        path: '/customers/:customer/account-password',
+        path: '/customers/:customer/factory/:factory/account-password',
         name: 'customers-customer-account-password',
         components: {
           'local-menu': () => import(/* webpackChunkName: "customers-local-menu" */ '../components/local-menu/LocalMenuCustomer'),
           'default': () => import(/* webpackChunkName: "account-password" */ '../pages/account-password'),
-          // 'local-toolbar': () => import(/* webpackChunkName: "customers-local-toolbar" */ '../components/local-toolbar/toolbar-factory'),
+          'local-toolbar': () => import(/* webpackChunkName: "customers-local-toolbar" */ '../components/local-toolbar/toolbar-factory'),
         },
       },
       {

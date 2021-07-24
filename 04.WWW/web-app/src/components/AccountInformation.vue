@@ -1,178 +1,118 @@
 <template>
-  <div>
-    <div>
-      <p>
-        {{ user }}
-      </p>
-      <p>
-        {{ userInfo }}
-      </p>
-      <div class="mt-8 md:w-8/12 m-auto p-2">
-        <form accept-charset="UTF-8" method="POST">
-            <div class="flex items-center justify-center">
-              <div class="pr-12">
-                <img class="avatar" src="/assets/img/factory.png" alt="">
-              </div>
-              <div>
-                <p class="capitalize text-xl font-semibold text-blue-600 font-bold-italic">{{userInfo.name}}</p>
-                <p class="font-thin italic text-right">
-                  <i class="fas fa-user-clock"></i>
-                  Lần truy cập gần nhất: {{userInfo.last_login}}
-                </p>
-                <a href="javascript:void(0)" class="upload-avatar">
-                  <i class="fas fa-camera"></i>
-                  Cập nhật ảnh đại diện
-                </a>
-              </div>
-            </div>
-          <div>
-            <div class="box-info mt-4">
-              <h4 class="inline-block text-xl font-semibold text-blue-600 tracking-tight capitalize pb-4">
-                <i class="fas fa-sign-in-alt "></i>
-                Thông tin đăng nhập
-              </h4>
-              <table>
-                <tr class="lg:h-10">
-                  <td class="text-green-pt font-bold-italic">IP Đăng Nhập:</td>
-                  <td class="pl-2 font-light">{{userInfo.factory?userInfo.factory.ip:''}}</td>
-                </tr>
-                <tr class="lg:h-10">
-                  <td class="text-green-pt font-bold-italic">Nhà máy:</td>
-                  <td class="pl-2 font-light">{{userInfo.factory?userInfo.factory.name:''}}</td>
-                </tr>
-                <tr class="lg:h-10">
-                  <td class="text-green-pt font-bold-italic">Mật khẩu:</td>
-                  <td class="pl-2 font-light">
-                    <input type="password" value="matkhaudangnhap"/>
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <div class="box-info">
-              <h4 class="inline-block text-xl font-semibold text-blue-600 tracking-tight capitalize pb-4">
-                <i class="far fa-id-card pr-3"></i>
-                Thông tin chung
-              </h4>
-              <table>
-                <tr class="lg:h-10">
-                  <td class="text-green-pt font-bold-italic">Họ & tên:</td>
-                  <td class="pl-2 font-light">{{userInfo.name}}</td>
-                </tr>
-                <tr class="lg:h-10">
-                  <td class="text-green-pt font-bold-italic">Email:</td>
-                  <td class="pl-2 font-light">{{userInfo.email}}</td>
-                </tr>
-                <tr class="col-end-2 lg:h-10">
-                  <td class="text-green-pt font-bold-italic">Giới tính:</td>
-                  <td class="pl-2 font-light">{{userInfo.gender==1?'Nam':'Nữ'}}</td>
-                  <td class="text-green-pt font-bold-italic">Ngày sinh:</td>
-                  <td class="pl-2 font-light">{{userInfo.birthday}}</td>
-                </tr>
-                <tr class="lg:h-10">
-                  <td class="text-green-pt font-bold-italic">Số điện thoại:</td>
-                  <td class="pl-2 font-light">{{userInfo.phone}}</td>
-                </tr>
-                <tr class="lg:h-10">
-                  <td class="text-green-pt font-bold-italic">Địa chỉ:</td>
-                  <td class="pl-2 font-light">{{userInfo.address}}</td>
-                </tr>
-              </table>
-              <router-link :to="`${rootFactory}/account-info`" class="update-info">
-                <i class="far fa-user-circle"></i>
-                Cập nhật thông tin cá nhân
-              </router-link>
-            </div>
-            <div class="box-info">
-              <h4 class="inline-block text-xl font-semibold text-blue-600 tracking-tight capitalize pb-4">
-                <i class="fas fa-key"></i>
-                Bảo mật
-              </h4>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                  <table>
-                    <tr>
-                      <td class="text-green-pt font-bold-italic">Mật khẩu:</td>
-                      <td class="pl-2 font-light">
-                        <input type="password" value="matkhaudangnhap"/>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-                <router-link :to="`${rootFactory}/account-password`" class="btn-change-password">
-                  <i class="fas fa-unlock-alt"></i>
-                  Thay đổi mật khẩu
-                </router-link>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+  <div class="w-full space-y-2">
+    <v-card class="mx-auto" flat>
+      <v-list-item two-line>
+        <v-list-item-avatar size="100">
+          <v-img :src="userInfo.avatar"/>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title class="text-h5">
+            {{ userInfo.name }}
+          </v-list-item-title>
+          <v-list-item-subtitle>Lần truy cập gần nhất: {{ userInfo.last_login }}</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+      <v-divider/>
+      <v-card-title>
+        Thông tin đăng nhập
+      </v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col>IP Đăng Nhập:</v-col>
+          <v-col>{{ userInfo.factory ? userInfo.factory.ip : '' }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col>Nhà máy:</v-col>
+          <v-col>{{ userInfo.factory ? userInfo.factory.name : '' }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col>Mật khẩu:</v-col>
+          <v-col>
+            <v-text-field type="password" value="matkhaudangnhap" disabled/>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-divider/>
+      <v-card-title>
+        Thông tin chung
+      </v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col>Họ & tên:</v-col>
+          <v-col>{{ userInfo.name }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col>Email:</v-col>
+          <v-col>{{ userInfo.email }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col>Giới tính:</v-col>
+          <v-col>{{ userInfo.gender == 1 ? 'Nam' : 'Nữ' }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col>Ngày sinh:</v-col>
+          <v-col>{{ userInfo.birthday }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col>Số điện thoại:</v-col>
+          <v-col>{{ userInfo.phone }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col>Địa chỉ:</v-col>
+          <v-col>{{ userInfo.address }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn color="primary" :to="`${rootFactory}/account-info`" class="update-info">
+              Cập nhật thông tin cá nhân
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-divider/>
+      <v-card-title>Bảo mật</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col>Mật khẩu:</v-col>
+          <v-col>
+            <v-text-field readonly value="matkhaudangnhap" type="password" disabled/>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn color="primary" :to="`${rootFactory}/account-password`" class="btn-change-password">
+              Thay đổi mật khẩu
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex';
+
 export default {
   name: "AccountInformation",
   data() {
-    return {
-    }
+    return {}
   },
   computed: {
     ...mapGetters({
-      user:'auth/user',
+      user: 'auth/user',
+      factory: 'auth/factory'
     }),
     userInfo() {
       return this.user || {}
     },
     rootFactory() {
-      return `/customers/${this.$route.params.customer}`
+      const { params: {customer, factory} } = this.$route
+      return `/customers/${customer}/factory/${factory}`
     }
   },
 }
 </script>
 <style scoped>
-.avatar{
-  border-radius: 50%;
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-}
-.upload-avatar{
-  color: #fff;
-  background-color: #007BFF;
-  padding: 5px 20px;
-  border-radius: 10px;
-  display: block;
-  margin-top: 10px;
-  text-align: center;
-  width: 75%;
-}
-.box-info{
-  background: #ffffff;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  padding: 20px;
-}
-.btn-change-password{
-  color:#ffffff;
-  background-color: #007BFF;
-  padding: 5px 20px;
-  border-radius: 10px;
-}
-.update-info{
-  color: #ffffff;
-  background-color: #007BFF;
-  padding: 7px 20px;
-  border-radius: 10px;
-  margin: auto;
-  display: block;
-  width: 40%;
-  margin-top: 20px;
-  text-align: center;
-}
-table tr{
-  font-size: 18px;
-}
+
 </style>
