@@ -52,6 +52,12 @@
 
   }
 }
+.space-x {
+
+  &>* {
+    margin: 0px 10px;
+  }
+}
 .space-border {
   &>* {
     border: solid 1px rgba(0,0,0,0.1);

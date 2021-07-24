@@ -21,6 +21,7 @@
     "lightLabel": "Light",
     "labelGetTheApp": "Get the app.",
     "labelUpdateInformation": "Update info profile",
+    "labelUpdatePassword": "Update Password",
     "btnUpdate": "Update",
     "btnReset": "Reset",
     "confirmSignOutDescription": "Log out session?",
