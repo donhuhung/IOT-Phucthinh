@@ -76,9 +76,9 @@ export default {
       console.error('init', res)
       const { value } = this
       if(value) {
-        // this.pond.addFile(value)
-        this.pond.addFile('https://znews-photo.zadn.vn/w1920/Uploaded/ngogtn/2021_03_13/Billy_Crudup_Maribel_Verdu.jpeg')
-        this.pond.addFile('https://www.htechsolution.vn/phucthinh/admin/storage/app/uploads/public/60f/c09/023/60fc09023b389929686837.png')
+        this.pond.addFile(value)
+        // this.pond.addFile('https://znews-photo.zadn.vn/w1920/Uploaded/ngogtn/2021_03_13/Billy_Crudup_Maribel_Verdu.jpeg')
+        // this.pond.addFile('https://www.htechsolution.vn/phucthinh/admin/storage/app/uploads/public/60f/c09/023/60fc09023b389929686837.png')
       }
     },
     onError(...res) {
