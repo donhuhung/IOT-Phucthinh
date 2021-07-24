@@ -10,6 +10,7 @@ use Rainlab\User\Models\UserGroup;
 use PhucThinh\API\Transformers\UserTransformer;
 use JWTAuth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /**
  * User Back-end Controller
@@ -129,12 +130,38 @@ class User extends General {
             $user->phone = $phone;
             $user->address = $address;
             $user->save();
-			$results = fractal($user, new UserTransformer())->toArray();
-			return $this->respondWithSuccess($results, "Update Account succesfully!");
+            $results = fractal($user, new UserTransformer())->toArray();
+            return $this->respondWithSuccess($results, "Update Account succesfully!");
         } catch (\Exception $ex) {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
         }
     }
-        
+
+    public function updateAvatar(Request $request) {
+        try {
+            $userToken = JWTAuth::parseToken()->authenticate();
+            $user = $this->userRepository->find($userToken->id);
+            if ($user) {
+                if ($request->hasFile('avatar')) {
+                    $file = $request->avatar;
+                    $arrFile = ['png', 'jpg', 'jpeg'];
+                    $extension = Str::lower($file->getClientOriginalExtension());
+                    if (in_array($extension, $arrFile)) {
+                        $user->avatar = $request->file('avatar');
+                        $user->save();
+                        return $this->respondWithMessage("Update Avatar succesfully!");
+                    } else {
+                        return $this->respondWithError('File không hợp lệ!', self::HTTP_INTERNAL_SERVER_ERROR);
+                    }
+                } else {
+                    return $this->respondWithError('File không hợp lệ!', self::HTTP_INTERNAL_SERVER_ERROR);
+                }
+            } else {
+                return $this->respondWithError('Người Dùng không tồn tại!', self::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception $ex) {
+            return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
+        }
+    }
 
 }
