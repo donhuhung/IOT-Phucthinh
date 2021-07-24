@@ -38,10 +38,11 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-import {getListSensor} from "../../api/app"
+import {getDetailFactory, getListSensor} from "../../api/app"
+import '@/mixins/factory'
 import GridOfSensor from "../../components/GridOfSensor";
 import NotFoundData from "../../components/NotFoundData";
+import {factoryMixin} from "@/mixins/factory";
 
 export default {
   components: {NotFoundData, GridOfSensor},
@@ -53,13 +54,12 @@ export default {
       active: false,
       activetab: 0,
       items: [],
-      dateSync: Date.now()
+      dateSync: Date.now(),
+      factory:[]
     }
   },
+  mixins: [factoryMixin],
   computed: {
-    ...mapGetters({
-      factory: 'auth/factory',
-    }),
     links() {
       const {factory} = this
       return [
@@ -102,7 +102,10 @@ export default {
         console.log("Syncing Data")
       }, 45000);
     },
-  }
+    getDetailFactory(res){
+      this.factory = res
+    }
+  },
 }
 </script>
 

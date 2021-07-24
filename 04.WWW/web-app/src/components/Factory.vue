@@ -59,7 +59,8 @@ export default {
   },
   methods: {
     async listFactory() {
-      const res = await getListFactory()
+      const customerID = this.$route.params.customer
+      const res = await getListFactory(customerID)
       const {data} = res.data
       this.items = data
     }

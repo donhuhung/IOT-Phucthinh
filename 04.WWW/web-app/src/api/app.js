@@ -1,7 +1,18 @@
 import axios from "../plugins/https";
 
-async function getListFactory() {
-  return await axios.get('/api/v1/factory/list');
+async function getListCustomer() {
+  return await axios.get('/api/v1/customer/list');
+}
+
+async function getListFactory(data) {
+  let form = new FormData();
+  form.append("customer_id", data);
+  return await axios.post('/api/v1/factory/list',form);
+}
+async function getDetailFactory(data) {
+  let form = new FormData();
+  form.append("factory_id", data);
+  return await axios.post('/api/v1/factory/detail',form);
 }
 async function getListSensor(data) {
   let form = new FormData();
@@ -29,7 +40,9 @@ async function updateSetPoint(data) {
 }
 
 export {
+  getListCustomer,
   getListFactory,
+  getDetailFactory,
   getListSensor,
   getListMotor,
   getListValve,

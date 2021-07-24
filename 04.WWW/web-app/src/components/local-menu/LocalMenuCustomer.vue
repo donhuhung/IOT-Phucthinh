@@ -27,22 +27,23 @@
 </template>
 
 <script>
+import {getListCustomer} from "@/api/app"
 export default {
   name: "LocalMenuCustomer",
   data() {
     return {
-      customers: [
-        {
-          name: 'Tân Hiệp Phát',
-          id: 1,
-        },
-        {
-          name: 'Cơ Khí Tiền Giang',
-          id: 2,
-        },
-
-      ]
+      customers: []
     }
+  },
+  mounted() {
+    this.listCustomer()
+  },
+  methods: {
+    async listCustomer() {
+      const res = await getListCustomer()
+      this.customers = res.data.data
+    },
+
   }
 }
 </script>
