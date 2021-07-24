@@ -5,7 +5,7 @@
         <form accept-charset="UTF-8" v-on:submit.prevent="onSubmit()" method="POST">
             <div class="flex items-center justify-center">
               <div class="pr-12">
-                <img class="avatar" :src="this.userInfo.avatar" alt="">
+                <img class="avatar" src="/assets/img/factory.png" alt="">
               </div>
               <div>
                 <p class="capitalize text-xl font-semibold text-blue-600 font-bold-italic">{{userInfo.name}}</p>
@@ -119,10 +119,19 @@ export default {
       user:'auth/user',
     }),
     rootFactory() {
-
       return `/customers/${this.$route.params.customer}`
     }
   },
+  mounted() {
+    this.getUserInfo();
+  },
+  methods: {
+    getUserInfo(){// eslint-disable-line
+      let avatar = '';
+      this.userInfo = this.user;
+      this.userInfo.avatar = avatar;
+    },
+  }
 }
 </script>
 <style scoped>
