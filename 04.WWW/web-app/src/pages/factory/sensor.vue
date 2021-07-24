@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {getDetailFactory, getListSensor} from "../../api/app"
+import {getListSensor} from "../../api/app"
 import '@/mixins/factory'
 import GridOfSensor from "../../components/GridOfSensor";
 import NotFoundData from "../../components/NotFoundData";

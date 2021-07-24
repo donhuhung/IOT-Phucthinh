@@ -14,7 +14,7 @@
         </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
-        <v-menu offset-y bottom open-on-hover>
+        <v-menu offset-y bottom open-on-hover transition="slide-y-transition">
           <template v-slot:activator="{on}">
             <v-icon v-on="on">mdi-dots-vertical</v-icon>
           </template>

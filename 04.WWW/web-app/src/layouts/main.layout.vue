@@ -12,10 +12,16 @@
     </v-app-bar>
     <v-navigation-drawer app>
       <SideBarProfile/>
-      <v-divider />
+      <v-divider/>
       <router-view name="local-menu"/>
       <template v-slot:append>
-        <LinkSignOut class="px-2"/>
+        <v-divider/>
+        <div class="d-flex">
+          <LinkSignOut/>
+          <v-spacer />
+          <ThemeDarkLight />
+          <LocaleChange/>
+        </div>
       </template>
     </v-navigation-drawer>
     <v-main color="#f5f7f9">
@@ -30,10 +36,12 @@
 <script>
 import LinkSignOut from "../components/LinkSignOut"
 import SideBarProfile from "../components/SideBarProfile";
+import LocaleChange from "../components/LocaleChange";
+import ThemeDarkLight from "../components/ThemeDarkLight";
 
 export default {
   name: "MainLayout",
-  components: {SideBarProfile, LinkSignOut},
+  components: {ThemeDarkLight, LocaleChange, SideBarProfile, LinkSignOut},
   data() {
     return {
       message: undefined,

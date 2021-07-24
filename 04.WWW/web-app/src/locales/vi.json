@@ -15,7 +15,10 @@
     "navSetting": "Tài Khoản",
     "msgWelcome": "Xin Chào",
     "titleMess": "Cập nhật tài khoản",
-    "labelCustomer": "Khách Hàng"
+    "labelCustomer": "Khách Hàng",
+    "labelTheme": "Chủ đề",
+    "darkLabel": "Tối",
+    "lightLabel": "Sáng"
   },
   "message": {
 

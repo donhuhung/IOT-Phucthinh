@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="submitting" elevation="20" width="450px">
+  <v-card :loading="submitting" elevation="20" width="300px">
     <form @submit.prevent="submit">
       <v-card-title class="justify-center">
         <h3>{{ $t('layout.login') }}</h3>
@@ -24,9 +24,9 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer/>
-        <v-btn rounded
-               color="primary"
+        <v-btn color="primary"
                depressed
+               block
                type="submit"
                :loading="submitting"
                :disabled="submitting">

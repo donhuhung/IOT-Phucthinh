@@ -6,6 +6,9 @@ const state = () => ({
   ],
   locale: 'vi',
 })
+const getters = {
+  locale: (state) => state.locale
+}
 const mutations = {
   setLocale(state, locale) {
     const isLocale = _find(state.locales, { value: locale })
@@ -17,7 +20,7 @@ const mutations = {
 export default {
   namespaced: true,
   state,
-  getters: {},
+  getters,
   actions: {},
   mutations,
 }
