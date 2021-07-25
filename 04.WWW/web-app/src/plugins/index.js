@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import notify from './notify'
 import bus from './bus'
+import './googleMaps'
 
 const eventbus = new Vue()
 // TODO: add store checking

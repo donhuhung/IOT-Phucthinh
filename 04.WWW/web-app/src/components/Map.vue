@@ -1,23 +1,7 @@
 <template>
   <v-container>
     <div class="info-windows">
-      <google-map id="map" ref="Map">
-        <google-map-marker
-            :key="index"
-            v-for="(infoWindow, index) in infoWindowsList"
-            :position="infoWindow.position"
-            @click="toggleInfoWindow(infoWindow)"
-        />
-        <google-map-infowindow
-            :position="infoWindowContext.position"
-            :show.sync="showInfo"
-            :options="{maxWidth: 300}"
-            @info-window-clicked="infoClicked"
-        >
-          <h4>{{infoWindowContext.title}}</h4>
-          <p>{{infoWindowContext.description}}</p>
-        </google-map-infowindow>
-      </google-map>
+
     </div>
   </v-container>
 
