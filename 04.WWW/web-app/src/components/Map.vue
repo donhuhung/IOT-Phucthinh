@@ -31,8 +31,8 @@ export default {
       showInfo: false,
       infoWindowContext: {
         position: {
-          lat: 44.2899,
-          lng: 11.8774
+          lat: 13.785870,
+          lng: 109.148590
         }
       },
       infoWindowsList: cities
