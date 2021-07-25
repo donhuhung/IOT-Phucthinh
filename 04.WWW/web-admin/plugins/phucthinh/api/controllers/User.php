@@ -149,7 +149,9 @@ class User extends General {
                     if (in_array($extension, $arrFile)) {
                         $user->avatar = $request->file('avatar');
                         $user->save();
-                        return $this->respondWithMessage("Update Avatar succesfully!");
+                        $data['avatar'] = $user->avatar->getPath();
+                        $return['data'] = $data;
+                        return $this->respondWithSuccess($return, "Avatar succesfully!");
                     } else {
                         return $this->respondWithError('File không hợp lệ!', self::HTTP_INTERNAL_SERVER_ERROR);
                     }
