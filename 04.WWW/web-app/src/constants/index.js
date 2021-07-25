@@ -1,8 +1,8 @@
 export const STATUS = {
   NONE: [0, 'None', 'white'],
   LOCAL: [1, 'Local', 'white'],
-  MANU: [2, 'Manu', 'white'],
-  AUTO: [3, 'Auto', 'white'],
+  MANU: [2, 'Manu', 'gray'],
+  AUTO: [3, 'Auto', 'primary'],
   UDF: [4, 'Udf', 'grey'],
 }
 export const OPERATING_STATUS_MOTOR = {

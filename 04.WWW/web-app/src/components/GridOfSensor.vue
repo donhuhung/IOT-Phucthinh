@@ -3,7 +3,7 @@
     <h3>
       {{ name }} {{ symbol }}
     </h3>
-    <table class="w-full mt-4">
+    <table class="w-full mt-4 table-grid">
       <tr>
         <template v-for="field in fields">
           <th :key="field.name" class="cell-table cell-header">
@@ -178,6 +178,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .box-sensor {
   border: 2px solid #E5E5E5;
   padding: 20px;

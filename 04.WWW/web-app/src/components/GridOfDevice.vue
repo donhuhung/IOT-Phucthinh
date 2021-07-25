@@ -1,11 +1,11 @@
 <template>
-  <v-card class="w-full h-full box-sensor space-y-2" flat>
-    <table class="min-w-max w-full table-auto">
+  <v-card class="w-full h-full box-sensor space-y-2" flat tile>
+    <table class="min-w-max w-full table-auto table-grid">
       <tr>
         <template v-for="(field, index) in fieldsCombined">
           <th :key="index" class="cell-table cell-header">
-            <div>
-              {{ field.label }}
+            <div class="d-flex">
+              <span class="cell-header--text">{{ field.label }}</span>
               <v-icon class="cursor-pointer"
                       v-if="index !== 0"
                       right
@@ -35,6 +35,7 @@
                   <div class="py-1">
                     <v-btn class="link_item text-center"
                            shaped width="100px"
+                           depressed block
                            :color="row.status | statusDevice">
                       {{ row['status_name'] }}
                     </v-btn>
@@ -43,7 +44,7 @@
                 <template v-else-if="header.name === 'operation_status'">
                   <div class="py-1">
                     <v-btn class="link_item"
-                           shaped width="100px"
+                           shaped width="100px" depressed block
                            :color="row.operation_status | statusOperating">
                       {{ row['operation_status_name'] }}
                     </v-btn>
@@ -214,48 +215,56 @@ export default {
 <style scoped lang="scss">
 
 .box-sensor {
-  border: 2px solid #E5E5E5;
-  padding: 20px;
-  border-radius: 10px;
-  background: #fff;
-
   h3 {
     font-size: 22px;
     color: #222;
     font-weight: bold;
   }
 }
-.cell-table {
-  position: relative;
-  padding: 10px 20px 10px 0;
-  text-align: left;
-  font-size: 14px;
+.table-grid {
+  border: solid 1px #EFEFEF;
+  .cell-table {
+    position: relative;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 14px;
 
-  &.cell-header {
-    //@apply px-4 py-2;
-    color: #222;
-    border-bottom: 1px solid #222222;
-    font-weight: bold;
+    &.cell-header {
+      //@apply px-4 py-2;
+      color: #222;
+      //border-bottom: 1px solid #222222;
+      border-bottom: 1px solid #EFEFEF;
+      border-left: 1px solid #EFEFEF;
+      font-weight: bold;
+      //padding: 5px 5px;
+      .cell-header--text {
+        font-size: 14px;
+        white-space: nowrap;
+        display: block;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+      }
+    }
+
+    &.cell-row {
+      //padding: 6px 12px;
+      //border-color: #2980b9;
+      border-bottom: 1px solid #EFEFEF;
+      border-left: 1px solid #EFEFEF;
+      //padding: 0px 5px;
+      //border: 1px solid #EFEFEF;
+      &.cell-row--no {
+        width: 50px;
+      }
+    }
   }
-
-  &.cell-row {
-    //padding: 6px 12px;
-    //border-color: #2980b9;
-    border-bottom: 1px solid #EFEFEF;
-  }
-}
-
-.text-tiny {
-  font-size: 12px;
-  color: #757575;
-  margin-top: 10px;
-}
-
-.grid-row {
-  &:last-child {
-    td.cell-row {
-      border-color: transparent;
+  .grid-row {
+    &:last-child {
+      td.cell-row {
+        //border-color: transparent;
+      }
     }
   }
 }
+
 </style>
