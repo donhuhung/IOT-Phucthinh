@@ -39,10 +39,9 @@
 
 <script>
 import {getListSensor} from "../../api/app"
-import '@/mixins/factory'
 import GridOfSensor from "../../components/GridOfSensor";
 import NotFoundData from "../../components/NotFoundData";
-import {factoryMixin} from "@/mixins/factory";
+import factoryMixin from "@/mixins/factoryMixin"
 
 export default {
   components: {NotFoundData, GridOfSensor},
@@ -55,7 +54,6 @@ export default {
       activetab: 0,
       items: [],
       dateSync: Date.now(),
-      factory:[]
     }
   },
   mixins: [factoryMixin],
@@ -101,9 +99,6 @@ export default {
         this.dateSync = Date.now()
         console.log("Syncing Data")
       }, 45000);
-    },
-    getDetailFactory(res){
-      this.factory = res
     }
   },
 }

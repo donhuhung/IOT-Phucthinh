@@ -7,14 +7,12 @@
 
 <script>
 import DeviceTemplate from "../../components/DeviceTemplate";
-import {mapGetters} from "vuex";
+import factoryMixin from "@/mixins/factoryMixin"
 
 export default {
   components: {DeviceTemplate},
+  mixins: [factoryMixin],
   computed: {
-    ...mapGetters({
-      factory: 'auth/factory',
-    }),
     links() {
       const {factory = {}} = this
       return [
