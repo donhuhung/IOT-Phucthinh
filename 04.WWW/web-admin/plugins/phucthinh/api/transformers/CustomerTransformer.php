@@ -11,6 +11,7 @@ class CustomerTransformer extends Fractal\TransformerAbstract {
         return [
             'id' => (int) $customer->id,
             'name' => (string) $customer->name,            
+			'address' => (string) $customer->address, 
             'logo' => $customer->logo ? $customer->logo->getPath() : '',            
         ];
     }

@@ -17,3 +17,7 @@ fields:
             extension: auto
         span: auto
         type: fileupload
+    address:
+        label: Address
+        span: auto
+        type: text

@@ -5,3 +5,12 @@ columns:
     name:
         label: name
         type: text
+        searchable: true
+        invisible: true
+        sortable: true
+    address:
+        label: Address
+        type: text
+        searchable: true
+        invisible: true
+        sortable: true

@@ -17,3 +17,6 @@
 1.0.8:
     - 'Updated table phucthinh_iot_customer'
     - builder_table_update_phucthinh_iot_customer.php
+1.0.9:
+    - 'Updated table phucthinh_iot_customer'
+    - builder_table_update_phucthinh_iot_customer_2.php
