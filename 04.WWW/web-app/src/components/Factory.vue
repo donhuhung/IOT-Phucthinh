@@ -70,5 +70,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.box-factory--item{
+  margin-right: 10px;
+}
 </style>

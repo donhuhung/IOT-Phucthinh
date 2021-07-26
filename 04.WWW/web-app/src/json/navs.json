@@ -24,6 +24,22 @@
     }
   },
   {
+    "label": "layout.navReport",
+    "icon": "/img/bar-chart.svg",
+    "inFactory": true,
+    "to": {
+      "path": "report"
+    }
+  },
+  {
+    "label": "layout.navMaintenance",
+    "icon": "/img/bar-chart.svg",
+    "inFactory": true,
+    "to": {
+      "path": "maintenance"
+    }
+  },
+  {
     "label": "layout.navChart",
     "icon": "/img/bar-chart.svg",
     "inFactory": true,

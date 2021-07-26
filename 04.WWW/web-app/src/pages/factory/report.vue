@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    Đồ Thị
+    Thống Kê
   </v-container>
 </template>
 

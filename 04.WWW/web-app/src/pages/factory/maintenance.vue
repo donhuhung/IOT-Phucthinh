@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    Đồ Thị
+    Bảo Trì
   </v-container>
 </template>
 
