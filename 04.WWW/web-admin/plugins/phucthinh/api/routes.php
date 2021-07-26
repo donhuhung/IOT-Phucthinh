@@ -8,8 +8,8 @@ Route::group([
     //API for User
     Route::prefix('user')->group(function () {
         Route::post('login', 'PhucThinh\Api\Controllers\User@login');
-        Route::post('forgot-password', 'Mtech\Api\Controllers\User@forgotPassWord');
-        Route::post('logout', 'Mtech\Api\Controllers\User@logout');
+        Route::post('forgot-password', 'PhucThinh\Api\Controllers\User@forgotPassWord');
+        Route::get('logout', 'PhucThinh\Api\Controllers\User@logout');
     });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('user')->group(function () {
         Route::post('change-password', 'PhucThinh\Api\Controllers\User@changePassword');

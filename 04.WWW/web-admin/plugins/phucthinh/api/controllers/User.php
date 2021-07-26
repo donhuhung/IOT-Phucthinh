@@ -63,11 +63,12 @@ class User extends General {
 
     public function logout(Request $request) {
         try {
-            $token = $request->header('Authorization');
+            /*$token = $request->header('Authorization');
             $token = str_replace('Bearer ', '', $token);
-            $user = JWTAuth::authenticate($token);
-
-            JWTAuth::invalidate();
+			if($token){
+				$user = JWTAuth::authenticate($token);			
+				JWTAuth::invalidate();
+			}         */  
             return $this->respondWithMessage('Logout succesful!');
         } catch (\Exception $ex) {
             return $this->respondWithError($ex->getMessage(), self::HTTP_INTERNAL_SERVER_ERROR);
