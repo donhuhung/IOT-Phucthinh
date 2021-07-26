@@ -62,11 +62,11 @@ export default {
         const value = this.val
         this.submitting = true
         await updateSetPoint({idSetPoint, fieldSetPoint, value})
-        const text = 'Cập nhật Set Point thành công!'
-        this.$notify({text, title: '', type: 'notify_success',})
+        const message = 'Cập nhật Set Point thành công!'
+        this.$notify({message, title: '', type: 'success',})
         this.point = value
       } catch (e) {
-        this.$notify({text: e.message, title: this.$t('layout.titleMess'), type: 'error'})
+        this.$notify({message: e.message, title: this.$t('layout.titleMess'), type: 'error'})
       } finally {
         this.submitting = false
       }

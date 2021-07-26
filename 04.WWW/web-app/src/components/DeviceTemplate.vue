@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-2">
+  <div class="">
     <v-app-bar height="40px" flat>
       <v-tabs v-model="panel">
         <template v-for="(tab, index) in itemMotors">

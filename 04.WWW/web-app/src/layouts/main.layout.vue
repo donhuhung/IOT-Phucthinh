@@ -24,7 +24,7 @@
         </div>
       </template>
     </v-navigation-drawer>
-    <v-main color="#f5f7f9">
+    <v-main style="background: #eee;">
       <router-view/>
       <NotifyFlash />
     </v-main>

@@ -4,20 +4,17 @@ import store from './store'
 import router from './router'
 import './plugins'
 import '@/styles/main.scss'
-import VueGoogleMap from 'vuejs-google-maps'
-import 'vuejs-google-maps/dist/vuejs-google-maps.css'
 import vuetify from './plugins/vuetify'
 import i18n from './plugins/i18n'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.config.productionTip = false
-
-Vue.use(VueGoogleMap, {
+Vue.use(VueGoogleMaps, {
   load: {
-    apiKey: "AIzaSyDoXYw-BR44MRw7yOehi4o6qQrTr4iq_ko",
-    v: '3.',
-    libraries: ["places"] // necessary for places input
-  }
-});
+    key: 'AIzaSyBtQqDypgJkvUg17lqDnulidVOlJxGVU4o',
+    libraries: 'places', // This is required if you use the Autocomplete plugin
+  },
+})
 
 new Vue({
   store,
