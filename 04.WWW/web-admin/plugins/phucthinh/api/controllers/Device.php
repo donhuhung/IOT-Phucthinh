@@ -160,7 +160,8 @@ class Device extends General {
 					$dataStationArr[$j]['edit_set_point'] = trim($deviceName[$numberStart - 1]->setpoint) == 1 ? 'true' : 'false';
 					$dataStationArr[$j]['field_set_point'] = $fieldSetPoint;
 					$dataStationArr[$j]['id_set_point'] = trim($selectTable->id);
-                    for ($k = 0; $k < 3; $k++) {
+					$loopSensor = 0;
+                    for ($k = 0; $k < 3; $k++) {						
 						$isPercent = 'false';
 						$field = "sensor" . $numberStart . "Value" . ($k + 1);						
 						$paramSensor = "sensorUnit" . ($k + 1);
@@ -170,11 +171,11 @@ class Device extends General {
 							echo "</prev>";*/
 							if (trim($deviceName[$numberStart - 1]->$paramSensor) == '%')
 								$isPercent = 'true';
-							$dataSensor[$k]['value'] = isset($objData->$field) ? trim($objData->$field) : 0;
-							$dataSensor[$k]['unit'] = isset($deviceName[$numberStart - 1]->$paramSensor) ? trim($deviceName[$numberStart - 1]->$paramSensor) : '';
-							$dataSensor[$k]['is_percent'] = $isPercent;							
-						}
-                                               
+							$dataSensor[$loopSensor]['value'] = isset($objData->$field) ? trim($objData->$field) : 0;
+							$dataSensor[$loopSensor]['unit'] = isset($deviceName[$numberStart - 1]->$paramSensor) ? trim($deviceName[$numberStart - 1]->$paramSensor) : '';
+							$dataSensor[$loopSensor]['is_percent'] = $isPercent;		
+							$loopSensor++;
+						}                                             
                     }
                     $dataStationArr[$j]['data_sensor'] = $dataSensor;
                     $numberStart++;
@@ -480,8 +481,8 @@ class Device extends General {
     }
 	
 	private function translateAuto($string){
-		$original = ["Luu","luong","Muc","Ap","suat","Bom", "gieng", "Quat", "hoa", "Khuay","Hut","xa","bun","hoi","gio","rua","loc","nuoc","sach","vao","cap","khi"];
-		$modify   = ["Lưu","lượng","Mực","Áp","suất","Bơm", "Giếng", "Quạt", "hóa", "Khuấy","Hút","xả","bùn","hồi","gió","rửa","lọc","nước","sạch","vào","cấp","khí"];
+		$original = ["Luu","luong","Muc","Ap","suat","Bom", "gieng", "Quat", "hoa", "Khuay","Hut","xa","bun","hoi","gio","rua","loc","nuoc","sach","vao","cap","khi","be","Nhiet","do"];
+		$modify   = ["Lưu","lượng","Mực","Áp","suất","Bơm", "Giếng", "Quạt", "hóa", "Khuấy","Hút","xả","bùn","hồi","gió","rửa","lọc","nước","sạch","vào","cấp","khí","bể","Nhiệt","độ"];
 		return str_replace($original, $modify, $string);        
 	}
 
