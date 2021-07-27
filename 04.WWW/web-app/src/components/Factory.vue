@@ -18,10 +18,10 @@
               </div>
             </v-card-text>
             <v-card-text>
-              <img class="d-block" style="max-width: 100%" :src="`${item.thumbnail}`">
+              <img class="d-block" style="width: 100%;height: 200px; object-fit: cover" :src="`${item.thumbnail}`">
             </v-card-text>
             <v-card-actions>
-              <v-btn color="primary" shaped depressed class="link-item">
+              <v-btn color="primary" shaped depressed class="link-item ma-auto">
                 <span style="letter-spacing: 0px;">Truy Cập</span>
               </v-btn>
             </v-card-actions>

@@ -8,6 +8,7 @@
         <div class="">
           <v-text-field v-model="ip_factory"
                         type="text"
+                        readonly
                         :label="$t('layout.IpFactory')"/>
           <v-text-field v-model="username"
                         type="text"
@@ -58,10 +59,9 @@ export default {
       groupUser: 'auth/groupUser'
     }),
     defaultPage() {
-      // const {groupUser} = this
-      // let factoryID = this.user.factory.id;
-      // return groupUser === 'super_admin_app' ? '/factory' : '/factory/' + factoryID + '/overview'
-      return '/'
+      const {groupUser} = this
+      let customerID = this.user.customer.id;
+      return groupUser === 'super_admin_app' ? '/' : '/customers/' + customerID
     },
   },
   methods: {
@@ -92,7 +92,10 @@ export default {
       }
     },
     authSuccess() {
-      const path = this.$route.query['redirect'] || this.defaultPage
+      let path = this.defaultPage
+      if(this.$route.query['redirect'] !='/'){
+        path = this.$route.query['redirect']
+      }
       this.$router.replace({path})
     },
   }

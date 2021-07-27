@@ -51,7 +51,7 @@
                   </div>
                 </template>
                 <template v-else>
-                  <div class="text-show">
+                  <div class="text-show text-center">
                     {{ row[header.name] }}
                   </div>
                 </template>

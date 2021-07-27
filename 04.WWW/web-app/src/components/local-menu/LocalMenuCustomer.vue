@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list dense>
+    <v-list dense v-if="groupUser =='super_admin_app'">
       <v-list-group no-action :value="true">
         <template v-slot:activator>
           <v-list-item-icon>
@@ -27,12 +27,26 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import {getListCustomer} from "@/api/app"
 export default {
   name: "LocalMenuCustomer",
   data() {
     return {
       customers: []
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+      groupUser: 'auth/groupUser'
+    }),
+    userInfo() {
+      return this.user || {}
+    },
+    groupUser(){
+      let group = this.user.group[0].code
+      return group;
     }
   },
   mounted() {

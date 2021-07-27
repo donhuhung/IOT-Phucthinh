@@ -4,7 +4,7 @@
         app dense
         color="primary"
         dark>
-      <v-btn to="/" icon>
+      <v-btn :to="`${rootLink}`" icon>
         <v-icon>mdi-home</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import LinkSignOut from "../components/LinkSignOut"
 import SideBarProfile from "../components/SideBarProfile";
 import LocaleChange from "../components/LocaleChange";
@@ -41,6 +42,17 @@ import NotifyFlash from "../components/NotifyFlash";
 export default {
   name: "MainLayout",
   components: {NotifyFlash, ThemeDarkLight, LocaleChange, SideBarProfile, LinkSignOut},
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+      groupUser: 'auth/groupUser'
+    }),
+    rootLink(){
+      const {groupUser} = this
+      let customerID = this.user.customer.id;
+      return groupUser === 'super_admin_app' ? '/' : '/customers/' + customerID
+    }
+  },
 }
 </script>
 
