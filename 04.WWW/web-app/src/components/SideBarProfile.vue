@@ -14,7 +14,7 @@
         </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
-        <v-menu offset-y bottom transition="slide-y-transition">
+        <v-menu offset-y bottom transition="slide-y-transition" :close-on-content-click="false">
           <template v-slot:activator="{on}">
             <v-icon v-on="on">mdi-dots-vertical</v-icon>
           </template>
@@ -28,6 +28,17 @@
                   <v-list-item-title class="pl-0">{{ item.label }}</v-list-item-title>
                 </v-list-item>
               </template>
+              <LinkSignOut>
+                <template v-slot:activator="{on}">
+                  <v-list-item link @click="on" color="red" :input-value="true">
+                    <v-list-item-icon>
+                      <v-icon>mdi-logout</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title class="pl-0">{{ $t('layout.confirmSignOutLabel') }}</v-list-item-title>
+                  </v-list-item>
+                </template>
+              </LinkSignOut>
+
             </v-list>
           </v-card>
         </v-menu>
@@ -38,9 +49,11 @@
 
 <script>
 import {mapGetters} from 'vuex';
+import LinkSignOut from "./LinkSignOut";
 
 export default {
   name: "SideBarProfile",
+  components: {LinkSignOut},
   computed: {
     ...mapGetters(
         {

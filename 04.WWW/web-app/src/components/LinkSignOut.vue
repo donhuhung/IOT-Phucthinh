@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot>
+    <slot name="activator" :on="handleSignOut">
       <v-btn @click="handleSignOut" icon>
         <v-icon small>
           mdi-logout
