@@ -1,9 +1,12 @@
 <template>
-  <div>
+  <v-toolbar-items>
     <template v-for="(nav, index) in navs">
-      <v-btn :key="index" text :to="`${rootLink}/${nav.to.path}`">{{ $t(nav.label) }}</v-btn>
+      <v-btn :key="index" text :to="`${rootLink}/${nav.to.path}`">
+        <v-icon left>{{ nav.icon }}</v-icon>
+        {{ $t(nav.label) }}
+      </v-btn>
     </template>
-  </div>
+  </v-toolbar-items>
 </template>
 
 <script>

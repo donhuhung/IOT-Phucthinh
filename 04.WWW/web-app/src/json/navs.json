@@ -1,7 +1,7 @@
 [
   {
     "label": "layout.navOverview",
-    "icon": "/img/icon-overview.svg",
+    "icon": "mdi-book-open-page-variant",
     "inFactory": true,
     "to": {
       "path": "overview"
@@ -9,7 +9,7 @@
   },
   {
     "label": "layout.navSensor",
-    "icon": "/img/sensor.svg",
+    "icon": "mdi-radar",
     "inFactory": true,
     "to": {
       "path": "sensor"
@@ -17,7 +17,7 @@
   },
   {
     "label": "layout.navDevice",
-    "icon": "/img/device.svg",
+    "icon": "mdi-devices",
     "inFactory": true,
     "to": {
       "path": "device"
@@ -25,7 +25,7 @@
   },
   {
     "label": "layout.navReport",
-    "icon": "/img/bar-chart.svg",
+    "icon": "mdi-database-check",
     "inFactory": true,
     "to": {
       "path": "report"
@@ -33,7 +33,7 @@
   },
   {
     "label": "layout.navMaintenance",
-    "icon": "/img/bar-chart.svg",
+    "icon": "mdi-table-cog",
     "inFactory": true,
     "to": {
       "path": "maintenance"
@@ -41,7 +41,7 @@
   },
   {
     "label": "layout.navChart",
-    "icon": "/img/bar-chart.svg",
+    "icon": "mdi-chart-bar",
     "inFactory": true,
     "to": {
       "path": "chart"
@@ -49,18 +49,10 @@
   },
   {
     "label": "layout.navMaps",
-    "icon": "/img/place.svg",
+    "icon": "mdi-google-maps",
     "inFactory": true,
     "to": {
       "path": "maps"
-    }
-  },
-  {
-    "label": "layout.navSetting",
-    "icon": "/img/place.svg",
-    "inFactory": true,
-    "to": {
-      "path": "account"
     }
   }
 ]
