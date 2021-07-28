@@ -11,121 +11,126 @@
       Enter your email, phone, or username and we'll send you a link to get back into your account.
     </v-card-text>
     <v-card-text>
-      <label>Avatar</label>
-      <PictureUpload class="mx-auto" v-model="avatar"/>
-      <validation-observer
-          ref="observer"
-          v-slot="{ invalid }"
-      >
-        <form @submit.prevent="submit">
-          <div class="d-flex flex-wrap mx-n2">
-            <div class="w-full px-2">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="Họ & tên"
-                  rules="required"
-              >
-                <v-text-field
-                    v-model="name"
-                    :error-messages="errors"
-                    label="Họ & tên"
-                    append-icon="mdi-account"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </div>
-            <div class="w-full px-2">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="Số điện thoại"
-                  rules="required"
-              >
-                <v-text-field
-                    v-model="phoneNumber"
-                    :counter="12"
-                    :error-messages="errors"
-                    label="Số Điện thoại"
-                    append-icon="mdi-cellphone"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </div>
-            <div class="w-full px-2">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="email"
-                  rules="required|email"
-              >
-                <v-text-field
-                    v-model="email"
-                    :error-messages="errors"
-                    label="E-mail"
-                    append-icon="mdi-email"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </div>
-            <div class="w-full px-2">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="Địa chỉ"
-                  rules="required"
-              >
-                <v-text-field
-                    v-model="address"
-                    :error-messages="errors"
-                    label="Địa chỉ"
-                    append-icon="mdi-office-building-marker"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </div>
-            <div class="w-full px-2">
-              <validation-provider
-                  v-slot="{ errors }"
-                  name="Ngày sinh"
-                  rules="required"
-              >
-                <v-text-field
-                    v-model="birthday"
-                    :error-messages="errors"
-                    label="Ngày sinh"
-                    type="date"
-                    append-icon="mdi-calendar-today"
-                    required
-                ></v-text-field>
-              </validation-provider>
-            </div>
-            <div class="w-full px-2">
-              <validation-provider
-                  rules="required"
-                  name="Giới tính"
-              >
-                <v-radio-group v-model="gender" label="Giới tính:" row
-                               append-icon="fa-transgender">
-                  <v-radio :ripple="false" value="Nam" name="gender" label="Nam"/>
-                  <v-radio :ripple="false" value="Nữ" name="gender" label="Nữ"/>
-                </v-radio-group>
-              </validation-provider>
-            </div>
-          </div>
-          <div class="flex space-x-2">
-            <div class="d-flex">
-              <v-btn @click="clear" width="150">
-                {{ $t('layout.btnReset') }}
-              </v-btn>
-              <div class="mx-1"></div>
-              <v-btn color="primary"
-                     width="150"
-                     type="submit"
-                     :loading="submitting"
-                     :disabled="invalid || submitting">
-                {{ $t('layout.btnUpdate') }}
-              </v-btn>
-            </div>
-          </div>
-        </form>
-      </validation-observer>
+      <div class="d-flex flex-wrap">
+        <div class="w-50">
+          <label>Ảnh đại diện</label>
+          <PictureUpload class="mx-auto" v-model="avatar"/>
+        </div>
+        <div class="w-50">
+          <validation-observer
+              ref="observer"
+              v-slot="{ invalid }"
+          >
+            <form @submit.prevent="submit">
+              <div class="d-flex flex-wrap mx-n2">
+                <div class="w-full px-2">
+                  <validation-provider
+                      v-slot="{ errors }"
+                      name="Họ & tên"
+                      rules="required"
+                  >
+                    <v-text-field
+                        v-model="name"
+                        :error-messages="errors"
+                        label="Họ & tên"
+                        append-icon="mdi-account"
+                        required
+                    ></v-text-field>
+                  </validation-provider>
+                </div>
+                <div class="w-full px-2">
+                  <validation-provider
+                      v-slot="{ errors }"
+                      name="Số điện thoại"
+                      rules="required"
+                  >
+                    <v-text-field
+                        v-model="phoneNumber"
+                        :counter="12"
+                        :error-messages="errors"
+                        label="Số Điện thoại"
+                        append-icon="mdi-cellphone"
+                        required
+                    ></v-text-field>
+                  </validation-provider>
+                </div>
+                <div class="w-full px-2">
+                  <validation-provider
+                      v-slot="{ errors }"
+                      name="email"
+                      rules="required|email"
+                  >
+                    <v-text-field
+                        v-model="email"
+                        :error-messages="errors"
+                        label="E-mail"
+                        append-icon="mdi-email"
+                        required
+                    ></v-text-field>
+                  </validation-provider>
+                </div>
+                <div class="w-full px-2">
+                  <validation-provider
+                      v-slot="{ errors }"
+                      name="Địa chỉ"
+                      rules="required"
+                  >
+                    <v-text-field
+                        v-model="address"
+                        :error-messages="errors"
+                        label="Địa chỉ"
+                        append-icon="mdi-office-building-marker"
+                        required
+                    ></v-text-field>
+                  </validation-provider>
+                </div>
+                <div class="w-full px-2">
+                  <validation-provider
+                      v-slot="{ errors }"
+                      name="Ngày sinh"
+                      rules="required"
+                  >
+                    <v-text-field
+                        v-model="birthday"
+                        :error-messages="errors"
+                        label="Ngày sinh"
+                        type="date"
+                        required
+                    ></v-text-field>
+                  </validation-provider>
+                </div>
+                <div class="w-full px-2">
+                  <validation-provider
+                      rules="required"
+                      name="Giới tính"
+                  >
+                    <v-radio-group v-model="gender" label="Giới tính:" row
+                                   append-icon="fa-transgender">
+                      <v-radio :ripple="false" value="Nam" name="gender" label="Nam"/>
+                      <v-radio :ripple="false" value="Nữ" name="gender" label="Nữ"/>
+                    </v-radio-group>
+                  </validation-provider>
+                </div>
+              </div>
+              <div class="flex space-x-2">
+                <div class="d-flex">
+                  <v-btn @click="clear" width="150">
+                    {{ $t('layout.btnReset') }}
+                  </v-btn>
+                  <div class="mx-1"></div>
+                  <v-btn color="primary"
+                         width="150"
+                         type="submit"
+                         :loading="submitting"
+                         :disabled="invalid || submitting">
+                    {{ $t('layout.btnUpdate') }}
+                  </v-btn>
+                </div>
+              </div>
+            </form>
+          </validation-observer>
+        </div>
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -201,9 +206,14 @@ export default {
           this.$store.commit("auth/updateUser", res.data.data);
           const text = 'Cập nhật thông tin thành công!'
           this.$notify({message: text, title: this.$t('layout.titleMess'), type: 'success',})
-          if(avatar) {
-            await uploadAvatarAccount({ avatar })
-            this.$notify({message: text, title: this.$t('layout.titleMess'), type: 'success',})
+          if (avatar) {
+            const res = await uploadAvatarAccount({avatar})
+            this.$notify({
+              message: 'Cập ảnh đại diện thành công!',
+              title: this.$t('layout.titleMess'),
+              type: 'success',
+            })
+            this.$store.commit('auth/updateUser', res.data.data)
           }
         } catch (e) {
           this.$notify({message: e.message, title: this.$t('layout.titleMess'), type: 'error'})

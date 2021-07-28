@@ -18,6 +18,7 @@
     "msgWelcome": "Xin Chào",
     "titleMess": "Cập nhật tài khoản",
     "labelCustomer": "Khách Hàng",
+    "labelAccount": "Tài khoản",
     "labelTheme": "Chủ đề",
     "darkLabel": "Tối",
     "lightLabel": "Sáng",
@@ -29,7 +30,8 @@
     "confirmSignOutDescription": "Đăng xuất phiên làm việc?",
     "confirmSignOutLabel": "Đăng xuất",
     "labelCancel": "Hủy bỏ",
-    "signOut": "Đăng xuất"
+    "signOut": "Đăng xuất",
+    "labelLanguage": "Ngôn Ngữ"
   },
   "message": {
 

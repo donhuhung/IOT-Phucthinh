@@ -4,24 +4,45 @@
         app dense
         color="primary"
         dark>
+      <v-app-bar-nav-icon @click="toggleNavigation"></v-app-bar-nav-icon>
       <v-btn :to="`${rootLink}`" icon>
         <v-icon>mdi-home</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
       <router-view name="local-toolbar"/>
     </v-app-bar>
-    <v-navigation-drawer app>
+    <v-navigation-drawer app :mini-variant="mini">
       <SideBarProfile/>
       <v-divider/>
       <router-view name="local-menu"/>
       <template v-slot:append>
         <v-divider/>
-        <div class="d-flex">
-          <LinkSignOut/>
-          <v-spacer />
-          <ThemeDarkLight />
-          <LocaleChange/>
-        </div>
+        <LocaleChange>
+          <template v-slot:activator="{ on, value }">
+            <v-list-item link v-on="on" dense>
+              <v-list-item-icon>
+                <img class="d-block" width="20" height="20" :src="value.icon" alt=""/>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>{{ $t('layout.labelLanguage') }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+        </LocaleChange>
+        <ThemeDarkLight>
+          <template v-slot:activator="{ on }">
+            <v-list-item link v-on="on" dense>
+              <v-list-item-icon>
+                <v-icon>mdi-theme-light-dark</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ $t('layout.labelTheme') }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+        </ThemeDarkLight>
       </template>
     </v-navigation-drawer>
     <v-main style="background: #eee;">
@@ -33,7 +54,6 @@
 
 <script>
 import {mapGetters} from 'vuex';
-import LinkSignOut from "../components/LinkSignOut"
 import SideBarProfile from "../components/SideBarProfile";
 import LocaleChange from "../components/LocaleChange";
 import ThemeDarkLight from "../components/ThemeDarkLight";
@@ -41,7 +61,12 @@ import NotifyFlash from "../components/NotifyFlash";
 
 export default {
   name: "MainLayout",
-  components: {NotifyFlash, ThemeDarkLight, LocaleChange, SideBarProfile, LinkSignOut},
+  components: {NotifyFlash, ThemeDarkLight, LocaleChange, SideBarProfile},
+  data() {
+    return {
+      mini: true
+    }
+  },
   computed: {
     ...mapGetters({
       user: 'auth/user',
@@ -53,6 +78,11 @@ export default {
       return groupUser === 'super_admin_app' ? '/' : '/customers/' + customerID
     }
   },
+  methods: {
+    toggleNavigation() {
+      this.mini = !this.mini
+    }
+  }
 }
 </script>
 

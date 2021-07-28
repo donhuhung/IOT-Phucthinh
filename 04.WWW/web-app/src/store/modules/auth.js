@@ -65,8 +65,9 @@ export const mutations = {
     state.messageError = ''
   },
   updateUser(state, data) {
-    state.user = data
-    setSESSION(SESSION.USER, data)
+    let user = {...state.user, ...data}
+    state.user = user
+    setSESSION(SESSION.USER, user)
   },
   logout(state) {
     state.status = ''

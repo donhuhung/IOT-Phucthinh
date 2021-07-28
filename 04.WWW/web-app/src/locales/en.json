@@ -18,6 +18,7 @@
     "msgWelcome": "Welcome",
     "titleMess": "Update information",
     "labelCustomer": "Customer",
+    "labelAccount": "Account",
     "labelTheme": "Theme",
     "darkLabel": "Dark",
     "lightLabel": "Light",
@@ -29,7 +30,8 @@
     "confirmSignOutDescription": "Log out session?",
     "confirmSignOutLabel": "Log out",
     "labelCancel": "Cancel",
-    "signOut": "Log out"
+    "signOut": "Log out",
+    "labelLanguage": "Language"
   },
   "message": {
 

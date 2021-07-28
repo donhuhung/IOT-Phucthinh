@@ -1,9 +1,11 @@
 <template>
   <v-menu :close-on-content-click="false" offset-x right transition="slide-y-transition">
     <template v-slot:activator="{ on }">
-      <v-btn icon v-on="on">
-        <v-icon>mdi-theme-light-dark</v-icon>
-      </v-btn>
+      <slot name="activator" :on="on">
+        <v-btn icon v-on="on">
+          <v-icon>mdi-theme-light-dark</v-icon>
+        </v-btn>
+      </slot>
     </template>
     <v-card>
       <v-subheader class="text--primary font-weight-black text-uppercase">
@@ -46,7 +48,7 @@ export default {
           },
         },
       ]
-      const [dark, light]  = modes
+      const [dark, light] = modes
       const mode = this.$vuetify.theme.dark ? dark : light
       return {
         modes,

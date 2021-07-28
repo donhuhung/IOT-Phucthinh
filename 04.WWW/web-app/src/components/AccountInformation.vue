@@ -63,7 +63,7 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-btn color="primary" :to="`${rootFactory}/account-info`" class="update-info">
+            <v-btn color="primary" :to="`/account-info`" class="update-info">
               Cập nhật thông tin cá nhân
             </v-btn>
           </v-col>
@@ -80,7 +80,7 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-btn color="primary" :to="`${rootFactory}/account-password`" class="btn-change-password">
+            <v-btn color="primary" :to="`/account-password`" class="btn-change-password">
               Thay đổi mật khẩu
             </v-btn>
           </v-col>

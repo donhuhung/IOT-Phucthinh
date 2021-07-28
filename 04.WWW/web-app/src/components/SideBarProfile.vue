@@ -70,8 +70,9 @@ export default {
       ]
     },
     rootLink() {
-      const {params: {customer, factory}} = this.$route
-      return `/customers/${customer}/factory/${factory}`
+      // const {params: {customer, factory}} = this.$route
+      return ``
+      // return `/customers/${customer}/factory/${factory}`
     }
   },
 }

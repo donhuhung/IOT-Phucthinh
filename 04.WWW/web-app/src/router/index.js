@@ -38,7 +38,7 @@ const routes = [
         },
       },
       {
-        path: '/customers/:customer/factory/:factory/account',
+        path: '/account',
         name: 'account-factory',
         components: {
           'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
@@ -47,7 +47,7 @@ const routes = [
         },
       },
       {
-        path: '/customers/:customer/factory/:factory/account-info',
+        path: '/account-info',
         name: 'customers-customer-account-info',
         components: {
           'local-menu': () => import( '../components/local-menu/LocalMenuCustomer'),
@@ -56,7 +56,7 @@ const routes = [
         },
       },
       {
-        path: '/customers/:customer/factory/:factory/account-password',
+        path: '/account-password',
         name: 'customers-customer-account-password',
         components: {
           'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),

@@ -1,7 +1,18 @@
 <template>
   <div>
-    <v-list dense v-if="groupUser =='super_admin_app'">
-      <v-list-group no-action :value="true">
+    <v-list dense>
+      <v-list-item link to="/account-info" active-class="primary--text">
+        <v-list-item-icon>
+          <v-icon>mdi-account</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ $t('layout.labelAccount') }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-group v-if="groupUser =='super_admin_app'"
+                    no-action :value="true">
         <template v-slot:activator>
           <v-list-item-icon>
             <v-icon>mdi-account-box-multiple</v-icon>
@@ -29,6 +40,7 @@
 <script>
 import {mapGetters} from 'vuex';
 import {getListCustomer} from "@/api/app"
+
 export default {
   name: "LocalMenuCustomer",
   data() {
@@ -44,7 +56,7 @@ export default {
     userInfo() {
       return this.user || {}
     },
-    groupUser(){
+    groupUser() {
       let group = this.user.group[0].code
       return group;
     }

@@ -1,9 +1,11 @@
 <template>
   <v-menu transition="slide-y-transition" offset-x right>
     <template v-slot:activator="{on}">
-      <div v-on="on" class="d-flex align-center justify-center cursor-pointer px-2" :v-ripple="true">
-        <img class="d-block" width="20" :src="languages.lan.icon" alt=""/>
-      </div>
+      <slot name="activator" :on="on" :value="languages.lan">
+        <div v-on="on" class="d-flex align-center justify-center cursor-pointer px-2" :v-ripple="true">
+          <img class="d-block" width="20" :src="languages.lan.icon" alt=""/>
+        </div>
+      </slot>
     </template>
     <v-card>
       <v-list dense>
