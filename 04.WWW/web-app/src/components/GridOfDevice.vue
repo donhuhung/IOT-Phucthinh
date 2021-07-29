@@ -45,7 +45,7 @@
                   <div class="py-1">
                     <v-btn class="link_item"
                            shaped width="100px" depressed block
-                           :color="row.operation_status | statusOperating">
+                           :color="row.operation_status | statusOperating(isValve)">
                       {{ row['operation_status_name'] }}
                     </v-btn>
                   </div>
@@ -82,8 +82,8 @@ export default {
         'row--run': isRun(status),
       }
     },
-    statusOperating(status) {
-      const [,, color] =  getOperatingStatusMotorValve(status)
+    statusOperating(status,isValve) {
+      const [,, color] =  getOperatingStatusMotorValve(status, isValve)
       return color
     },
     statusDevice(status) {
