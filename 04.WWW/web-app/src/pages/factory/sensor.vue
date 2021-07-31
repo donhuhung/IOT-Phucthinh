@@ -1,6 +1,5 @@
 <template>
-  <v-container fluid>
-    <v-breadcrumbs class="px-0" :items="links"></v-breadcrumbs>
+  <div>
     <v-app-bar height="40px" flat>
       <v-tabs v-model="activetab">
         <template v-for="(tab, index) in items">
@@ -34,14 +33,13 @@
         </template>
       </template>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
 import {getListSensor} from "../../api/app"
 import GridOfSensor from "../../components/GridOfSensor";
 import NotFoundData from "../../components/NotFoundData";
-import factoryMixin from "@/mixins/factoryMixin"
 
 export default {
   components: {NotFoundData, GridOfSensor},
@@ -50,36 +48,15 @@ export default {
   ],
   data() {
     return {
-      active: false,
       activetab: 0,
       items: [],
       dateSync: Date.now(),
     }
   },
-  mixins: [factoryMixin],
   computed: {
-    links() {
-      const {factory} = this
-      return [
-        {
-          text: 'Factory',
-          disabled: false,
-          exact: true,
-          to: '/factory',
-        },
-        {
-          text: factory.name,
-          disabled: false,
-          exact: true,
-          to: `/factory/${factory.id}`,
-        },
-        {
-          text: 'MONITORING & SCALLING SENSOR',
-          disabled: true,
-          href: 'breadcrumbs_link_2',
-        },
-      ]
-    },
+    factory() {
+      return {}
+    }
   },
   mounted() {
     this.listSensor()

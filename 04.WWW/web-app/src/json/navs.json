@@ -5,7 +5,8 @@
     "inFactory": true,
     "to": {
       "path": "overview"
-    }
+    },
+    "name": "factory-overview"
   },
   {
     "label": "layout.navSensor",
@@ -13,7 +14,8 @@
     "inFactory": true,
     "to": {
       "path": "sensor"
-    }
+    },
+    "name": "factory-sensor"
   },
   {
     "label": "layout.navDevice",
@@ -21,7 +23,8 @@
     "inFactory": true,
     "to": {
       "path": "device"
-    }
+    },
+    "name": "factory-device"
   },
   {
     "label": "layout.navReport",
@@ -29,7 +32,8 @@
     "inFactory": true,
     "to": {
       "path": "statistic"
-    }
+    },
+    "name": "factory-statistic"
   },
   {
     "label": "layout.navMaintenance",
@@ -37,7 +41,8 @@
     "inFactory": true,
     "to": {
       "path": "maintenance"
-    }
+    },
+    "name": "factory-maintenance"
   },
   {
     "label": "layout.navChart",
@@ -45,7 +50,8 @@
     "inFactory": true,
     "to": {
       "path": "report"
-    }
+    },
+    "name": "factory-report"
   },
   {
     "label": "layout.navMaps",
@@ -53,6 +59,7 @@
     "inFactory": true,
     "to": {
       "path": "maps"
-    }
+    },
+    "name": "customer-maps"
   }
 ]

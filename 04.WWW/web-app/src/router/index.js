@@ -48,7 +48,7 @@ const routes = [
       },
       {
         path: '/account-info',
-        name: 'customers-customer-account-info',
+        name: 'account-info',
         components: {
           'local-menu': () => import( '../components/local-menu/LocalMenuCustomer'),
           'default': () => import('../pages/account-info'),
@@ -57,7 +57,7 @@ const routes = [
       },
       {
         path: '/account-password',
-        name: 'customers-customer-account-password',
+        name: 'account-password',
         components: {
           'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
           'default': () => import('../pages/account-password'),
@@ -65,70 +65,103 @@ const routes = [
         },
       },
       {
-        path: '/customers/:customer/factory/:factory/device',
-        name: 'customers-customer-account-password',
+        path: '/customers/:customer/factory/:factory',
+        name: 'factory-detail',
+        meta: {
+          breadcrumb: 'Detail'
+        },
         components: {
           'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
           'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
-          'default': () => import('../pages/factory/device'),
+          'default': () => import('../pages/factory'),
         },
+        children: [
+          {
+            path: '/customers/:customer/factory/:factory/device',
+            name: 'factory-device',
+            meta: {
+              breadcrumb: 'MONITORING & CONTROLLING DEVICES'
+            },
+            components: {
+              'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
+              'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
+              'default': () => import('../pages/factory/device'),
+            },
+          },
+          {
+            path: '/customers/:customer/factory/:factory/statistic',
+            name: 'factory-statistic',
+            components: {
+              'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
+              'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
+              'default': () => import('../pages/factory/statistic'),
+            },
+            meta: {
+              breadcrumb: 'STATISTIC'
+            },
+          },
+          {
+            path: '/customers/:customer/factory/:factory/report',
+            name: 'factory-report',
+            components: {
+              'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
+              'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
+              'default': () => import('../pages/factory/report'),
+            },
+            meta: {
+              breadcrumb: 'REPORT'
+            },
+          },
+          {
+            path: '/customers/:customer/factory/:factory/maintenance',
+            name: 'factory-maintenance',
+            components: {
+              'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
+              'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
+              'default': () => import('../pages/factory/maintenance'),
+            },
+            meta: {
+              breadcrumb: 'Maintenance'.toUpperCase()
+            },
+          },
+          {
+            path: '/customers/:customer/factory/:factory/maps',
+            name: 'customer-maps',
+            components: {
+              'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
+              'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
+              'default': () => import( '../pages/factory/maps'),
+            },
+            meta: {
+              breadcrumb: 'Maps'.toUpperCase()
+            },
+          },
+          {
+            path: '/customers/:customer/factory/:factory/overview',
+            name: 'factory-overview',
+            components: {
+              'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
+              'local-toolbar': () => import( '../components/local-toolbar/toolbar-factory'),
+              'default': () => import('../pages/factory/overview'),
+            },
+            meta: {
+              breadcrumb: 'OVERVIEW'
+            },
+          },
+          {
+            path: '/customers/:customer/factory/:factory/sensor',
+            name: 'factory-sensor',
+            components: {
+              'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
+              'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
+              'default': () => import('../pages/factory/sensor'),
+            },
+            meta: {
+              breadcrumb: 'MONITORING & SCALLING SENSOR'
+            },
+          },
+        ]
       },
-      {
-        path: '/customers/:customer/factory/:factory/statistic',
-        name: 'factory-statistic',
-        components: {
-          'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
-          'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
-          'default': () => import('../pages/factory/statistic'),
-        },
-      },
-      {
-        path: '/customers/:customer/factory/:factory/report',
-        name: 'factory-report',
-        components: {
-          'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
-          'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
-          'default': () => import('../pages/factory/report'),
-        },
-      },
-      {
-        path: '/customers/:customer/factory/:factory/maintenance',
-        name: 'factory-maintenance',
-        components: {
-          'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
-          'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
-          'default': () => import('../pages/factory/maintenance'),
-        },
-      },
-      {
-        path: '/customers/:customer/factory/:factory/maps',
-        name: 'customers-customer-account-password',
-        components: {
-          'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
-          'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
-          'default': () => import( '../pages/factory/maps'),
-        },
-      },
-      {
-        path: '/customers/:customer/factory/:factory/overview',
-        name: 'customers-customer-account-password',
-        components: {
-          'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
-          'local-toolbar': () => import( '../components/local-toolbar/toolbar-factory'),
-          'default': () => import('../pages/factory/overview'),
-        },
-      },
-      {
-        path: '/customers/:customer/factory/:factory/sensor',
-        name: 'customers-customer-sensor',
-        components: {
-          'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
-          'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
-          'default': () => import('../pages/factory/sensor'),
-        },
-      },
-
-
     ]
   },
   {

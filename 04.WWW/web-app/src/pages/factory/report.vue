@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid>
+  <div>
     Đồ thị
-  </v-container>
+  </div>
 </template>
 
 <script>

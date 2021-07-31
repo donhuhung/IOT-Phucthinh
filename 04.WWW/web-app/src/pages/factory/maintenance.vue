@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid>
+  <div>
     Bảo Trì
-  </v-container>
+  </div>
 </template>
 
 <script>

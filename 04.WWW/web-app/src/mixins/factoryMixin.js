@@ -5,8 +5,8 @@ export default {
       factory: [],
     }
   },
-  mounted() {
-    this.detailFactory()
+  async mounted() {
+    await this.detailFactory()
   },
   methods:{
     async detailFactory(){
