@@ -74,17 +74,17 @@ const routes = [
         },
       },
       {
-        path: '/customers/:customer/factory/:factory/chart',
-        name: 'customers-customer-account-password',
+        path: '/customers/:customer/factory/:factory/statistic',
+        name: 'factory-statistic',
         components: {
           'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
           'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
-          'default': () => import('../pages/factory/chart'),
+          'default': () => import('../pages/factory/statistic'),
         },
       },
       {
         path: '/customers/:customer/factory/:factory/report',
-        name: 'customers-factory-report',
+        name: 'factory-report',
         components: {
           'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
           'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),
@@ -93,7 +93,7 @@ const routes = [
       },
       {
         path: '/customers/:customer/factory/:factory/maintenance',
-        name: 'customers-factory-maintenance',
+        name: 'factory-maintenance',
         components: {
           'local-menu': () => import('../components/local-menu/LocalMenuCustomer'),
           'local-toolbar': () => import('../components/local-toolbar/toolbar-factory'),

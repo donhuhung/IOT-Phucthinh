@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    Thống Kê
+    Đồ thị
   </v-container>
 </template>
 

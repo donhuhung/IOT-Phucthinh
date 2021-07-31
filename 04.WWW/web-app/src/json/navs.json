@@ -28,7 +28,7 @@
     "icon": "mdi-database-check",
     "inFactory": true,
     "to": {
-      "path": "report"
+      "path": "statistic"
     }
   },
   {
@@ -44,7 +44,7 @@
     "icon": "mdi-chart-bar",
     "inFactory": true,
     "to": {
-      "path": "chart"
+      "path": "report"
     }
   },
   {
