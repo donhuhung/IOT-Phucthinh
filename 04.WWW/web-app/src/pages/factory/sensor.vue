@@ -40,6 +40,7 @@
 import {getListSensor} from "../../api/app"
 import GridOfSensor from "../../components/GridOfSensor";
 import NotFoundData from "../../components/NotFoundData";
+import {requestAnimFrame} from "../../libs";
 
 export default {
   components: {NotFoundData, GridOfSensor},
@@ -59,6 +60,10 @@ export default {
     }
   },
   mounted() {
+    // requestAnimFrame
+    requestAnimFrame(function () {
+      console.error(1)
+    })
     this.listSensor()
   },
   methods: {

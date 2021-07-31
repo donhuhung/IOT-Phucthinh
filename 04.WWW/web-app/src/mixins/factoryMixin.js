@@ -2,7 +2,7 @@ import {getDetailFactory} from "@/api/app"
 export default {
   data() {
     return {
-      factory: [],
+      factory: {},
     }
   },
   async mounted() {

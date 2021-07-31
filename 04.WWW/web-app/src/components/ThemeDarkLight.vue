@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import {setSESSION, getSESSION} from "../helpers/sessions";
+
 export default {
   name: "ThemeDarkLight",
   computed: {
@@ -57,11 +59,13 @@ export default {
     }
   },
   mounted() {
-    this.setDarkMode(process.env.VUE_APP_DARK)
+    const isDark = getSESSION('dark')
+    this.setDarkMode(isDark)
   },
   methods: {
     setDarkMode(isDark = false) {
       this.$vuetify.theme.dark = isDark
+      setSESSION('dark', isDark)
     }
   }
 }
