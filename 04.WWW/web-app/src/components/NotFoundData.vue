@@ -1,5 +1,5 @@
 <template>
-  <v-card flat color="blue-grey lighten-5">
+  <v-card flat :color="$vuetify.theme.dark ? '' : 'blue-grey lighten-5'">
     <v-card-text class="text-center">
       <div class="flex justify-center items-center space-x-2">
         <div>

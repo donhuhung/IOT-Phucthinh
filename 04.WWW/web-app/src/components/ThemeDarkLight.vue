@@ -56,6 +56,9 @@ export default {
       }
     }
   },
+  mounted() {
+    this.setDarkMode(process.env.VUE_APP_DARK)
+  },
   methods: {
     setDarkMode(isDark = false) {
       this.$vuetify.theme.dark = isDark

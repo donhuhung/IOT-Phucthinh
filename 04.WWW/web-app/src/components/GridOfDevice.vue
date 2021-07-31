@@ -222,7 +222,8 @@ export default {
   }
 }
 .table-grid {
-  border: solid 1px #EFEFEF;
+  border-top: solid 1px #EFEFEF;
+  border-right: solid 1px #EFEFEF;
   .cell-table {
     position: relative;
     padding: 5px 10px;
@@ -231,7 +232,7 @@ export default {
 
     &.cell-header {
       //@apply px-4 py-2;
-      color: #222;
+      //color: #222;
       //border-bottom: 1px solid #222222;
       border-bottom: 1px solid #EFEFEF;
       border-left: 1px solid #EFEFEF;

@@ -45,7 +45,7 @@
         </ThemeDarkLight>
       </template>
     </v-navigation-drawer>
-    <v-main style="background: #eee;">
+    <v-main :style="{ background: !$vuetify.theme.dark ? '#eee' : '' }">
       <router-view/>
       <NotifyFlash />
     </v-main>
