@@ -183,11 +183,11 @@ export default {
   border: 2px solid #E5E5E5;
   padding: 20px;
   border-radius: 10px;
-  background: #fff;
+  //background: #fff;
 
   h3 {
     font-size: 22px;
-    color: #222;
+    //color: #222;
     font-weight: bold;
   }
 }
@@ -200,8 +200,9 @@ export default {
 
   &.cell-header {
     //@apply px-4 py-2;
-    color: #222;
-    border-bottom: 1px solid #222222;
+    //color: #222;
+    //border-bottom: 1px solid #222222;
+    border-bottom: 1px solid;
     font-weight: bold;
   }
 

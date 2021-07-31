@@ -31,7 +31,8 @@
     "confirmSignOutLabel": "Log out",
     "labelCancel": "Cancel",
     "signOut": "Log out",
-    "labelLanguage": "Language"
+    "labelLanguage": "Language",
+    "labelUpdateSetPoint": "Update SetPoint"
   },
   "message": {
 

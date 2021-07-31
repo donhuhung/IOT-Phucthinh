@@ -30,8 +30,10 @@
     "confirmSignOutDescription": "Đăng xuất phiên làm việc?",
     "confirmSignOutLabel": "Đăng xuất",
     "labelCancel": "Hủy bỏ",
+    "labelSave": "Lưu",
     "signOut": "Đăng xuất",
-    "labelLanguage": "Ngôn Ngữ"
+    "labelLanguage": "Ngôn Ngữ",
+    "labelUpdateSetPoint": "Cập nhật SetPoint"
   },
   "message": {
 

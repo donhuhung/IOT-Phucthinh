@@ -2,6 +2,8 @@
   <v-edit-dialog
     :return-value.sync="val"
     large
+    :cancel-text="$t('layout.labelCancel')"
+    :save-text="$t('layout.labelSave')"
     persistent
     @save="save"
     @cancel="cancel"
@@ -13,13 +15,11 @@
     </v-btn>
     <template v-slot:input>
       <div class="mt-4 text-h6">
-        Update SetPoint
+        {{ $t('layout.labelUpdateSetPoint') }}
       </div>
       <v-text-field type="number"
         v-model="val"
-        label="Edit"
         single-line
-        counter
         autofocus
       ></v-text-field>
     </template>
