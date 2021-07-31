@@ -6,14 +6,14 @@
       </v-card-title>
       <v-card-text>
         <div class="row_sheet_panels" v-if="row['bieu_gia_dien']">
-        <v-card outlined color="primary" class="row_sheet" tile>
-          <template v-for="(t, index) in row['bieu_gia_dien'].data_list">
-            <div :key="index" class="row_sheet--item">
-              <GridInfoUnits :info="t.info" :title="t.title"/>
-            </div>
-          </template>
-        </v-card>
-      </div>
+          <v-card outlined color="primary" class="row_sheet" tile>
+            <template v-for="(t, index) in row['bieu_gia_dien'].data_list">
+              <div :key="index" class="row_sheet--item">
+                <GridInfoUnits :info="t.info" :title="t.title"/>
+              </div>
+            </template>
+          </v-card>
+        </div>
       </v-card-text>
     </v-card>
     <v-card tile flat>
@@ -22,16 +22,16 @@
       </v-card-title>
       <v-card-text>
         <div class="row_sheet_panels">
-        <template v-for="(item, index) in row['thong_so_dien']">
-          <v-card outlined :color="colors[index]" class="row_sheet" :key="index" tile>
-            <template v-for="(t, index) in item.data_list">
-              <div :key="index" class="row_sheet--item">
-                <GridInfoUnits :info="t.info" :title="t.title"/>
-              </div>
-            </template>
-          </v-card>
-        </template>
-      </div>
+          <template v-for="(item, index) in row['thong_so_dien']">
+            <v-card outlined :color="colors[index]" class="row_sheet" :key="index" tile>
+              <template v-for="(t, index) in item.data_list">
+                <div :key="index" class="row_sheet--item">
+                  <GridInfoUnits :info="t.info" :title="t.title"/>
+                </div>
+              </template>
+            </v-card>
+          </template>
+        </div>
       </v-card-text>
     </v-card>
     <v-card tile flat>
@@ -40,16 +40,16 @@
       </v-card-title>
       <v-card-text>
         <div class="row_sheet_panels">
-        <template v-for="(item, index) in row['dien_nang_tieu_thu']">
-          <v-card outlined :color="colors[index]" class="row_sheet" :key="index" tile>
-            <template v-for="(t, index) in item.data_list">
-              <div :key="index" class="row_sheet--item">
-                <GridInfoUnits :info="t.info" :title="t.title"/>
-              </div>
-            </template>
-          </v-card>
-        </template>
-      </div>
+          <template v-for="(item, index) in row['dien_nang_tieu_thu']">
+            <v-card outlined :color="colors[index]" class="row_sheet" :key="index" tile>
+              <template v-for="(t, index) in item.data_list">
+                <div :key="index" class="row_sheet--item">
+                  <GridInfoUnits :info="t.info" :title="t.title"/>
+                </div>
+              </template>
+            </v-card>
+          </template>
+        </div>
       </v-card-text>
     </v-card>
     <v-card tile flat>
@@ -58,16 +58,16 @@
       </v-card-title>
       <v-card-text>
         <div class="row_sheet_panels">
-        <template v-for="(item, index) in row['chi_phi_dien']">
-          <v-card outlined :color="colors[index]" class="row_sheet" :key="index" tile>
-            <template v-for="(t, index) in item.data_list">
-              <div :key="index" class="row_sheet--item">
-                <GridInfoUnits :info="t.info" :title="t.title"/>
-              </div>
-            </template>
-          </v-card>
-        </template>
-      </div>
+          <template v-for="(item, index) in row['chi_phi_dien']">
+            <v-card outlined :color="colors[index]" class="row_sheet" :key="index" tile>
+              <template v-for="(t, index) in item.data_list">
+                <div :key="index" class="row_sheet--item">
+                  <GridInfoUnits :info="t.info" :title="t.title"/>
+                </div>
+              </template>
+            </v-card>
+          </template>
+        </div>
       </v-card-text>
     </v-card>
 
@@ -99,7 +99,7 @@ export default {
 .row_sheet_panels {
   display: flex;
   flex-wrap: wrap;
-  flex-wrap: nowrap;
+  //flex-wrap: nowrap;
   //border: solid 1px red;
   overflow-x: auto;
 
@@ -112,10 +112,17 @@ export default {
   //justify-content: center;
   border-top-width: 5px;
   margin-right: 10px;
-  max-width: unset;
+  //max-width: unset;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  background: transparent !important;
+  &:first-child {
+    //opacity: 0.5;
+    margin-top: 0px;
+  }
 
   .row_sheet--item {
-    min-width: 450px;
+    width: 350px;
   }
 }
 

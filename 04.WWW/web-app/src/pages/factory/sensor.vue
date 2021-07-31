@@ -40,7 +40,6 @@
 import {getListSensor} from "../../api/app"
 import GridOfSensor from "../../components/GridOfSensor";
 import NotFoundData from "../../components/NotFoundData";
-import {requestAnimFrame} from "../../libs";
 
 export default {
   components: {NotFoundData, GridOfSensor},
@@ -52,6 +51,7 @@ export default {
       activetab: 0,
       items: [],
       dateSync: Date.now(),
+      timer: undefined,
     }
   },
   computed: {
@@ -60,10 +60,6 @@ export default {
     }
   },
   mounted() {
-    // requestAnimFrame
-    requestAnimFrame(function () {
-      console.error(1)
-    })
     this.listSensor()
   },
   methods: {
@@ -74,15 +70,18 @@ export default {
       this.syncListSensor()
     },
     syncListSensor() {
-      setInterval(async () => {
+      this.timer = setInterval(async () => {
         let factory_id = this.$route.params.factory;
         const res = await getListSensor(factory_id)
         this.items = res.data.data
         this.dateSync = Date.now()
-        console.log("Syncing Data")
+        clearInterval(this.timer)
       }, 45000);
     }
   },
+  beforeDestroy() {
+    clearInterval(this.timer)
+  }
 }
 </script>
 

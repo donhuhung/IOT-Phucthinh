@@ -1,6 +1,8 @@
 <template>
   <v-card flat class="w-full h-full box-table" tile>
-    <h3 v-if="title" class="mb-4">{{ title }}</h3>
+    <h3 v-if="title" class="mb-4">
+      {{ title }}
+    </h3>
     <table class="w-full table-grid">
       <tr>
         <th class="cell-table cell-header cell-no">
@@ -14,11 +16,15 @@
         </th>
       </tr>
       <template v-for="(t, k, i) in info">
-        <tr class="grid-row" :key="k">
-          <td class="cell-table cell-row"> {{ i + 1 }}</td>
-          <td class="cell-table cell-row">{{ t | numberFormat }}</td>
+        <tr class="grid-row" :key="k" v-ripple>
           <td class="cell-table cell-row">
-            <v-chip label small
+            <span class="caption font-weight-bold">{{ i + 1 }}</span>
+          </td>
+          <td class="cell-table cell-row">
+            <span class="caption">{{ t | numberFormat }}</span>
+          </td>
+          <td class="cell-table cell-row">
+            <v-chip small
                     style="min-width: 60px;" dark>
               {{ k }}
             </v-chip>
@@ -54,15 +60,15 @@ export default {
 $colorBorder: #EFEFEF;
 $colorBorderNone: transparent;
 .table-grid {
-  //border-right: solid 1px $colorBorder;
-  //border-top: solid 1px $colorBorder;
+  border-right: solid 1px $colorBorder;
+  border-top: solid 1px $colorBorder;
 }
 
 .box-table {
   padding: 20px;
 
   h3 {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     //white-space: nowrap;
   }
@@ -78,7 +84,14 @@ $colorBorderNone: transparent;
     border-bottom: 1px solid;
     font-weight: bold;
     padding: 5px 10px;
-    //border-left: solid 1px $colorBorder;
+    //border-left: solid 1px;
+    //border-top: solid 1px;
+    font-size: 12px;
+    background: #1976D2;
+    color: white;
+    &:last-child {
+      //border-right: solid 1px;
+    }
   }
 
   &.cell-no {
@@ -89,6 +102,7 @@ $colorBorderNone: transparent;
     border-bottom: 1px solid #EFEFEF;
     //border-left: 1px solid #EFEFEF;
     //border: 1px solid #EFEFEF;
+    border-left: solid 1px $colorBorder;
     padding: 5px 10px;
   }
 }
@@ -100,6 +114,11 @@ $colorBorderNone: transparent;
 }
 
 .grid-row {
+  &:nth-child(odd) {
+    td {
+      background: #E3F2FD;
+    }
+  }
   &:last-child {
     td.cell-row {
       //border-color: transparent;

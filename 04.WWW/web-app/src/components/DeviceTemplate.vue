@@ -47,6 +47,7 @@ export default {
       itemValves: [],
       children: ['motor', 'valve'],
       child: 0,
+      timer: undefined,
     }
   },
   mounted() {
@@ -75,23 +76,19 @@ export default {
       this.syncListMotor();
     },
     syncListMotor() {
-      setInterval(async () => {
+      this.timer = setInterval(async () => {
         const res = await getListMotor(this.factoryId)
         this.itemMotors = res.data.data
+        clearInterval(this.timer)
       }, 45000);
     },
-
     async listValve() {
       const res = await getListValve(this.factoryId)
       this.itemValves = res.data.data
     },
-    syncListValve() {
-      setInterval(async () => {
-        const res = await getListValve(this.factoryId)
-        this.itemValves = res.data.data
-      }, 45000);
-    },
-
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   }
 }
 </script>
