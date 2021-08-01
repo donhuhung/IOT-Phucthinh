@@ -7,29 +7,41 @@
         </div>
       </v-card-title>
       <template v-for="([info, list], index) in categories">
-        <v-list :key="index">
-          <v-subheader>
-            {{ info.title }}
-          </v-subheader>
-          <template v-for="([id, label, color, icon]) in list">
-            <v-list-item :key="id"
-                         dense
-                         link
-                         :color="color"
-                         :style="{borderLeft: `solid 3px ${color}`}"
-                         @click="$emit('clickItem', id)">
-              <v-list-item-icon>
-                <v-icon>{{ icon || 'mdi-database-check' }}</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ label }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-divider :key="`divider-${id}`"/>
-          </template>
-        </v-list>
+        <template v-if="info.isActive">
+          <v-list :key="index">
+            <v-subheader>
+              {{ info.title }}
+            </v-subheader>
+            <template v-for="([id, label, color, icon]) in list">
+              <v-list-item :key="id"
+                           dense
+                           link
+                           :color="color"
+                           active-class="primary--text"
+                           :style="{borderLeft: `solid 3px ${color}`}" :to="`#${id}`">
+                <v-list-item-icon>
+                  <v-icon>{{ icon || 'mdi-database-check' }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ label }}
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider :key="`divider-${id}`"/>
+            </template>
+          </v-list>
+        </template>
+        <template v-else>
+          <v-list-item dense link :key="index" :to="info.to">
+            <v-list-item-icon>
+              <v-icon>mdi-link-variant</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{ info.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
       </template>
     </v-card>
   </div>
@@ -40,9 +52,18 @@ export default {
   name: "PanelStatisticNavigation",
   computed: {
     categories() {
+      const {name, params } = this.$route
+      const isElectrical = name === 'statistic-electrical'
+      const isChemical = name === 'statistic-chemical'
+      const isFlowmeter = name === 'statistic-flowmeter'
       const electrical = [
         {
-          title: 'Điện năng'
+          title: 'Điện năng',
+          isActive: isElectrical,
+          to: {
+            name: 'statistic-electrical',
+            params,
+          }
         },
         [
           ['bieu_gia_dien', 'Biểu Giá Điện', 'pink'],
@@ -53,7 +74,12 @@ export default {
       ]
       const chemical = [
         {
-          title: 'Hóa chất'
+          title: 'Hóa chất',
+          isActive: isChemical,
+          to: {
+            name: 'statistic-chemical',
+            params,
+          }
         },
         [
           ['cong_thuc_pha_hoa_chat', 'Công thức hóa chất', 'pink', 'mdi-format-header-equal'],
@@ -65,7 +91,12 @@ export default {
       ]
       const flowmeter = [
         {
-          title: 'Lưu lượng'
+          title: 'Lưu lượng',
+          isActive: isFlowmeter,
+          to: {
+            name: 'statistic-flowmeter',
+            params,
+          }
         },
         [
           ['luu_luong_dau_vao', 'Lưu lượng đầu vào', 'pink', 'mdi-import'],

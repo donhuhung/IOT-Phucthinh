@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div class="labels-category">
-      <PanelStatisticNavigation @clickItem="cateClick"/>
-    </div>
     <div class="pl-6">
       <template v-for="([id, label, color]) in categories">
         <div :ref="id" :key="`${id}`" :class="`line_${color}`">
@@ -59,11 +56,10 @@
 
 <script>
 import GridInfoUnits from "./GridInfoUnits";
-import PanelStatisticNavigation from "./PanelStatisticNavigation";
 
 export default {
   name: "StatisticElectricalTemplate",
-  components: {PanelStatisticNavigation, GridInfoUnits},
+  components: {GridInfoUnits},
   props: {
     row: {},
     colors: {
@@ -197,17 +193,6 @@ $colorLine: gray;
 
 }
 
-.labels-category {
-  //border: solid 1px red;
-  width: 250px;
-  position: fixed;
-  right: 0px;
-  top: 70px;
-  //transform: translateY(-100px);
-  z-index: 99;
-  height: 85vh;
-  overflow-y: auto;
-}
 
 .top-line {
   //border: solid 1px $colorLine;

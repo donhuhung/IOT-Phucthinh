@@ -99,6 +99,36 @@ const routes = [
             meta: {
               breadcrumb: 'STATISTIC'
             },
+            children: [
+              {
+                path: 'electrical',
+                exact: true,
+                name: 'statistic-electrical',
+                components: {
+                  'local-panel': () => import('../components/panels/PanelStatistic'),
+                  'default': () => import('../pages/factory/statistic/electrical'),
+                },
+              },
+              {
+                path: 'flowmeter',
+                exact: true,
+                name: 'statistic-flowmeter',
+                components: {
+                  'local-panel': () => import('../components/panels/PanelStatistic'),
+                  'default': () => import('../pages/factory/statistic/flowmeter'),
+                },
+              },
+              {
+                path: 'schemical',
+                exact: true,
+                name: 'statistic-chemical',
+                components: {
+                  'local-panel': () => import('../components/panels/PanelStatistic'),
+                  'default': () => import('../pages/factory/statistic/schemical'),
+                },
+              },
+
+            ]
           },
           {
             path: '/customers/:customer/factory/:factory/report',
