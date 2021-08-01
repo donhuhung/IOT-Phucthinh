@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title class="pb-0">
         <div class="text-h6 font-weight-medium text--primary text-capitalize">
-          Thống Kê
+          {{ $t('layout.navReport') }}
         </div>
       </v-card-title>
       <template v-for="([info, list], index) in categories">

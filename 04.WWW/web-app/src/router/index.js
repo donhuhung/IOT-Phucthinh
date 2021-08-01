@@ -126,18 +126,17 @@ const routes = [
                 },
               },
               {
-                path: 'schemical',
+                path: 'chemical',
                 exact: true,
                 name: 'statistic-chemical',
                 components: {
                   'local-panel': () => import('../components/panels/PanelStatistic'),
-                  'default': () => import('../pages/factory/statistic/schemical'),
+                  'default': () => import('../pages/factory/statistic/chemical'),
                 },
                 meta: {
-                  breadcrumb: 'STATISTIC / Schemical'.toUpperCase()
+                  breadcrumb: 'STATISTIC / chemical'.toUpperCase()
                 },
               },
-
             ]
           },
           {
@@ -151,6 +150,44 @@ const routes = [
             meta: {
               breadcrumb: 'REPORT'
             },
+            children: [
+              {
+                path: 'electrical',
+                exact: true,
+                name: 'report-electrical',
+                components: {
+                  'local-panel': () => import('../components/panels/PanelStatistic'),
+                  'default': () => import('../pages/factory/report/electrical'),
+                },
+                meta: {
+                  breadcrumb: 'REPORT / Electrical'.toUpperCase()
+                },
+              },
+              {
+                path: 'flowmeter',
+                exact: true,
+                name: 'report-flowmeter',
+                components: {
+                  'local-panel': () => import('../components/panels/PanelStatistic'),
+                  'default': () => import('../pages/factory/report/flowmeter'),
+                },
+                meta: {
+                  breadcrumb: 'REPORT / flowmeter'.toUpperCase()
+                },
+              },
+              {
+                path: 'chemical',
+                exact: true,
+                name: 'report-chemical',
+                components: {
+                  'local-panel': () => import('../components/panels/PanelStatistic'),
+                  'default': () => import('../pages/factory/report/chemical'),
+                },
+                meta: {
+                  breadcrumb: 'REPORT / Chemical'.toUpperCase()
+                },
+              },
+            ]
           },
           {
             path: '/customers/:customer/factory/:factory/maintenance',
