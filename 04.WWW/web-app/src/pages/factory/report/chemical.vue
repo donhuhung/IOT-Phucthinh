@@ -1,10 +1,14 @@
 <template>
-<div>chemical</div>
+<div>
+  <ReportTemplate end-point="/api/v1/report/chemical"/>
+</div>
 </template>
 
 <script>
+import ReportTemplate from "../../../components/ReportTemplate";
 export default {
-  name: "chemical"
+  name: "chemical",
+  components: {ReportTemplate}
 }
 </script>
 
