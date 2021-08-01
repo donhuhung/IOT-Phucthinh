@@ -1,9 +1,16 @@
 <template>
   <v-card flat class="w-full h-full box-table" tile>
-    <h3 v-if="title" class="mb-4">
+    <h3 v-if="false" class="mb-4">
       {{ title }}
     </h3>
     <table class="w-full table-grid">
+      <tr>
+        <th class="cell-table cell-header cell-no text-left" colspan="3">
+          <span class="text-h6">
+            {{ title }}
+          </span>
+        </th>
+      </tr>
       <tr>
         <th class="cell-table cell-header cell-no">
           #
