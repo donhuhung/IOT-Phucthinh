@@ -7,13 +7,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      electrical: {},
-      chemical: {},
-      flowmeter: {},
-    }
-  },
 
 }
 </script>

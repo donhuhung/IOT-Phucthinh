@@ -108,6 +108,9 @@ const routes = [
                   'local-panel': () => import('../components/panels/PanelStatistic'),
                   'default': () => import('../pages/factory/statistic/electrical'),
                 },
+                meta: {
+                  breadcrumb: 'STATISTIC / Electrical'.toUpperCase()
+                },
               },
               {
                 path: 'flowmeter',
@@ -117,6 +120,9 @@ const routes = [
                   'local-panel': () => import('../components/panels/PanelStatistic'),
                   'default': () => import('../pages/factory/statistic/flowmeter'),
                 },
+                meta: {
+                  breadcrumb: 'STATISTIC / flowmeter'.toUpperCase()
+                },
               },
               {
                 path: 'schemical',
@@ -125,6 +131,9 @@ const routes = [
                 components: {
                   'local-panel': () => import('../components/panels/PanelStatistic'),
                   'default': () => import('../pages/factory/statistic/schemical'),
+                },
+                meta: {
+                  breadcrumb: 'STATISTIC / Schemical'.toUpperCase()
                 },
               },
 

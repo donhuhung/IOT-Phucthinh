@@ -16,7 +16,23 @@
                 {{ label }}
               </v-alert>
             </div>
-            <template v-if="id !== 'bieu_gia_dien'">
+            <template v-if="row[id].data_list">
+              <div>
+                <div class="row_sheet_panels">
+                  <v-card flat class="row_sheet" tile>
+                    <div class="row_sheet--content">
+                      <div class="d"></div>
+                      <template v-for="(t, index) in row[id].data_list">
+                        <div :key="index" class="row_sheet--item">
+                          <GridInfoUnits :info="t.info" :title="t.title"/>
+                        </div>
+                      </template>
+                    </div>
+                  </v-card>
+                </div>
+              </div>
+            </template>
+            <template v-else>
               <div>
                 <div class="row_sheet_panels">
                   <template v-for="(item, index) in row[id]">
@@ -34,22 +50,7 @@
                 </div>
               </div>
             </template>
-            <template v-else>
-              <div>
-                <div class="row_sheet_panels" v-if="row['bieu_gia_dien']">
-                  <v-card flat class="row_sheet" tile>
-                    <div class="row_sheet--content">
-                      <div class="d"></div>
-                      <template v-for="(t, index) in row['bieu_gia_dien'].data_list">
-                        <div :key="index" class="row_sheet--item">
-                          <GridInfoUnits :info="t.info" :title="t.title"/>
-                        </div>
-                      </template>
-                    </div>
-                  </v-card>
-                </div>
-              </div>
-            </template>
+
           </v-card>
         </div>
       </template>
@@ -62,7 +63,7 @@ import GridInfoUnits from "./GridInfoUnits";
 import https from "../plugins/https";
 
 export default {
-  name: "StatisticElectricalTemplate",
+  name: "StatisticSchemicalTemplate",
   components: {GridInfoUnits},
   data() {
     return {
@@ -73,10 +74,11 @@ export default {
   computed: {
     categories() {
       return [
-        ['bieu_gia_dien', 'Biểu Giá Điện', 'pink'],
-        ['thong_so_dien', 'Thông Số Điện', 'green'],
-        ['dien_nang_tieu_thu', 'Điện Năng Tiêu Thụ', 'orange'],
-        ['chi_phi_dien', 'Chi Phí Điện', 'teal', 'mdi-currency-usd']
+        ['cong_thuc_pha_hoa_chat', 'Công thức Pha hóa chất', 'pink', 'mdi-format-header-equal'],
+        ['kho_hoa_chat', 'Kho hóa chất', 'green', 'mdi-factory'],
+        ['hoa_chat_tieu_thu', 'hóa chất tiêu thụ', 'orange'],
+        ['bieu_gia_hoa_chat', 'Biểu giá hóa chất', 'teal', 'mdi-currency-usd'],
+        ['chi_phi_hoa_chat', 'Chi phí hóa chất', 'teal', 'mdi-currency-usd']
       ]
     }
   },
@@ -99,7 +101,7 @@ export default {
     async fetchReport() {
       try {
         this.getting = true
-        const res = await https.post('/api/v1/statistic/electrical')
+        const res = await https.post('/api/v1/statistic/chemical')
         this.row = res.data.data
       }finally {
         this.getting = false

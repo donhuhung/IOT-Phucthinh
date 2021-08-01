@@ -82,7 +82,7 @@ export default {
           }
         },
         [
-          ['cong_thuc_pha_hoa_chat', 'Công thức hóa chất', 'pink', 'mdi-format-header-equal'],
+          ['cong_thuc_pha_hoa_chat', 'Công thức Pha hóa chất', 'pink', 'mdi-format-header-equal'],
           ['kho_hoa_chat', 'Kho hóa chất', 'green', 'mdi-factory'],
           ['hoa_chat_tieu_thu', 'hóa chất tiêu thụ', 'orange'],
           ['bieu_gia_hoa_chat', 'Biểu giá hóa chất', 'teal', 'mdi-currency-usd'],
