@@ -70,6 +70,11 @@ $colorBorderNone: transparent;
 .box-table {
   //padding: 20px;
   padding: 0px;
+  //border: solid 1px red;
+  &.compact {
+    max-height: 300px;
+    overflow-y: auto;
+  }
   h3 {
     font-size: 20px;
     font-weight: bold;

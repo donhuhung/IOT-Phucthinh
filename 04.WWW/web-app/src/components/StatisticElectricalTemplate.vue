@@ -106,6 +106,9 @@ $colorLine: gray;
     &:before, &:after {
       background: $color !important;
     }
+    .d {
+      background: $color !important;
+    }
   }
 }
 .line_pink {
@@ -152,14 +155,15 @@ $colorLine: gray;
     position: relative;
 
     .d {
-      width: 5px;
-      height: 5px;
+      width: 8px;
+      height: 8px;
       background: red;
       border-radius: 100%;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       left: 0px;
+      z-index: 2;
     }
 
     &:before {
