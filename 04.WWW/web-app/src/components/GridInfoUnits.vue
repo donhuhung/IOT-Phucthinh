@@ -1,15 +1,11 @@
 <template>
-  <v-card flat class="w-full h-full box-table" tile>
+  <v-card flat class="w-full box-table" tile>
     <h3 v-if="false" class="mb-4">
       {{ title }}
     </h3>
     <table class="w-full table-grid">
       <tr>
-        <th class="cell-table cell-header cell-no text-left" colspan="3">
-          <span class="text-h6">
-            {{ title }}
-          </span>
-        </th>
+        <th colspan="3" class="cell-table cell-header text-h6">{{ title }}</th>
       </tr>
       <tr>
         <th class="cell-table cell-header cell-no">
@@ -28,7 +24,7 @@
             <span class="caption font-weight-bold">{{ i + 1 }}</span>
           </td>
           <td class="cell-table cell-row">
-            <span class="caption">{{ t | numberFormat }}</span>
+            <span class="caption font-weight-bold text--primary">{{ t | numberFormat }}</span>
           </td>
           <td class="cell-table cell-row">
             <v-chip small
@@ -72,8 +68,8 @@ $colorBorderNone: transparent;
 }
 
 .box-table {
-  padding: 20px;
-
+  //padding: 20px;
+  padding: 0px;
   h3 {
     font-size: 20px;
     font-weight: bold;
@@ -91,7 +87,7 @@ $colorBorderNone: transparent;
     border-bottom: 1px solid;
     font-weight: bold;
     padding: 5px 10px;
-    //border-left: solid 1px;
+    border-left: solid 1px;
     //border-top: solid 1px;
     font-size: 12px;
     background: #1976D2;
@@ -121,7 +117,7 @@ $colorBorderNone: transparent;
 }
 
 .grid-row {
-  &:nth-child(odd) {
+  &:nth-child(even) {
     td {
       background: #E3F2FD;
     }

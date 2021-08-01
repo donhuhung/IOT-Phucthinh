@@ -1,77 +1,69 @@
 <template>
   <div>
-    <v-card tile flat>
-      <v-card-title class="text-h4">
-        Biểu Giá Điện
-      </v-card-title>
-      <v-card-text>
-        <div class="row_sheet_panels" v-if="row['bieu_gia_dien']">
-          <v-card outlined color="primary" class="row_sheet" tile>
-            <template v-for="(t, index) in row['bieu_gia_dien'].data_list">
-              <div :key="index" class="row_sheet--item">
-                <GridInfoUnits :info="t.info" :title="t.title"/>
+    <div class="labels-category">
+      <template v-for="([id,label, color], index) in categories">
+        <div :key="index" @click="cateClick(id)" class="cursor-pointer">
+          <v-alert dense
+                   dark
+                   class="mb-1"
+                   :color="color"
+                   icon="mdi-database-check">
+            {{ label }}
+          </v-alert>
+        </div>
+      </template>
+    </div>
+    <div class="pl-6">
+      <template v-for="([id, label, color]) in categories">
+        <div :ref="id" :key="`${id}`" :class="`line_${color}`">
+          <v-card tile flat color="transparent">
+            <div class="top-line">
+              <v-alert class="mb-0"
+                       dense
+                       :color="color"
+                       dark
+                       icon="mdi-database-check">
+                {{ label }}
+              </v-alert>
+            </div>
+            <template v-if="id !== 'bieu_gia_dien'">
+              <div>
+              <div class="row_sheet_panels">
+                <template v-for="(item, index) in row[id]">
+                  <v-card flat class="row_sheet" :key="index" tile>
+                    <div class="row_sheet--content">
+                      <div class="d"></div>
+                      <template v-for="(t, index) in item.data_list">
+                        <div :key="index" class="row_sheet--item">
+                          <GridInfoUnits :info="t.info" :title="t.title"/>
+                        </div>
+                      </template>
+                    </div>
+                  </v-card>
+                </template>
+              </div>
+            </div>
+            </template>
+            <template v-else>
+              <div>
+                <div class="row_sheet_panels" v-if="row['bieu_gia_dien']">
+                  <v-card flat class="row_sheet" tile>
+                    <div class="row_sheet--content">
+                      <div class="d"></div>
+                      <template v-for="(t, index) in row['bieu_gia_dien'].data_list">
+                        <div :key="index" class="row_sheet--item">
+                          <GridInfoUnits :info="t.info" :title="t.title"/>
+                        </div>
+                      </template>
+                    </div>
+                  </v-card>
+                </div>
               </div>
             </template>
           </v-card>
         </div>
-      </v-card-text>
-    </v-card>
-    <v-card tile flat>
-      <v-card-title class="text-h4">
-        Thông Số Điện
-      </v-card-title>
-      <v-card-text>
-        <div class="row_sheet_panels">
-          <template v-for="(item, index) in row['thong_so_dien']">
-            <v-card outlined :color="colors[index]" class="row_sheet" :key="index" tile>
-              <template v-for="(t, index) in item.data_list">
-                <div :key="index" class="row_sheet--item">
-                  <GridInfoUnits :info="t.info" :title="t.title"/>
-                </div>
-              </template>
-            </v-card>
-          </template>
-        </div>
-      </v-card-text>
-    </v-card>
-    <v-card tile flat>
-      <v-card-title class="text-h4">
-        Điện Năng Tiêu Thụ
-      </v-card-title>
-      <v-card-text>
-        <div class="row_sheet_panels">
-          <template v-for="(item, index) in row['dien_nang_tieu_thu']">
-            <v-card outlined :color="colors[index]" class="row_sheet" :key="index" tile>
-              <template v-for="(t, index) in item.data_list">
-                <div :key="index" class="row_sheet--item">
-                  <GridInfoUnits :info="t.info" :title="t.title"/>
-                </div>
-              </template>
-            </v-card>
-          </template>
-        </div>
-      </v-card-text>
-    </v-card>
-    <v-card tile flat>
-      <v-card-title class="text-h4">
-        Chi Phí Điện
-      </v-card-title>
-      <v-card-text>
-        <div class="row_sheet_panels">
-          <template v-for="(item, index) in row['chi_phi_dien']">
-            <v-card outlined :color="colors[index]" class="row_sheet" :key="index" tile>
-              <template v-for="(t, index) in item.data_list">
-                <div :key="index" class="row_sheet--item">
-                  <GridInfoUnits :info="t.info" :title="t.title"/>
-                </div>
-              </template>
-            </v-card>
-          </template>
-        </div>
-      </v-card-text>
-    </v-card>
-
-
+      </template>
+    </div>
   </div>
 </template>
 
@@ -83,47 +75,159 @@ export default {
   components: {GridInfoUnits},
   props: {
     row: {},
-    ks: {
-      type: Array,
-      default: () => ['thong_so_dien', 'bieu_gia_dien', 'dien_nang_tieu_thu', 'chi_phi_dien'],
-    },
     colors: {
       type: Array,
-      default: () => ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan', 'teal', 'green'],
+      default: () => ['red', 'pink', 'orange', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan', 'teal', 'green'],
     },
+  },
+  computed: {
+    categories() {
+      return [
+        ['bieu_gia_dien', 'Biểu Giá Điện', 'pink'],
+        ['thong_so_dien', 'Thông Số Điện', 'green'],
+        ['dien_nang_tieu_thu', 'Điện Năng Tiêu Thụ', 'orange'],
+        ['chi_phi_dien', 'Chi Phí Điện', 'teal']
+      ]
+    }
+  },
+  methods: {
+    cateClick(id) {
+      const ref = this.$refs[id][0]
+      this.$vuetify.goTo(ref)
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.row_sheet_panels {
-  display: flex;
-  flex-wrap: wrap;
-  //flex-wrap: nowrap;
-  //border: solid 1px red;
-  overflow-x: auto;
-
+$colorLine: gray;
+@mixin lineColor($color) {
+  .row_sheet--content, .top-line {
+    &:before, &:after {
+      background: $color !important;
+    }
+  }
+}
+.line_pink {
+  @include lineColor(#e91e63);
+}
+.line_primary {
+  @include lineColor(#1976d2);
+}
+.line_orange {
+  @include lineColor(orange);
+}
+.line_teal {
+  @include lineColor(teal);
+}
+.line_green {
+  @include lineColor(green);
 }
 
+.row_sheet_panels {
+  position: relative;
+}
+
+
 .row_sheet {
-  display: flex;
-  //width: 100%;
-  //width: 50%;
-  //justify-content: center;
-  border-top-width: 5px;
-  margin-right: 10px;
-  //max-width: unset;
   margin-top: 20px;
-  flex-wrap: wrap;
   background: transparent !important;
+  margin: 0px -5px;
+
   &:first-child {
-    //opacity: 0.5;
     margin-top: 0px;
   }
 
-  .row_sheet--item {
-    width: 350px;
+  &:last-child {
+    .row_sheet--content {
+      &:after {
+        height: 50%;
+      }
+    }
   }
+
+  .row_sheet--content {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+
+    .d {
+      width: 5px;
+      height: 5px;
+      background: red;
+      border-radius: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0px;
+    }
+
+    &:before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: $colorLine;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -20px;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 100%;
+      background: $colorLine;
+      position: absolute;
+      left: -20px;
+    }
+
+    .row_sheet--item {
+      width: 350px;
+      padding: 5px;
+    }
+  }
+
 }
 
+.labels-category {
+  //border: solid 1px red;
+  width: 250px;
+  position: fixed;
+  right: 0px;
+  top: 70px;
+  //transform: translateY(-100px);
+  z-index: 99;
+}
+
+.top-line {
+  //border: solid 1px $colorLine;
+  position: relative;
+  width: 50%;
+  width: 690px;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    background: $colorLine;
+    width: 25px;
+    height: 1px;
+    left: -25px;
+    top: 50%;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: calc(50% + 4px);
+    background: $colorLine;
+    position: absolute;
+    top: 50%;
+    left: -25px;
+  }
+}
 </style>
