@@ -1,17 +1,7 @@
 <template>
   <div>
     <div class="labels-category">
-      <template v-for="([id,label, color], index) in categories">
-        <div :key="index" @click="cateClick(id)" class="cursor-pointer">
-          <v-alert dense
-                   dark
-                   class="mb-1"
-                   :color="color"
-                   icon="mdi-database-check">
-            {{ label }}
-          </v-alert>
-        </div>
-      </template>
+      <PanelStatisticNavigation @clickItem="cateClick"/>
     </div>
     <div class="pl-6">
       <template v-for="([id, label, color]) in categories">
@@ -28,21 +18,21 @@
             </div>
             <template v-if="id !== 'bieu_gia_dien'">
               <div>
-              <div class="row_sheet_panels">
-                <template v-for="(item, index) in row[id]">
-                  <v-card flat class="row_sheet" :key="index" tile>
-                    <div class="row_sheet--content">
-                      <div class="d"></div>
-                      <template v-for="(t, index) in item.data_list">
-                        <div :key="index" class="row_sheet--item">
-                          <GridInfoUnits :info="t.info" :title="t.title"/>
-                        </div>
-                      </template>
-                    </div>
-                  </v-card>
-                </template>
+                <div class="row_sheet_panels">
+                  <template v-for="(item, index) in row[id]">
+                    <v-card flat class="row_sheet" :key="index" tile>
+                      <div class="row_sheet--content">
+                        <div class="d"></div>
+                        <template v-for="(t, index) in item.data_list">
+                          <div :key="index" class="row_sheet--item">
+                            <GridInfoUnits :info="t.info" :title="t.title"/>
+                          </div>
+                        </template>
+                      </div>
+                    </v-card>
+                  </template>
+                </div>
               </div>
-            </div>
             </template>
             <template v-else>
               <div>
@@ -69,10 +59,11 @@
 
 <script>
 import GridInfoUnits from "./GridInfoUnits";
+import PanelStatisticNavigation from "./PanelStatisticNavigation";
 
 export default {
   name: "StatisticElectricalTemplate",
-  components: {GridInfoUnits},
+  components: {PanelStatisticNavigation, GridInfoUnits},
   props: {
     row: {},
     colors: {
@@ -86,14 +77,18 @@ export default {
         ['bieu_gia_dien', 'Biểu Giá Điện', 'pink'],
         ['thong_so_dien', 'Thông Số Điện', 'green'],
         ['dien_nang_tieu_thu', 'Điện Năng Tiêu Thụ', 'orange'],
-        ['chi_phi_dien', 'Chi Phí Điện', 'teal']
+        ['chi_phi_dien', 'Chi Phí Điện', 'teal', 'mdi-currency-usd']
       ]
     }
   },
   methods: {
     cateClick(id) {
-      const ref = this.$refs[id][0]
-      this.$vuetify.goTo(ref)
+      try {
+        const ref = this.$refs[id][0]
+        this.$vuetify.goTo(ref, {offset: 10})
+      }catch (e) {
+        throw e.message
+      }
     }
   }
 }
@@ -106,23 +101,29 @@ $colorLine: gray;
     &:before, &:after {
       background: $color !important;
     }
+
     .d {
       background: $color !important;
     }
   }
 }
+
 .line_pink {
   @include lineColor(#e91e63);
 }
+
 .line_primary {
   @include lineColor(#1976d2);
 }
+
 .line_orange {
   @include lineColor(orange);
 }
+
 .line_teal {
   @include lineColor(teal);
 }
+
 .line_green {
   @include lineColor(green);
 }
@@ -204,6 +205,8 @@ $colorLine: gray;
   top: 70px;
   //transform: translateY(-100px);
   z-index: 99;
+  height: 85vh;
+  overflow-y: auto;
 }
 
 .top-line {

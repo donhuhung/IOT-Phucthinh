@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="w-full box-table" tile>
+  <v-card flat class="w-full box-table" :class="compact ? `compact` : ``" tile>
     <h3 v-if="false" class="mb-4">
       {{ title }}
     </h3>
@@ -19,7 +19,7 @@
         </th>
       </tr>
       <template v-for="(t, k, i) in info">
-        <tr class="grid-row" :key="k" v-ripple>
+        <tr class="grid-row" :key="k">
           <td class="cell-table cell-row">
             <span class="caption font-weight-bold">{{ i + 1 }}</span>
           </td>
@@ -51,10 +51,15 @@ export default {
     title: {
       type: String,
       default: () => '',
-    }
+    },
   },
   filters: {
     numberFormat,
+  },
+  data() {
+    return {
+      compact: false,
+    }
   }
 }
 </script>
@@ -74,6 +79,8 @@ $colorBorderNone: transparent;
   &.compact {
     max-height: 300px;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
+    overflow-scrolling: touch;
   }
   h3 {
     font-size: 20px;

@@ -1,5 +1,11 @@
+body{
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
 * {
   box-sizing: border-box !important;
+  -webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
+  overflow-scrolling: touch;
 }
 .h-full {
   height: 100%;
