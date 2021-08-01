@@ -99,6 +99,7 @@ const routes = [
             meta: {
               breadcrumb: 'STATISTIC'
             },
+            redirect: {name: 'statistic-electrical', hash: '#bieu_gia_dien'},
             children: [
               {
                 path: 'electrical',

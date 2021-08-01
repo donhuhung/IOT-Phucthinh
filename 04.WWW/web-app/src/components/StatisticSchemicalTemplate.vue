@@ -16,23 +16,7 @@
                 {{ label }}
               </v-alert>
             </div>
-            <template v-if="row[id].data_list">
-              <div>
-                <div class="row_sheet_panels">
-                  <v-card flat class="row_sheet" tile>
-                    <div class="row_sheet--content">
-                      <div class="d"></div>
-                      <template v-for="(t, index) in row[id].data_list">
-                        <div :key="index" class="row_sheet--item">
-                          <GridInfoUnits :info="t.info" :title="t.title"/>
-                        </div>
-                      </template>
-                    </div>
-                  </v-card>
-                </div>
-              </div>
-            </template>
-            <template v-else>
+            <template v-if="Array.isArray(row[id])">
               <div>
                 <div class="row_sheet_panels">
                   <template v-for="(item, index) in row[id]">
@@ -47,6 +31,24 @@
                       </div>
                     </v-card>
                   </template>
+                </div>
+              </div>
+            </template>
+            <template v-else>
+              <div>
+                <div class="row_sheet_panels">
+                  <v-card flat class="row_sheet" tile>
+                    <div class="row_sheet--content">
+                      <div class="d"></div>
+                      <template v-if="row[id]">
+                        <template v-for="(t, index) in row[id].data_list">
+                          <div :key="index" class="row_sheet--item">
+                            <GridInfoUnits :info="t.info" :title="t.title"/>
+                          </div>
+                        </template>
+                      </template>
+                    </div>
+                  </v-card>
                 </div>
               </div>
             </template>
@@ -102,7 +104,7 @@ export default {
         this.getting = true
         const res = await https.post('/api/v1/statistic/chemical')
         this.row = res.data.data
-      }finally {
+      } finally {
         this.getting = false
       }
     }
