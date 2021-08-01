@@ -33,4 +33,19 @@ Route::group([
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('valve')->group(function () {
         Route::post('list', 'PhucThinh\Api\Controllers\Device@getListValve');
     });
+    Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('statistic')->group(function () {
+        Route::post('electrical', 'PhucThinh\Api\Controllers\Statistic@getListElectrical');
+        Route::post('chemical', 'PhucThinh\Api\Controllers\Statistic@getListChemical');
+        Route::post('flowmeter', 'PhucThinh\Api\Controllers\Statistic@getListFlowmeter');
+    });
+    
+    Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('report')->group(function () {
+        Route::post('electrical', 'PhucThinh\Api\Controllers\Report@getListElectrical');
+        Route::post('chemical', 'PhucThinh\Api\Controllers\Report@getListChemical');
+        Route::post('flowmeter', 'PhucThinh\Api\Controllers\Report@getListFlowmeter');
+        
+        Route::post('motor', 'PhucThinh\Api\Controllers\Report@getListMotor');
+        Route::post('valve', 'PhucThinh\Api\Controllers\Report@getListValve');
+        Route::post('sensor', 'PhucThinh\Api\Controllers\Report@getListSensor');
+    });
 });
