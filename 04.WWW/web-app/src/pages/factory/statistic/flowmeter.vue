@@ -1,14 +1,14 @@
 <template>
   <div>
-    <StatisticElectricalTemplate />
+    <StatisticFlowMeterTemplate />
   </div>
 </template>
 
 <script>
-import StatisticElectricalTemplate from "../../../components/StatisticElectricalTemplate"
+import StatisticFlowMeterTemplate from "../../../components/StatisticFlowMeterTemplate"
 
 export default {
-  components: {StatisticElectricalTemplate},
+  components: {StatisticFlowMeterTemplate},
 }
 </script>
 

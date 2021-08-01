@@ -1,18 +1,20 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>
+      <v-card-title class="pb-0">
         <div class="text-h6 font-weight-medium text--primary text-capitalize">
           Thống Kê
         </div>
       </v-card-title>
       <template v-for="([info, list], index) in categories">
+        <v-divider v-if="index !== 0" :key="`divider-${index}`"/>
         <template v-if="info.isActive">
           <v-list :key="index">
             <v-subheader>
               {{ info.title }}
             </v-subheader>
-            <template v-for="([id, label, color, icon]) in list">
+            <template v-for="([id, label, color, icon], index) in list">
+              <v-divider v-if="index !== 0" :key="`divider-${id}`"/>
               <v-list-item :key="id"
                            dense
                            link
@@ -28,7 +30,6 @@
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-divider :key="`divider-${id}`"/>
             </template>
           </v-list>
         </template>
@@ -102,7 +103,7 @@ export default {
           ['luu_luong_dau_vao', 'Lưu lượng đầu vào', 'pink', 'mdi-import'],
           ['luu_luong_hao_phi', 'Lưu lượng hao phí', 'green', 'mdi-leak-off'],
           ['doanh_so_ban_nuoc', 'Doanh số bán nước', 'orange', 'mdi-cash-plus'],
-          ['luu_luong_ban_ra', 'Lưu lượng bán ra', 'mdi-currency-usd']
+          ['luu_luong_ban_ra', 'Lưu lượng bán ra', 'teal', 'mdi-currency-usd']
         ]
       ]
       return [

@@ -62,7 +62,7 @@ import GridInfoUnits from "./GridInfoUnits";
 import https from "../plugins/https";
 
 export default {
-  name: "StatisticSchemicalTemplate",
+  name: "StatisticFlowMeterTemplate",
   components: {GridInfoUnits},
   data() {
     return {
@@ -73,11 +73,10 @@ export default {
   computed: {
     categories() {
       return [
-        ['cong_thuc_pha_hoa_chat', 'Công thức Pha hóa chất', 'pink', 'mdi-format-header-equal'],
-        ['kho_hoa_chat', 'Kho hóa chất', 'green', 'mdi-factory'],
-        ['hoa_chat_tieu_thu', 'hóa chất tiêu thụ', 'orange'],
-        ['bieu_gia_hoa_chat', 'Biểu giá hóa chất', 'teal', 'mdi-currency-usd'],
-        ['chi_phi_hoa_chat', 'Chi phí hóa chất', 'teal', 'mdi-currency-usd']
+        ['luu_luong_dau_vao', 'Lưu lượng đầu vào', 'pink', 'mdi-import'],
+        ['luu_luong_hao_phi', 'Lưu lượng hao phí', 'green', 'mdi-leak-off'],
+        ['doanh_so_ban_nuoc', 'Doanh số bán nước', 'orange', 'mdi-cash-plus'],
+        ['luu_luong_ban_ra', 'Lưu lượng bán ra', 'teal', 'mdi-currency-usd']
       ]
     }
   },
@@ -100,7 +99,7 @@ export default {
     async fetchReport() {
       try {
         this.getting = true
-        const res = await https.post('/api/v1/statistic/chemical')
+        const res = await https.post('/api/v1/statistic/flowmeter')
         this.row = res.data.data
       }finally {
         this.getting = false
