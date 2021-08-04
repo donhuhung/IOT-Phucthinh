@@ -17,15 +17,24 @@
               </v-alert>
             </div>
             <template v-if="Array.isArray(row[id])">
-              <div>
+              <div v-if="tabActive == id">
                 <div class="row_sheet_panels">
                   <template v-for="(item, index) in row[id]">
                     <v-card flat class="row_sheet" :key="index" tile>
-                      <div class="row_sheet--content">
+                      <div class="station" @click="collapseIndex = index" v-if="row[id].length > 1">
+                        <v-alert class="mb-0"
+                                 dense
+                                 :color="color"
+                                 dark
+                                 :icon="collapseIndex==index?'mdi-arrow-down':'mdi-arrow-up'">
+                          {{ item.title }}
+                        </v-alert>
+                      </div>
+                      <div class="row_sheet--content" v-show="collapseIndex==index">
                         <div class="d"></div>
                         <template v-for="(t, index) in item.data_list">
                           <div :key="index" class="row_sheet--item">
-                            <GridInfoUnits type="electrical" :info="t.info" :unit="item.unit" :titleGroup="item.title" :title="t.title"/>
+                            <GridInfoUnits type="electrical" :info="t.info" :unit="item.unit"  :title="t.title"/>
                           </div>
                         </template>
                       </div>
@@ -35,7 +44,7 @@
               </div>
             </template>
             <template v-else>
-              <div>
+              <div v-if="tabActive == id">
                 <div class="row_sheet_panels">
                   <v-card flat class="row_sheet" tile>
                     <div class="row_sheet--content">
@@ -70,6 +79,8 @@ export default {
     return {
       row: {},
       getting: false,
+      tabActive: 'bieu_gia_dien',
+      collapseIndex: 0
     }
   },
   computed: {
@@ -94,6 +105,8 @@ export default {
       try {
         const ref = this.$refs[id][0]
         this.$vuetify.goTo(ref, {offset: 10})
+        this.tabActive = id
+        this.collapseIndex = 0
       } catch (e) {
         throw e.message
       }
@@ -107,7 +120,7 @@ export default {
         this.getting = false
       }
     }
-  }
+  },
 }
 </script>
 
@@ -147,6 +160,12 @@ $colorLine: gray;
 
 .row_sheet_panels {
   position: relative;
+
+  .station{
+    width: 690px;
+    margin: 10px 5px;
+    cursor:pointer;
+  }
 }
 
 
@@ -171,6 +190,7 @@ $colorLine: gray;
     display: flex;
     flex-wrap: wrap;
     position: relative;
+    width: 80%;
 
     .d {
       width: 8px;
@@ -209,6 +229,7 @@ $colorLine: gray;
     .row_sheet--item {
       width: 350px;
       padding: 5px;
+      margin: 2px;
     }
   }
 

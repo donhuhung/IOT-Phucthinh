@@ -51,7 +51,6 @@
 </template>
 
 <script>
-<!--import RangeDatePicker from 'vue-easy-range-date-picker';-->
 import https from "../plugins/https";
 
 export default {
