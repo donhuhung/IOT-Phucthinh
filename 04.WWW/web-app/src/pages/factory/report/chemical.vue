@@ -1,6 +1,6 @@
 <template>
 <div>
-  <ReportTemplate end-point="/api/v1/report/chemical"/>
+  <ReportTemplate end-point="/api/v1/report/chemical" device-name="chemical"/>
 </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <ReportTemplate end-point="/api/v1/report/flowmeter" />
+  <ReportTemplate end-point="/api/v1/report/flowmeter" device-name="flowmeter"/>
 </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-for="r in ['electrical', 'chemical', 'flowmeter']">
+    <template v-for="r in ['device','electrical', 'chemical', 'flowmeter']">
       <v-btn :key="r" :to="{name: `report-${r}`, params: $route.params}">
         {{ r }}
       </v-btn>
@@ -14,7 +14,7 @@ export default {
   created() {
     const { params } = this.$route
     if(this.$route.name === `factory-report`) {
-      this.$router.push({name: 'report-electrical', params})
+      this.$router.push({name: 'report-device', params})
     }
   }
 }

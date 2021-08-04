@@ -152,6 +152,18 @@ const routes = [
             },
             children: [
               {
+                path: 'device',
+                exact: true,
+                name: 'report-device',
+                components: {
+                  'local-panel': () => import('../components/panels/PanelStatistic'),
+                  'default': () => import('../pages/factory/report/device'),
+                },
+                meta: {
+                  breadcrumb: 'REPORT / DEVICE'.toUpperCase()
+                },
+              },
+              {
                 path: 'electrical',
                 exact: true,
                 name: 'report-electrical',
