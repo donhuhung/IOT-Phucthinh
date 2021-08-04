@@ -1,7 +1,7 @@
 <template>
   <v-card flat class="w-full box-table" :class="compact ? `compact` : ``" tile>
-    <h3 v-if="false" class="mb-4">
-      {{ title }}
+    <h3 v-if="titleGroup">
+      {{ titleGroup }}
     </h3>
     <table class="w-full table-grid">
       <tr>
@@ -19,7 +19,7 @@
         </th>
       </tr>
       <template v-for="(t, k, i) in info">
-        <tr class="grid-row" :key="k">
+        <tr class="grid-row" :key="k" v-if="k!='unit'">
           <td class="cell-table cell-row">
             <span class="caption font-weight-bold">{{ i + 1 }}</span>
           </td>
@@ -29,7 +29,12 @@
           <td class="cell-table cell-row">
             <v-chip small
                     style="min-width: 60px;" dark>
-              {{ k }}
+              <template v-if="type != 'flowmeter'">
+                {{ unit?unit:k|numberUnit }}
+              </template>
+              <template v-else>
+                {{info.unit}}
+              </template>
             </v-chip>
           </td>
         </tr>
@@ -40,6 +45,7 @@
 
 <script>
 import {numberFormat} from "../filters/number";
+import {numberUnit} from "../filters/unit";
 
 export default {
   name: "GridInfoUnits",
@@ -52,15 +58,28 @@ export default {
       type: String,
       default: () => '',
     },
+    titleGroup: {
+      type: String,
+      default: () => '',
+    },
+    type: {
+      type: String,
+      default: () => '',
+    },
+    unit: {
+      type: String,
+      default: () => '',
+    },
   },
   filters: {
     numberFormat,
+    numberUnit,
   },
   data() {
     return {
       compact: false,
     }
-  }
+  },
 }
 </script>
 
@@ -85,6 +104,7 @@ $colorBorderNone: transparent;
   h3 {
     font-size: 20px;
     font-weight: bold;
+    padding: 10px;
     //white-space: nowrap;
   }
 }

@@ -36,15 +36,6 @@
     "name": "factory-statistic"
   },
   {
-    "label": "layout.navMaintenance",
-    "icon": "mdi-table-cog",
-    "inFactory": true,
-    "to": {
-      "path": "maintenance"
-    },
-    "name": "factory-maintenance"
-  },
-  {
     "label": "layout.navChart",
     "icon": "mdi-chart-bar",
     "inFactory": true,

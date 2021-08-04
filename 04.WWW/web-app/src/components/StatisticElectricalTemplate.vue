@@ -25,7 +25,7 @@
                         <div class="d"></div>
                         <template v-for="(t, index) in item.data_list">
                           <div :key="index" class="row_sheet--item">
-                            <GridInfoUnits :info="t.info" :title="t.title"/>
+                            <GridInfoUnits type="electrical" :info="t.info" :unit="item.unit" :titleGroup="item.title" :title="t.title"/>
                           </div>
                         </template>
                       </div>
@@ -43,7 +43,7 @@
                       <template v-if="row[id]">
                         <template v-for="(t, index) in row[id].data_list">
                           <div :key="index" class="row_sheet--item">
-                            <GridInfoUnits :info="t.info" :title="t.title"/>
+                            <GridInfoUnits type="electrical" :unit="t.unit" :info="t.info" :title="t.title"/>
                           </div>
                         </template>
                       </template>
