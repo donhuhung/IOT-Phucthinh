@@ -1,15 +1,38 @@
 <template>
   <div>
-    <DateRangePicker />
     <template v-if="getting">
       <v-skeleton-loader type="table" width="690px"/>
     </template>
     <template v-else>
       <div>
+        <div class="filter-date text-center">
+          <div style="width: 100px">
+            <v-text-field
+                v-model="number_start"
+                label="Number Start"
+                required
+            ></v-text-field>
+          </div>
+          <div style="width: 100px;" class="ml-4 mr-4">
+            <v-text-field
+                v-model="number_end"
+                label="Number End"
+                required
+            ></v-text-field>
+          </div>
+          <div class="filter-device pt-3">
+            <label class="pr-4">From Date:</label>
+            <date-picker @change="updateDatePicker" v-model="startDate" format="DD-MM-YYYY H:mm" type="datetime"></date-picker>
+          </div>
+          <p class="pl-4 pt-4">To Date: {{toDate}}</p>
+          <v-btn @click="submitFilter" type="button" class="mt-2 ml-4">Tìm kiếm</v-btn>
+        </div>
+
+        <template v-if="report">
         <template v-for="(dataDevice, keyDevice) in report">
-          <v-card :key="`card-${keyDevice}`" class="w-full h-full box-sensor ma-4" flat tile>
-            <h3 style="padding: 10px;">{{dataDevice.title}} - {{dataDevice.symbol}}</h3>
-            <table class="min-w-max w-full table-auto table-grid">
+          <v-card :key="`card-${keyDevice}`" class="w-full h-full box-sensor mt-4" flat tile>
+            <h3 class="title-device" @click="collapseIndex = keyDevice">{{dataDevice.title}} - {{dataDevice.symbol}}</h3>
+            <table class="min-w-max w-full table-auto table-grid" v-show="collapseIndex == keyDevice">
               <tr>
                 <template v-for="(field, index) in fieldsCombined">
                   <th :key="index" class="cell-table cell-header">
@@ -48,18 +71,25 @@
             </table>
           </v-card>
         </template>
+        </template>
+        <template v-else>
+          <NotFoundData />
+        </template>
       </div>
     </template>
   </div>
 </template>
 
 <script>
-import https from "../plugins/https";
-import DateRangePicker from "./DateRangePicker";
+import https from "../plugins/https"
+import moment from 'moment'
+import DatePicker from 'vue2-datepicker'
+import 'vue2-datepicker/index.css'
+import NotFoundData from "./NotFoundData";
 
 export default {
   name: "ReportTemplateDevice",
-  components: {DateRangePicker},
+  components: {DatePicker,NotFoundData},
   props: {
     endPoint: {
       type: String,
@@ -75,7 +105,13 @@ export default {
       getting: false,
       report: {},
       sort: '',
-      sortAscending: true //'asc' // desc
+      sortAscending: true,
+      startDate: '',
+      fromDate:'',
+      toDate:'',
+      number_start:0,
+      number_end:0,
+      collapseIndex: 0
     }
   },
   computed: {
@@ -126,32 +162,32 @@ export default {
           type: 'text',
         },
         {
-          name: 'name',
-          label: 'name',
+          name: 'timeStamp',
+          label: 'TimeStamp',
           type: 'text',
         },
         {
-          name: 'status',
+          name: 'mode_status',
           label: 'Status',
-          type: 'chips'
+          type: 'text'
         },
         {
           name: "operation_status",
           label: 'Operating Status',
-          type: 'chips',
+          type: 'text',
         },
         {
-          name: "totalovl",
-          label: 'Total OVL',
-          type: 'text'
-        },
-        {
-          name: 'totalnrf',
+          name: "total_nrf",
           label: 'Total NRF',
           type: 'text'
         },
         {
-          name: "totalrt",
+          name: 'total_ovl',
+          label: 'Total OVL',
+          type: 'text'
+        },
+        {
+          name: "total_rt",
           label: 'Total RT',
           type: 'text'
         }
@@ -165,14 +201,14 @@ export default {
           type: 'text'
         },
         {
-          name: 'name',
-          label: 'name',
-          type: 'text'
+          name: 'timeStamp',
+          label: 'TimeStamp',
+          type: 'text',
         },
         {
-          name: 'status',
+          name: 'mode_status',
           label: 'Status',
-          type: 'chips'
+          type: 'text'
         },
         {
           name: "operation_status",
@@ -180,17 +216,17 @@ export default {
           type: 'chips',
         },
         {
-          name: "totalfc",
+          name: "total_fc",
           label: 'Total FC',
           type: 'text'
         },
         {
-          name: 'totalfo',
+          name: 'total_fo',
           label: 'Total FO',
           type: 'text'
         },
         {
-          name: "totaloc",
+          name: "total_oc",
           label: 'Total OC',
           type: 'text'
         }
@@ -212,10 +248,10 @@ export default {
         this.getting = true
         const res = await https.post(endPoint, {
           factory_id: factory,
-          from_date: '25-07-2021 20:00:00',
-          to_date: '25-07-2021 20:05:00',
-          number_start: 1,
-          number_end: 4
+          from_date: this.fromDate,
+          to_date: this.toDate,
+          number_start: this.number_start,
+          number_end: this.number_end
         })
         this.report = res.data.data
       } finally {
@@ -226,12 +262,42 @@ export default {
       this.sort = fieldName
       this.sortAscending = !this.sortAscending
     },
+    customFormatter(date) {
+      return moment(date).format('DD-MM-YY, HH:mm:ss');
+    },
+    updateDatePicker(value){
+      this.fromDate = moment(value).format("DD-MM-YYYY H:mm:ss")
+      this.toDate = moment(value, "DD-MM-YYYY hh:mm:ss")
+          .add(30, 'minutes')
+          .format("DD-MM-YYYY H:mm:ss")
+    },
+    submitFilter(){
+      if(this.number_start && this.number_end && this.number_end > this.number_start)
+        this.fetchReport()
+      else{
+        this.$notify({message: 'Dữ liệu tìm kiếm không hợp lệ!!!', title: this.$t('layout.titleMess'), type: 'error'})
+      }
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-
+.title-device{
+  background-color: #4CAF50 ;
+  color:#fff !important;
+  font-weight: 400 !important;
+  padding: 10px;
+  cursor: pointer;
+}
+.filter-date{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #fff;
+  background: #fff;
+  padding: 10px 0;
+}
 .box-sensor {
   h3 {
     font-size: 22px;
@@ -244,7 +310,7 @@ export default {
   border-right: solid 1px #EFEFEF;
   .cell-table {
     position: relative;
-    padding: 5px 10px;
+    padding: 15px;
     text-align: left;
     font-size: 14px;
 

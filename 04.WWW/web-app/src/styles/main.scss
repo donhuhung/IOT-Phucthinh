@@ -77,3 +77,12 @@ body{
 .table-grid {
   border-spacing: 0px;
 }
+.ranges{
+  padding: 0 !important;
+}
+.vue-daterange-picker{
+  width: 300px;
+}
+.filter-device .ranges{
+  display: none;
+}

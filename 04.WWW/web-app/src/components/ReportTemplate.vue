@@ -6,7 +6,16 @@
     </template>
     <template v-else>
       <div>
+        <div class="filter-date text-center">
+          <label class="pr-4">Tìm kiếm theo:</label>
+          <date-range-picker
+              v-model="dateRange"
+              :locale-data="{format: 'dd-mm-yyyy'}"
+              @update="updateDatePicker"
+          ></date-range-picker>
+        </div>
         <v-card class="w-full h-full box-sensor space-y-2" style="margin-top: 30px;" flat tile>
+          <template v-if="report">
           <table class="min-w-max w-full table-auto table-grid">
             <tr>
               <template v-for="(field, index) in fieldsCombined">
@@ -44,6 +53,10 @@
               </tr>
             </template>
           </table>
+          </template>
+            <template v-else>
+              <NotFoundData />
+            </template>
         </v-card>
       </div>
     </template>
@@ -52,10 +65,15 @@
 
 <script>
 import https from "../plugins/https";
-
+import DateRangePicker from 'vue2-daterange-picker'
+//you need to import the CSS manually
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
+import moment from 'moment';
+import NotFoundData from "./NotFoundData";
 
 export default {
   name: "ReportTemplate",
+  components: { DateRangePicker , NotFoundData},
   props: {
     endPoint: {
       type: String,
@@ -67,11 +85,17 @@ export default {
     }
   },
   data() {
+    let startDate = new Date(new Date(new Date().getFullYear(),new Date().getMonth(), 1));
+    let endDate = new Date();
     return {
       getting: false,
       report: {},
       sort: '',
-      sortAscending: true //'asc' // desc
+      sortAscending: true,
+      timeFilter: null,
+      dateRange: {startDate, endDate},
+      fromDate:'',
+      toDate:''
     }
   },
 
@@ -224,8 +248,8 @@ export default {
         this.getting = true
         const res = await https.post(endPoint, {
           factory_id: factory,
-          from_date: '27-07-2021',
-          to_date: '27-07-2021'
+          from_date: this.fromDate,
+          to_date: this.toDate
         })
         this.report = res.data.data
       } finally {
@@ -236,12 +260,25 @@ export default {
       this.sort = fieldName
       this.sortAscending = !this.sortAscending
     },
+    dateFormat (classes, date) {
+      if (!classes.disabled) {
+        classes.disabled = date.getTime() < new Date()
+      }
+      return classes
+    },
+    updateDatePicker(value){
+      this.fromDate = moment(value.startDate).format("DD-MM-YYYY");
+      this.toDate = moment(value.endDate).format("DD-MM-YYYY");
+      this.fetchReport()
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-
+.filter-date{
+  margin-top: 20px;
+}
 .box-sensor {
   h3 {
     font-size: 22px;
@@ -254,7 +291,7 @@ export default {
   border-right: solid 1px #EFEFEF;
   .cell-table {
     position: relative;
-    padding: 5px 10px;
+    padding: 15px;
     text-align: left;
     font-size: 14px;
 

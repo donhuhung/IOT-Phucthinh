@@ -164,6 +164,42 @@ const routes = [
                 },
               },
               {
+                path: 'sensor',
+                exact: true,
+                name: 'report-sensor',
+                components: {
+                  'local-panel': () => import('../components/panels/PanelStatistic'),
+                  'default': () => import('../pages/factory/report/sensor'),
+                },
+                meta: {
+                  breadcrumb: 'REPORT / SENSOR'.toUpperCase()
+                },
+              },
+              {
+                path: 'motor',
+                exact: true,
+                name: 'report-motor',
+                components: {
+                  'local-panel': () => import('../components/panels/PanelStatistic'),
+                  'default': () => import('../pages/factory/report/motor'),
+                },
+                meta: {
+                  breadcrumb: 'REPORT / MOTOR'.toUpperCase()
+                },
+              },
+              {
+                path: 'valve',
+                exact: true,
+                name: 'report-valve',
+                components: {
+                  'local-panel': () => import('../components/panels/PanelStatistic'),
+                  'default': () => import('../pages/factory/report/valve'),
+                },
+                meta: {
+                  breadcrumb: 'REPORT / VALVE'.toUpperCase()
+                },
+              },
+              {
                 path: 'electrical',
                 exact: true,
                 name: 'report-electrical',
