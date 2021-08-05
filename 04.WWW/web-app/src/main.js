@@ -8,6 +8,7 @@ import vuetify from './plugins/vuetify'
 import i18n from './plugins/i18n'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
+
 Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {
   load: {
