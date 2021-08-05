@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <template v-if="getting">
       <v-skeleton-loader type="table" width="690px"/>
     </template>
@@ -52,6 +53,7 @@
 <script>
 import https from "../plugins/https";
 
+
 export default {
   name: "ReportTemplate",
   props: {
@@ -72,6 +74,7 @@ export default {
       sortAscending: true //'asc' // desc
     }
   },
+
   computed: {
     fieldsElectrical() {
       return [

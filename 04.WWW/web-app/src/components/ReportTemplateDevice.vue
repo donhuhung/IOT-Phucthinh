@@ -1,5 +1,6 @@
 <template>
   <div>
+    <DateRangePicker />
     <template v-if="getting">
       <v-skeleton-loader type="table" width="690px"/>
     </template>
@@ -54,9 +55,11 @@
 
 <script>
 import https from "../plugins/https";
+import DateRangePicker from "./DateRangePicker";
 
 export default {
   name: "ReportTemplateDevice",
+  components: {DateRangePicker},
   props: {
     endPoint: {
       type: String,
