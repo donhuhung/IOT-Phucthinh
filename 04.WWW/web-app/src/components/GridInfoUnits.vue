@@ -1,8 +1,6 @@
 <template>
   <v-card flat class="w-full box-table" :class="compact ? `compact` : ``" tile>
-    <h3 v-if="titleGroup">
-      {{ titleGroup }}
-    </h3>
+    
     <table class="w-full table-grid">
       <tr>
         <th colspan="3" class="cell-table cell-header text-h6">{{ title }}</th>
