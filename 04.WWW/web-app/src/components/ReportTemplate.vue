@@ -5,7 +5,6 @@
     </template>
     <template v-else>
       <div>
-        <!--<range-date-picker v-model="dates"/>-->
         <v-card class="w-full h-full box-sensor space-y-2" style="margin-top: 30px;" flat tile>
           <table class="min-w-max w-full table-auto table-grid">
             <tr>
@@ -51,7 +50,6 @@
 </template>
 
 <script>
-<!--import RangeDatePicker from 'vue-easy-range-date-picker';-->
 import https from "../plugins/https";
 
 export default {
