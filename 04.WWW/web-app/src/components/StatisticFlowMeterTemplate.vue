@@ -12,6 +12,8 @@
                        dense
                        :color="color"
                        dark
+                       style="cursor: pointer"
+                       @click="collapseTab(id)"
                        icon="mdi-database-check">
                 {{ label }}
               </v-alert>
@@ -80,8 +82,11 @@ export default {
     return {
       row: {},
       getting: false,
-      tabActive: 'luu_luong_dau_vao',
-      collapseIndex: 0
+      tabActive: '',
+      collapseIndex: 0,
+      tabCurrent:'',
+      subTabCurrent:null
+
     }
   },
   computed: {
@@ -89,7 +94,6 @@ export default {
       return [
         ['luu_luong_dau_vao', 'Lưu lượng đầu vào', 'pink', 'mdi-import'],
         ['luu_luong_hao_phi', 'Lưu lượng hao phí', 'green', 'mdi-leak-off'],
-        ['doanh_so_ban_nuoc', 'Doanh số bán nước', 'orange', 'mdi-cash-plus'],
         ['luu_luong_ban_ra', 'Lưu lượng bán ra', 'teal', 'mdi-currency-usd']
       ]
     }
@@ -120,6 +124,20 @@ export default {
       } finally {
         this.getting = false
       }
+    },
+    collapseTab(id){
+      if(this.tabCurrent == id){
+        this.tabActive = '';
+        this.tabCurrent = '';
+      }
+      else{
+        this.tabActive = id;
+        this.tabCurrent = id;
+
+        this.collapseIndex = null;
+        this.subTabCurrent = null;
+      }
+      this.collapseIndex = 0;
     }
   }
 }
@@ -161,6 +179,7 @@ $colorLine: gray;
 
 .row_sheet_panels {
   position: relative;
+
   .station{
     width: 690px;
     margin: 10px 5px;
@@ -190,7 +209,7 @@ $colorLine: gray;
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    width: 80%;
+    width: 100%;
 
     .d {
       width: 8px;
@@ -227,7 +246,7 @@ $colorLine: gray;
     }
 
     .row_sheet--item {
-      width: 350px;
+      width: 275px;
       padding: 5px;
       margin: 2px;
     }

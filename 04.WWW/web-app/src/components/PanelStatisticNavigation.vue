@@ -1,8 +1,9 @@
 <template>
   <div>
-    <v-card>
+    <v-card v-if="showMenu">
       <v-card-title class="pb-0">
-        <div class="text-h6 font-weight-medium text--primary text-capitalize">
+        <div class="text-h6 font-weight-medium text--primary text-capitalize" @click="toggleMenu()">
+          <i class="v-icon mdi mdi-menu" style="cursor: pointer"></i>
           {{ $t('layout.navReport') }}
         </div>
       </v-card-title>
@@ -45,12 +46,20 @@
         </template>
       </template>
     </v-card>
+    <div class="show-tab theme--light" @click="toggleMenu()">
+      <i v-if="!showMenu" class="v-icon mdi mdi-menu" style="cursor: pointer"></i>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "PanelStatisticNavigation",
+  data() {
+    return {
+      showMenu:true
+    }
+  },
   computed: {
     categories() {
       const {name, params } = this.$route
@@ -102,7 +111,7 @@ export default {
         [
           ['luu_luong_dau_vao', 'Lưu lượng đầu vào', 'pink', 'mdi-import'],
           ['luu_luong_hao_phi', 'Lưu lượng hao phí', 'green', 'mdi-leak-off'],
-          ['doanh_so_ban_nuoc', 'Doanh số bán nước', 'orange', 'mdi-cash-plus'],
+          /*['doanh_so_ban_nuoc', 'Doanh số bán nước', 'orange', 'mdi-cash-plus'],*/
           ['luu_luong_ban_ra', 'Lưu lượng bán ra', 'teal', 'mdi-currency-usd']
         ]
       ]
@@ -112,10 +121,24 @@ export default {
         flowmeter
       ]
     }
+  },
+  methods:{
+    toggleMenu(){
+        if(this.showMenu)
+          this.showMenu = false
+      else
+          this.showMenu = true
+    }
   }
 }
 </script>
 
 <style scoped>
-
+.show-tab{
+  position: fixed;
+  right: 0;
+  top: 100px;
+  background-color: #fff;
+  padding: 10px;
+}
 </style>

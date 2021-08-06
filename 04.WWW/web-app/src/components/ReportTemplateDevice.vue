@@ -6,19 +6,17 @@
     <template v-else>
       <div>
         <div class="filter-date text-center">
-          <div style="width: 100px">
-            <v-text-field
-                v-model="number_start"
-                label="Number Start"
-                required
-            ></v-text-field>
-          </div>
-          <div style="width: 100px;" class="ml-4 mr-4">
-            <v-text-field
-                v-model="number_end"
-                label="Number End"
-                required
-            ></v-text-field>
+          <div style="width: 300px; margin-right: 15px">
+            <v-select
+                :items="items"
+                item-text="name"
+                item-value="id"
+                label="Select Device"
+                v-model="dataSelect"
+                persistent-hint
+                return-object
+                outlined
+            ></v-select>
           </div>
           <div class="filter-device pt-3">
             <label class="pr-4">From Date:</label>
@@ -28,16 +26,14 @@
           <v-btn @click="submitFilter" type="button" class="mt-2 ml-4">Tìm kiếm</v-btn>
         </div>
 
-        <template v-if="report">
-        <template v-for="(dataDevice, keyDevice) in report">
-          <v-card :key="`card-${keyDevice}`" class="w-full h-full box-sensor mt-4" flat tile>
-            <h3 class="title-device" @click="collapseIndex = keyDevice">{{dataDevice.title}} - {{dataDevice.symbol}}</h3>
-            <table class="min-w-max w-full table-auto table-grid" v-show="collapseIndex == keyDevice">
+        <v-card class="w-full h-full box-sensor space-y-2" style="margin-top: 30px;" flat tile>
+          <template v-if="report">
+            <table class="min-w-max w-full table-auto table-grid">
               <tr>
                 <template v-for="(field, index) in fieldsCombined">
                   <th :key="index" class="cell-table cell-header">
                     <div class="d-flex">
-                      <span class="cell-header--text text-center">{{ field.label }}</span>
+                      <span class="cell-header--text">{{ field.label }}</span>
                       <v-icon class="cursor-pointer"
                               v-if="index !== 0"
                               right
@@ -47,8 +43,8 @@
                   </th>
                 </template>
               </tr>
-              <template v-for="(row, rowIndex) in dataDevice.data_list">
-                <tr :key="`${keyDevice}-${rowIndex}`" class="grid-row">
+              <template v-for="(row, rowIndex) in report">
+                <tr :key="rowIndex" class="grid-row">
                   <template v-for="(header, cellIndex) in fieldsCombined">
                     <td :key="`${rowIndex}-${cellIndex}`"
                         class="cell-table cell-row" :class="`cell-row--${header.name}`">
@@ -69,12 +65,11 @@
                 </tr>
               </template>
             </table>
-          </v-card>
-        </template>
-        </template>
-        <template v-else>
-          <NotFoundData />
-        </template>
+          </template>
+          <template v-else>
+            <NotFoundData />
+          </template>
+        </v-card>
       </div>
     </template>
   </div>
@@ -86,6 +81,7 @@ import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
 import 'vue2-datepicker/index.css'
 import NotFoundData from "./NotFoundData";
+import {getListSensorName, getListMotorName, getListValveName} from "../api/app"
 
 export default {
   name: "ReportTemplateDevice",
@@ -110,8 +106,9 @@ export default {
       fromDate:'',
       toDate:'',
       number_start:0,
-      number_end:0,
-      collapseIndex: 0
+      collapseIndex: 0,
+      items: [],
+      dataSelect:null
     }
   },
   computed: {
@@ -239,8 +236,24 @@ export default {
   },
   async mounted() {
     await this.fetchReport()
+    this.getListSelectDeviceName()
   },
   methods: {
+    async getListSelectDeviceName(){
+      let res;
+      const {params: {factory}} = this.$route
+      if(this.deviceName == 'sensor'){
+        res = await getListSensorName(factory)
+      }
+      else if(this.deviceName == 'motor'){
+        res = await getListMotorName(factory)
+      }
+      else{
+        res = await getListValveName(factory)
+      }
+
+      this.items = res.data.data
+    },
     async fetchReport() {
       const {endPoint} = this
       const {params: {factory}} = this.$route
@@ -250,8 +263,7 @@ export default {
           factory_id: factory,
           from_date: this.fromDate,
           to_date: this.toDate,
-          number_start: this.number_start,
-          number_end: this.number_end
+          number_start: this.number_start
         })
         this.report = res.data.data
       } finally {
@@ -272,8 +284,10 @@ export default {
           .format("DD-MM-YYYY H:mm:ss")
     },
     submitFilter(){
-      if(this.number_start && this.number_end && this.number_end > this.number_start)
+      if(this.dataSelect){
+        this.number_start = this.dataSelect.id
         this.fetchReport()
+      }
       else{
         this.$notify({message: 'Dữ liệu tìm kiếm không hợp lệ!!!', title: this.$t('layout.titleMess'), type: 'error'})
       }

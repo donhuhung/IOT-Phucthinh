@@ -10,8 +10,10 @@
             <div class="top-line">
               <v-alert class="mb-0"
                        dense
+                       style="cursor: pointer"
                        :color="color"
                        dark
+                       @click="collapseTab(id)"
                        icon="mdi-database-check">
                 {{ label }}
               </v-alert>
@@ -21,7 +23,7 @@
                 <div class="row_sheet_panels">
                   <template v-for="(item, index) in row[id]">
                     <v-card flat class="row_sheet" :key="index" tile>
-                      <div class="station" @click="collapseIndex = index" v-if="row[id].length > 1">
+                      <div class="station" @click="collapseSubTab(index)" v-if="row[id].length > 1">
                         <v-alert class="mb-0"
                                  dense
                                  :color="color"
@@ -30,7 +32,7 @@
                           {{ item.title }}
                         </v-alert>
                       </div>
-                      <div class="row_sheet--content" v-show="collapseIndex==index">
+                      <div class="row_sheet--content" v-if="collapseIndex==index">
                         <div class="d"></div>
                         <template v-for="(t, index) in item.data_list">
                           <div :key="index" class="row_sheet--item">
@@ -79,8 +81,10 @@ export default {
     return {
       row: {},
       getting: false,
-      tabActive: 'bieu_gia_dien',
-      collapseIndex: 0
+      tabActive: '',
+      collapseIndex: null,
+      tabCurrent:'',
+      subTabCurrent:null
     }
   },
   computed: {
@@ -118,6 +122,29 @@ export default {
         this.row = res.data.data
       } finally {
         this.getting = false
+      }
+    },
+    collapseTab(id){
+      if(this.tabCurrent == id){
+        this.tabActive = '';
+        this.tabCurrent = '';
+      }
+      else{
+        this.tabActive = id;
+        this.tabCurrent = id;
+
+        this.collapseIndex = null;
+        this.subTabCurrent = null;
+      }
+    },
+    collapseSubTab(index){
+      if(this.subTabCurrent == index){
+        this.collapseIndex = null;
+        this.subTabCurrent = null;
+      }
+      else{
+        this.collapseIndex = index;
+        this.subTabCurrent = index;
       }
     }
   },
@@ -190,7 +217,7 @@ $colorLine: gray;
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    width: 80%;
+    width: 100%;
 
     .d {
       width: 8px;
@@ -227,7 +254,7 @@ $colorLine: gray;
     }
 
     .row_sheet--item {
-      width: 350px;
+      width: 275px;
       padding: 5px;
       margin: 2px;
     }

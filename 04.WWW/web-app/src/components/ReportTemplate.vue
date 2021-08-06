@@ -7,7 +7,7 @@
     <template v-else>
       <div>
         <div class="filter-date text-center">
-          <label class="pr-4">Tìm kiếm theo:</label>
+          <label class="pr-4 pt-2">Chọn ngày:</label>
           <date-range-picker
               v-model="dateRange"
               :locale-data="{format: 'dd-mm-yyyy'}"
@@ -278,6 +278,11 @@ export default {
 <style scoped lang="scss">
 .filter-date{
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #fff;
+  background: #fff;
+  padding: 10px 0;
 }
 .box-sensor {
   h3 {

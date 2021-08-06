@@ -19,16 +19,31 @@ async function getListSensor(data) {
   form.append("factory_id", data);
   return await axios.post('/api/v1/sensor/list', form);
 }
+async function getListSensorName(data) {
+  let form = new FormData();
+  form.append("factory_id", data);
+  return await axios.post('/api/v1/sensor/list-name', form);
+}
 async function getListMotor(data) {
   let form = new FormData();
   form.append("factory_id", data);
   return await axios.post('/api/v1/motor/list', form);
+}
+async function getListMotorName(data) {
+  let form = new FormData();
+  form.append("factory_id", data);
+  return await axios.post('/api/v1/motor/list-name', form);
 }
 
 async function getListValve(data) {
   let form = new FormData();
   form.append("factory_id", data);
   return await axios.post('/api/v1/valve/list', form);
+}
+async function getListValveName(data) {
+  let form = new FormData();
+  form.append("factory_id", data);
+  return await axios.post('/api/v1/valve/list-name', form);
 }
 
 async function updateSetPoint(data) {
@@ -44,7 +59,10 @@ export {
   getListFactory,
   getDetailFactory,
   getListSensor,
+  getListSensorName,
   getListMotor,
+  getListMotorName,
   getListValve,
+  getListValveName,
   updateSetPoint
 };

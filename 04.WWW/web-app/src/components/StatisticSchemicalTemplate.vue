@@ -12,6 +12,8 @@
                        dense
                        :color="color"
                        dark
+                       style="cursor: pointer"
+                       @click="collapseTab(id)"
                        icon="mdi-database-check">
                 {{ label }}
               </v-alert>
@@ -21,7 +23,7 @@
                 <div class="row_sheet_panels">
                   <template v-for="(item, index) in row[id]">
                     <v-card flat class="row_sheet" :key="index" tile>
-                      <div class="station" @click="collapseIndex = index" v-if="row[id].length > 1">
+                      <div class="station" @click="collapseSubTab(index)" v-if="row[id].length > 1">
                         <v-alert class="mb-0"
                                  dense
                                  :color="color"
@@ -80,8 +82,10 @@ export default {
     return {
       row: {},
       getting: false,
-      tabActive: 'cong_thuc_pha_hoa_chat',
-      collapseIndex: 0
+      tabActive: '',
+      collapseIndex: null,
+      tabCurrent:'',
+      subTabCurrent:null
     }
   },
   computed: {
@@ -120,6 +124,29 @@ export default {
         this.row = res.data.data
       } finally {
         this.getting = false
+      }
+    },
+    collapseTab(id){
+      if(this.tabCurrent == id){
+        this.tabActive = '';
+        this.tabCurrent = '';
+      }
+      else{
+        this.tabActive = id;
+        this.tabCurrent = id;
+
+        this.collapseIndex = null;
+        this.subTabCurrent = null;
+      }
+    },
+    collapseSubTab(index){
+      if(this.subTabCurrent == index){
+        this.collapseIndex = null;
+        this.subTabCurrent = null;
+      }
+      else{
+        this.collapseIndex = index;
+        this.subTabCurrent = index;
       }
     }
   }
@@ -162,6 +189,7 @@ $colorLine: gray;
 
 .row_sheet_panels {
   position: relative;
+
   .station{
     width: 690px;
     margin: 10px 5px;
@@ -191,7 +219,7 @@ $colorLine: gray;
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    width: 80%;
+    width: 100%;
 
     .d {
       width: 8px;
@@ -228,7 +256,7 @@ $colorLine: gray;
     }
 
     .row_sheet--item {
-      width: 350px;
+      width: 275px;
       padding: 5px;
       margin: 2px;
     }
