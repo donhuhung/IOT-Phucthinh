@@ -10,20 +10,19 @@
             <div class="top-line">
               <v-alert class="mb-0"
                        dense
+                       style="cursor: pointer"
                        :color="color"
                        dark
-                       style="cursor: pointer"
                        @click="collapseTab(id)"
                        icon="mdi-database-check">
                 {{ label }}
               </v-alert>
             </div>
-            <template v-if="Array.isArray(row[id])">
               <div v-if="tabActive == id">
                 <div class="row_sheet_panels">
                   <template v-for="(item, index) in row[id]">
                     <v-card flat class="row_sheet" :key="index" tile>
-                      <div class="station" @click="collapseSubTab(index)" v-if="row[id].length > 1">
+                      <div class="station" @click="collapseSubTab(index)">
                         <v-alert class="mb-0"
                                  dense
                                  :color="color"
@@ -32,12 +31,11 @@
                           {{ item.title }}
                         </v-alert>
                       </div>
-
-                      <div class="row_sheet--content" v-show="collapseIndex==index">
+                      <div class="row_sheet--content" v-if="collapseIndex==index">
                         <div class="d"></div>
                         <template v-for="(t, index) in item.data_list">
                           <div :key="index" class="row_sheet--item">
-                            <GridInfoUnits type="chemical" :unit="item.unit" :info="t.info" :titleGroup="item.title" :title="t.title"/>
+                            <GridInfoUnits type="electrical" :info="t.info" :unit="item.unit"  :title="t.title"/>
                           </div>
                         </template>
                       </div>
@@ -45,25 +43,6 @@
                   </template>
                 </div>
               </div>
-            </template>
-            <template v-else>
-              <div v-if="tabActive == id">
-                <div class="row_sheet_panels">
-                  <v-card flat class="row_sheet" tile>
-                    <div class="row_sheet--content">
-                      <div class="d"></div>
-                      <template v-if="row[id]">
-                        <template v-for="(t, index) in row[id].data_list">
-                          <div :key="index" class="row_sheet--item">
-                            <GridInfoUnits type="chemical" :unit="t.unit" :info="t.info" :title="t.title"/>
-                          </div>
-                        </template>
-                      </template>
-                    </div>
-                  </v-card>
-                </div>
-              </div>
-            </template>
           </v-card>
         </div>
       </template>
@@ -91,11 +70,11 @@ export default {
   computed: {
     categories() {
       return [
-        ['cong_thuc_pha_hoa_chat', 'Công thức Pha hóa chất', 'pink', 'mdi-format-header-equal'],
-        ['kho_hoa_chat', 'Kho hóa chất', 'green', 'mdi-factory'],
-        ['hoa_chat_tieu_thu', 'Hóa chất tiêu thụ', 'orange'],
-        ['bieu_gia_hoa_chat', 'Biểu giá hóa chất', 'teal', 'mdi-currency-usd'],
-        ['chi_phi_hoa_chat', 'Chi phí hóa chất', 'teal', 'mdi-currency-usd']
+        ['voi', 'Vôi', 'light-green darken-3', 'mdi-format-header-equal'],
+        ['pac', 'PAC', 'lime darken-2', 'mdi-factory'],
+        ['polyme', 'Polyme', 'amber accent-4'],
+        ['clo', 'Clo', 'deep-purple lighten-3', 'mdi-currency-usd'],
+        ['other', 'Khác', 'teal accent-4', 'mdi-currency-usd']
       ]
     }
   },
@@ -149,7 +128,7 @@ export default {
         this.subTabCurrent = index;
       }
     }
-  }
+  },
 }
 </script>
 

@@ -92,11 +92,11 @@ export default {
           }
         },
         [
-          ['cong_thuc_pha_hoa_chat', 'Công thức Pha hóa chất', 'pink', 'mdi-format-header-equal'],
-          ['kho_hoa_chat', 'Kho hóa chất', 'green', 'mdi-factory'],
-          ['hoa_chat_tieu_thu', 'Hóa chất tiêu thụ', 'orange'],
-          ['bieu_gia_hoa_chat', 'Biểu giá hóa chất', 'teal', 'mdi-currency-usd'],
-          ['chi_phi_hoa_chat', 'Chi phí hóa chất', 'teal', 'mdi-currency-usd']
+          ['voi', 'Vôi', 'pink', 'mdi-format-header-equal'],
+          ['pac', 'Pac', 'green', 'mdi-format-header-equal'],
+          ['polyme', 'Polyme', 'orange','mdi-format-header-equal'],
+          ['clo', 'Clo', 'teal', 'mdi-format-header-equal'],
+          ['other', 'Khác', 'teal', 'mdi-format-header-equal']
         ]
       ]
       const flowmeter = [

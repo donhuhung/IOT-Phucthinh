@@ -2,7 +2,7 @@
   <v-card flat class="w-full box-table" :class="compact ? `compact` : ``" tile>
     
     <table class="w-full table-grid">
-      <tr>
+      <tr v-if="title">
         <th colspan="3" class="cell-table cell-header text-h6">{{ title }}</th>
       </tr>
       <tr>
