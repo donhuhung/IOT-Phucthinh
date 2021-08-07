@@ -37,6 +37,31 @@ class Device extends General {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
         }
     }
+	
+	//API Get List Sensor
+    public function getListNameSenSor(Request $request) {
+        try {
+            $factoryID = $request->get('factory_id');
+
+            //Get Station
+            $stations = $this->getStation($factoryID);
+
+            //Get Info Select
+            $selects = $this->getInfoSelect($factoryID);
+
+            //Get Info Device
+            $deviceName = $this->getDeviceName($factoryID);
+            
+            //Call API
+            $link = 'http://115.78.130.60:41440/api/UpdatesTableSensors/' . $factoryID;
+            $resp = $this->callAPI($link,"GET");
+            $return = $this->parseContentNameSensor($resp, $stations, $selects, $deviceName);
+            
+            return $this->respondWithSuccess($return, "Get List Sensor succesful!");
+        } catch (\Exception $ex) {
+            return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
+        }
+    }
 
     //API Get List Motor
     public function getListMotor(Request $request) {
@@ -60,6 +85,29 @@ class Device extends General {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
         }
     }
+	
+	//API Get List Motor Name
+    public function getListNameMotor(Request $request) {
+        try {
+            $factoryID = $request->get('factory_id');            
+
+            //Get Station
+            $stations = $this->getStation($factoryID);
+
+            //Get Info Device
+            $deviceName = $this->getDeviceName($factoryID);
+            
+            //Call API
+            $link = 'http://115.78.130.60:41440/api/UpdatesTableMotors/' . $factoryID;
+            $resp = $this->callAPI($link,"GET");
+
+            $return = $this->parseContentNameMotor($resp, $stations, $deviceName);
+            
+            return $this->respondWithSuccess($return, "Get List Motor succesful!");
+        } catch (\Exception $ex) {
+            return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
+        }
+    }
 
     //API Get List Valve
     public function getListValve(Request $request) {
@@ -77,6 +125,29 @@ class Device extends General {
             $resp = $this->callAPI($link,"GET");
 
             $return = $this->parseContentValve($resp, $stations, $deviceName);
+            
+            return $this->respondWithSuccess($return, "Get List Valve succesful!");
+        } catch (\Exception $ex) {
+            return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
+        }
+    }
+	
+	//API Get List Valve Name
+    public function getListNameValve(Request $request) {
+        try {
+            $factoryID = $request->get('factory_id');            
+
+            //Get Station
+            $stations = $this->getStation($factoryID);
+
+            //Get Info Device
+            $deviceName = $this->getDeviceName($factoryID);
+            
+            //Call API
+            $link = 'http://115.78.130.60:41440/api/UpdatesTableMotors/' . $factoryID;
+            $resp = $this->callAPI($link,"GET");
+
+            $return = $this->parseContentNameValve($resp, $stations, $deviceName);
             
             return $this->respondWithSuccess($return, "Get List Valve succesful!");
         } catch (\Exception $ex) {
@@ -164,6 +235,38 @@ class Device extends General {
         }
         return $return;
     }
+	
+	private function parseContentNameSensor($data, $stations, $selectTable, $deviceName) {
+
+        //Parse Json
+        $objData = json_decode($data);
+        $objData = $objData[0];
+        $objStation = json_decode($stations);
+        $deviceName = json_decode($deviceName);
+        $selectTable = json_decode($selectTable);
+        $return = [];
+		$loopSensor = 0;
+		$dataSensor = [];
+
+        //Parse Data               
+        foreach ($objStation as $index => $station) {
+
+            //Foreach Data
+            $numberSensor = $station->numberSensor;
+            $numberStart = $station->numberStartSensor;
+            //Loop Item Sensor            
+            for ($j = 0; $j < $numberSensor; $j++) {                
+                if (isset($deviceName[$numberStart - 1]->sensorName)) {
+                    $sensorName = $this->translateAuto(trim($deviceName[$numberStart - 1]->sensorName));
+                    $dataSensor[$loopSensor]['name'] = $sensorName .' - '.trim($deviceName[$numberStart - 1]->sensorSymbol);                    
+                    $dataSensor[$loopSensor]['id'] = $numberStart;
+                    $numberStart++;
+					$loopSensor++;
+                }
+            }           
+        }		
+        return $dataSensor;
+    }
 
     private function parseContentMotor($data, $stations, $deviceName) {
 
@@ -226,6 +329,40 @@ class Device extends General {
         }
         return $return;
     }
+	
+	
+	private function parseContentNameMotor($data, $stations, $deviceName) {
+
+        //Parse Json
+        $objData = json_decode($data);
+        $objData = $objData[0];
+        $objStation = json_decode($stations);
+        $deviceName = json_decode($deviceName);
+        $return = [];
+		$loopSensor = 0;
+		$dataSensor = [];
+
+        //Parse Data               
+        foreach ($objStation as $index => $station) {
+
+            //Foreach Data
+            $numberMotor = $station->numberMotor;
+            $numberStart = $station->numberStartMotor;
+			$start = ($numberStart - 1);
+            $end = ($numberMotor + $numberStart - 1);
+            //Loop Item Sensor            
+            for ($j = $start; $j < $end; $j++) {
+                if (isset($deviceName[$numberStart - 1]->motorName)) {
+                    $motorName = $this->translateAuto(trim($deviceName[$numberStart - 1]->motorName));
+                    $dataSensor[$loopSensor]['name'] = $motorName.' - '.trim($deviceName[$numberStart - 1]->motorSymbol);                    
+                    $dataSensor[$loopSensor]['id'] = $numberStart;
+                    $numberStart++;
+					$loopSensor++;
+                }
+            }           
+        }		
+        return $dataSensor;
+    }
 
     private function parseContentValve($data, $stations, $deviceName) {
 
@@ -286,6 +423,40 @@ class Device extends General {
             $return[$index] = $stationArr;
         }
         return $return;
+    }
+	
+	
+	private function parseContentNameValve($data, $stations, $deviceName) {
+
+        //Parse Json
+        $objData = json_decode($data);
+        $objData = $objData[0];
+        $objStation = json_decode($stations);
+        $deviceName = json_decode($deviceName);
+        $return = [];
+		$loopSensor = 0;
+		$dataSensor = [];
+
+        //Parse Data               
+        foreach ($objStation as $index => $station) {
+
+            //Foreach Data
+            $numberValve = $station->numberValve;
+            $numberStart = $station->numberStartValve;
+			$start = ($numberStart - 1);
+            $end = ($numberValve + $numberStart - 1);
+            //Loop Item Sensor            
+            for ($j = $start; $j < $end; $j++) {
+                if (isset($deviceName[$numberStart - 1]->valveName)) {
+                    $valveName = $this->translateAuto(trim($deviceName[$numberStart - 1]->valveName));
+                    $dataSensor[$loopSensor]['name'] = $valveName .' - '. trim($deviceName[$numberStart - 1]->valveSymbol);                    
+                    $dataSensor[$loopSensor]['id'] = $numberStart;
+                    $numberStart++;
+					$loopSensor++;
+                }
+            }           
+        }		
+        return $dataSensor;
     }
      
 

@@ -207,10 +207,10 @@ class Report extends General {
 
                 $toDate = date_create($toDate);
 
-                $fromDateFormat = date_format($fromDate, "Y/n/d");
-                $fromDateFormat = $fromDateFormat . ' 00:00:00';
-                $toDateFormat = date_format($toDate, "Y/n/d");
-                $toDateFormat = $toDateFormat . ' 1:12:00';
+                $fromDateFormat = date_format($fromDate, "Y/n/d H:i:s");
+                $fromDateFormat = $fromDateFormat;
+                $toDateFormat = date_format($toDate, "Y/n/d H:i:s");
+                $toDateFormat = $toDateFormat;
                 $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat);
                 $postdata = json_encode($data);
 
@@ -218,7 +218,7 @@ class Report extends General {
                 $link = 'http://115.78.130.60:41440/api/InsertsTableMotors';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
-                    $return = $this->parseContentMotor($resp, $deviceName, $numberStart, $numberEnd);
+                    $return = $this->parseContentMotor($resp, $deviceName, $numberStart);
                     if($return){
                         return $this->respondWithSuccess($return, "Get List Motor succesful!");
                     }      
@@ -236,7 +236,7 @@ class Report extends General {
         }
     }
 
-    private function checkStation($factoryID, $type, $numberStart, $numberEnd) {
+    private function checkStation($factoryID, $type, $numberStart) {
         //Get Station        
         $stations = $this->getStation($factoryID);
         $stations = json_decode($stations);
@@ -248,48 +248,41 @@ class Report extends General {
         }
     }
 
-    private function parseContentMotor($data, $deviceName, $numberStart, $numberEnd) {
+    private function parseContentMotor($data, $deviceName, $numberStart) {
         $objData = json_decode($data);
         $deviceName = json_decode($deviceName);
         //print_r($objData);die;
         $return = [];
         $loop = 0;
         $loopNumberStart = $numberStart;
-        for ($i = 0; $i < ($numberEnd - $numberStart); $i++) {
-            $dataMotor = [];
-            $dataMotorArr = [];
-            foreach ($objData as $index => $obj) {
-                $fieldModeStatus = 'motor' . $loopNumberStart . 'ModeStatus';
-                $fieldOperationStatus = 'motor' . $loopNumberStart . 'OperationStatus';
-                $fieldTotalOvl = 'motor' . $loopNumberStart . 'TotalOvl';
-                $fieldTotalNrf = 'motor' . $loopNumberStart . 'TotalNrf';
-                $fieldTotalRt = 'motor' . $loopNumberStart . 'TotalRt';
-                
-                if(!isset($obj->$fieldModeStatus)){
-                    return false;
-                }
+		$dataMotor = [];
+		$dataMotorArr = [];
+		foreach ($objData as $index => $obj) {
+			$fieldModeStatus = 'motor' . $loopNumberStart . 'ModeStatus';
+			$fieldOperationStatus = 'motor' . $loopNumberStart . 'OperationStatus';
+			$fieldTotalOvl = 'motor' . $loopNumberStart . 'TotalOvl';
+			$fieldTotalNrf = 'motor' . $loopNumberStart . 'TotalNrf';
+			$fieldTotalRt = 'motor' . $loopNumberStart . 'TotalRt';
+			
+			if(!isset($obj->$fieldModeStatus)){
+				return false;
+			}
 
-                $dataStatus = $this->parseStatusDevice($obj->$fieldModeStatus);
-                $statusName = $dataStatus['name'];
+			$dataStatus = $this->parseStatusDevice($obj->$fieldModeStatus);
+			$statusName = $dataStatus['name'];
 
-                $dataOperationStatus = $this->parseOperationStatusValve($obj->$fieldOperationStatus);
-                $operationStatusName = $dataOperationStatus['name'];
+			$dataOperationStatus = $this->parseOperationStatusValve($obj->$fieldOperationStatus);
+			$operationStatusName = $dataOperationStatus['name'];
 
-                $dataMotorArr['id'] = $obj->id;
-                $dataMotorArr['timeStamp'] = $obj->timeStamp;
-                $dataMotorArr['mode_status'] = $statusName;
-                $dataMotorArr['operation_status'] = $operationStatusName;
-                $dataMotorArr['total_ovl'] = $obj->$fieldTotalOvl;
-                $dataMotorArr['total_nrf'] = $obj->$fieldTotalNrf;
-                $dataMotorArr['total_rt'] = $obj->$fieldTotalRt;
-                $dataMotor[$index] = $dataMotorArr;
+			$dataMotorArr['id'] = $obj->id;
+			$dataMotorArr['timeStamp'] = $obj->timeStamp;
+			$dataMotorArr['mode_status'] = $statusName;
+			$dataMotorArr['operation_status'] = $operationStatusName;
+			$dataMotorArr['total_ovl'] = $obj->$fieldTotalOvl;
+			$dataMotorArr['total_nrf'] = $obj->$fieldTotalNrf;
+			$dataMotorArr['total_rt'] = $obj->$fieldTotalRt;
+			$return[$index] = $dataMotorArr;
             }
-            $return[$loop]['title'] = $this->translateAuto(trim($deviceName[$loopNumberStart - 1]->motorName));
-            $return[$loop]['symbol'] = trim($deviceName[$loopNumberStart - 1]->motorSymbol);
-            $return[$loop]['data_list'] = $dataMotor;
-            $loop++;
-            $loopNumberStart++;
-        }
         return $return;
     }
 
@@ -299,10 +292,9 @@ class Report extends General {
             $fromDate = $request->get('from_date');
             $toDate = $request->get('to_date');
             $numberStart = $request->get('number_start');
-            $numberEnd = $request->get('number_end');
 
             $type = "Valve";
-            $checkStation = $this->checkStation($factoryID, $type, $numberStart, $numberEnd);
+            $checkStation = $this->checkStation($factoryID, $type, $numberStart);
             if ($fromDate && $toDate) {
                 //Get Device Name
                 $deviceName = $this->getDeviceName($factoryID);
@@ -312,10 +304,10 @@ class Report extends General {
 
                 $toDate = date_create($toDate);
 
-                $fromDateFormat = date_format($fromDate, "Y/n/d");
-                $fromDateFormat = $fromDateFormat . ' 00:00:00';
-                $toDateFormat = date_format($toDate, "Y/n/d");
-                $toDateFormat = $toDateFormat . ' 1:12:00';
+                $fromDateFormat = date_format($fromDate, "Y/n/d H:i:s");
+                $fromDateFormat = $fromDateFormat;
+                $toDateFormat = date_format($toDate, "Y/n/d H:i:s");
+                $toDateFormat = $toDateFormat;
                 $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat);
                 $postdata = json_encode($data);
 
@@ -323,7 +315,7 @@ class Report extends General {
                 $link = 'http://115.78.130.60:41440/api/InsertsTableValves';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
-                    $return = $this->parseContentValve($resp, $deviceName, $numberStart, $numberEnd);
+                    $return = $this->parseContentValve($resp, $deviceName, $numberStart);
                     if($return)
                         return $this->respondWithSuccess($return, "Get List Valve succesful!");
                     else
@@ -339,48 +331,40 @@ class Report extends General {
         }
     }
 
-    private function parseContentValve($data, $deviceName, $numberStart, $numberEnd) {
+    private function parseContentValve($data, $deviceName, $numberStart) {
         $objData = json_decode($data);
         $deviceName = json_decode($deviceName);
         //print_r($objData);die;
         $return = [];
         $loop = 0;
         $loopNumberStart = $numberStart;
-        for ($i = 0; $i < ($numberEnd - $numberStart); $i++) {
-            $dataMotor = [];
-            $dataMotorArr = [];
-            foreach ($objData as $index => $obj) {
-                $fieldModeStatus = 'valve' . $loopNumberStart . 'ModeStatus';
-                $fieldOperationStatus = 'valve' . $loopNumberStart . 'OperationStatus';
-                $fieldTotalFO = 'valve' . $loopNumberStart . 'TotalFo';
-                $fieldTotalFC = 'valve' . $loopNumberStart . 'TotalFc';
-                $fieldTotalOC = 'valve' . $loopNumberStart . 'TotalOc';
-                
-                if(!isset($obj->$fieldModeStatus)){
-                    return false;
-                }
+		$dataMotorArr = [];
+		foreach ($objData as $index => $obj) {
+			$fieldModeStatus = 'valve' . $loopNumberStart . 'ModeStatus';
+			$fieldOperationStatus = 'valve' . $loopNumberStart . 'OperationStatus';
+			$fieldTotalFO = 'valve' . $loopNumberStart . 'TotalFo';
+			$fieldTotalFC = 'valve' . $loopNumberStart . 'TotalFc';
+			$fieldTotalOC = 'valve' . $loopNumberStart . 'TotalOc';
+			
+			if(!isset($obj->$fieldModeStatus)){
+				return false;
+			}
 
-                $dataStatus = $this->parseStatusDevice($obj->$fieldModeStatus);
-                $statusName = $dataStatus['name'];
+			$dataStatus = $this->parseStatusDevice($obj->$fieldModeStatus);
+			$statusName = $dataStatus['name'];
 
-                $dataOperationStatus = $this->parseOperationStatusValve($obj->$fieldOperationStatus);
-                $operationStatusName = $dataOperationStatus['name'];
+			$dataOperationStatus = $this->parseOperationStatusValve($obj->$fieldOperationStatus);
+			$operationStatusName = $dataOperationStatus['name'];
 
-                $dataMotorArr['id'] = $obj->id;
-                $dataMotorArr['timeStamp'] = $obj->timeStamp;
-                $dataMotorArr['mode_status'] = $statusName;
-                $dataMotorArr['operation_status'] = $operationStatusName;
-                $dataMotorArr['total_fo'] = $obj->$fieldTotalFO;
-                $dataMotorArr['total_fc'] = $obj->$fieldTotalFC;
-                $dataMotorArr['total_oc'] = $obj->$fieldTotalOC;
-                $dataMotor[$index] = $dataMotorArr;
-            }
-            $return[$loop]['title'] = $this->translateAuto(trim($deviceName[$loopNumberStart - 1]->valveName));
-            $return[$loop]['symbol'] = trim($deviceName[$loopNumberStart - 1]->valveSymbol);
-            $return[$loop]['data_list'] = $dataMotor;
-            $loop++;
-            $loopNumberStart++;
-        }
+			$dataMotorArr['id'] = $obj->id;
+			$dataMotorArr['timeStamp'] = $obj->timeStamp;
+			$dataMotorArr['mode_status'] = $statusName;
+			$dataMotorArr['operation_status'] = $operationStatusName;
+			$dataMotorArr['total_fo'] = $obj->$fieldTotalFO;
+			$dataMotorArr['total_fc'] = $obj->$fieldTotalFC;
+			$dataMotorArr['total_oc'] = $obj->$fieldTotalOC;
+			$return[$index] = $dataMotorArr;
+		}
         return $return;
     }
 
@@ -390,10 +374,8 @@ class Report extends General {
             $fromDate = $request->get('from_date');
             $toDate = $request->get('to_date');
             $numberStart = $request->get('number_start');
-            $numberEnd = $request->get('number_end');
 
             $type = "Sensor";
-            $checkStation = $this->checkStation($factoryID, $type, $numberStart, $numberEnd);
             if ($fromDate && $toDate) {
                 //Get Device Name
                 $deviceName = $this->getDeviceName($factoryID);
@@ -403,10 +385,10 @@ class Report extends General {
 
                 $toDate = date_create($toDate);
 
-                $fromDateFormat = date_format($fromDate, "Y/n/d");
-                $fromDateFormat = $fromDateFormat . ' 00:00:00';
-                $toDateFormat = date_format($toDate, "Y/n/d");
-                $toDateFormat = $toDateFormat . ' 1:12:00';
+                $fromDateFormat = date_format($fromDate, "Y/n/d H:i:s");
+                $fromDateFormat = $fromDateFormat;
+                $toDateFormat = date_format($toDate, "Y/n/d H:i:s");
+                $toDateFormat = $toDateFormat;
                 $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat);
                 $postdata = json_encode($data);
 
@@ -414,7 +396,7 @@ class Report extends General {
                 $link = 'http://115.78.130.60:41440/api/InsertsTableSensors';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
-                    $return = $this->parseContentSensor($resp, $deviceName, $numberStart, $numberEnd);
+                    $return = $this->parseContentSensor($resp, $deviceName, $numberStart);
                     if($return)
                         return $this->respondWithSuccess($return, "Get List Sensor succesful!");
                     else
@@ -430,45 +412,37 @@ class Report extends General {
         }
     }
 
-    private function parseContentSensor($data, $deviceName, $numberStart, $numberEnd) {
+    private function parseContentSensor($data, $deviceName, $numberStart) {
         $objData = json_decode($data);
         $deviceName = json_decode($deviceName);
         //print_r($objData);die;
         $return = [];
         $loop = 0;
-        $loopNumberStart = $numberStart;
-        for ($i = 0; $i < ($numberEnd - $numberStart); $i++) {
-            $dataMotor = [];
-            $dataMotorArr = [];
-            foreach ($objData as $index => $obj) {
-                $fieldModeStatus = 'sensor' . $loopNumberStart . 'Status';
-                if(!isset($obj->$fieldModeStatus)){
-                    return false;
-                }
-                $fieldValue1 = 'sensor' . $loopNumberStart . 'Value1';
-                $fieldValue2 = 'sensor' . $loopNumberStart . 'Value2';
-                $fieldValue3 = 'sensor' . $loopNumberStart . 'Value3';
-                $fieldTotalF = 'sensor' . $loopNumberStart . 'TotalF';
+		$dataMotor = [];
+		$dataMotorArr = [];
+		foreach ($objData as $index => $obj) {
+			$fieldModeStatus = 'sensor' . $numberStart . 'Status';
+			if(!isset($obj->$fieldModeStatus)){
+				return false;
+			}
+			$fieldValue1 = 'sensor' . $numberStart . 'Value1';
+			$fieldValue2 = 'sensor' . $numberStart . 'Value2';
+			$fieldValue3 = 'sensor' . $numberStart . 'Value3';
+			$fieldTotalF = 'sensor' . $numberStart . 'TotalF';
 
-                $dataStatus = $this->parseStatusDevice($obj->$fieldModeStatus);
-                $statusName = $dataStatus['name'];
+			$dataStatus = $this->parseStatusDevice($obj->$fieldModeStatus);
+			$statusName = $dataStatus['name'];
 
-                $dataMotorArr['id'] = $obj->id;
-                $dataMotorArr['timeStamp'] = $obj->timeStamp;
-                $dataMotorArr['mode_status'] = $statusName;
-                $dataMotorArr['value1'] = $obj->$fieldValue1;
-                $dataMotorArr['value2'] = $obj->$fieldValue2;
-                $dataMotorArr['value3'] = $obj->$fieldValue3;
-                $dataMotorArr['total_f'] = $obj->$fieldTotalF;
-                $dataMotor[$index] = $dataMotorArr;
-            }
-            $return[$loop]['title'] = $this->translateAuto(trim($deviceName[$loopNumberStart - 1]->sensorName));
-            $return[$loop]['symbol'] = trim($deviceName[$loopNumberStart - 1]->sensorSymbol);
-            $return[$loop]['data_list'] = $dataMotor;
-            $loop++;
-            $loopNumberStart++;
-        }
-        return $return;
+			$dataMotorArr['id'] = $obj->id;
+			$dataMotorArr['timeStamp'] = $obj->timeStamp;
+			$dataMotorArr['mode_status'] = $statusName;
+			$dataMotorArr['value1'] = $obj->$fieldValue1;
+			$dataMotorArr['value2'] = $obj->$fieldValue2;
+			$dataMotorArr['value3'] = $obj->$fieldValue3;
+			$dataMotorArr['total_f'] = $obj->$fieldTotalF;
+			$dataMotor[$index] = $dataMotorArr;
+		}
+        return $dataMotor;
     }
 
 }
