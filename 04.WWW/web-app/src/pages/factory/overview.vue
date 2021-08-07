@@ -5,13 +5,9 @@
 </template>
 
 <script>
-
+import factoryMixin from "@/mixins/factoryMixin"
 export default {
-  computed: {
-    factory() {
-      return {}
-    }
-  }
+  mixins: [factoryMixin],
 }
 </script>
 

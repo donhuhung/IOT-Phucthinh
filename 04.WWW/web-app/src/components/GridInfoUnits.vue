@@ -16,26 +16,46 @@
           Unit
         </th>
       </tr>
-      <template v-for="(t, k, i) in info">
-        <tr class="grid-row" :key="k" v-if="k!='unit'">
-          <td class="cell-table cell-row">
-            <span class="caption font-weight-bold">{{ i + 1 }}</span>
-          </td>
-          <td class="cell-table cell-row">
-            <span class="caption font-weight-bold text--primary">{{ t | numberFormat }}</span>
-          </td>
-          <td class="cell-table cell-row">
-            <v-chip small
-                    style="min-width: 60px;" dark>
-              <template v-if="type != 'flowmeter'">
-                {{ unit?unit:k|numberUnit }}
-              </template>
-              <template v-else>
-                {{info.unit}}
-              </template>
-            </v-chip>
-          </td>
-        </tr>
+      <template v-if="Array.isArray(info)">
+            <template v-for="(item,index) in info">
+              <tr class="grid-row" :key="index" v-if="k!='unit'">
+                <td class="cell-table cell-row">
+                  <span class="caption font-weight-bold">{{ index + 1 }}</span>
+                </td>
+                <td class="cell-table cell-row">
+                  <span class="caption font-weight-bold text--primary">{{ item.value | numberFormat }}</span>
+                </td>
+                <td class="cell-table cell-row">
+                  <v-chip small
+                          style="min-width: 60px;" dark>
+                      {{item.unit}}
+                  </v-chip>
+                </td>
+              </tr>
+            </template>
+      </template>
+      <template v-else>
+        <template v-for="(t, k, i) in info">
+          <tr class="grid-row" :key="k" v-if="k!='unit'">
+            <td class="cell-table cell-row">
+              <span class="caption font-weight-bold">{{ i + 1 }}</span>
+            </td>
+            <td class="cell-table cell-row">
+              <span class="caption font-weight-bold text--primary">{{ t | numberFormat }}</span>
+            </td>
+            <td class="cell-table cell-row">
+              <v-chip small
+                      style="min-width: 60px;" dark>
+                <template v-if="type != 'flowmeter'">
+                  {{ unit?unit:k|numberUnit }}
+                </template>
+                <template v-else>
+                  {{info.unit}}
+                </template>
+              </v-chip>
+            </td>
+          </tr>
+        </template>
       </template>
     </table>
   </v-card>
@@ -76,6 +96,7 @@ export default {
   data() {
     return {
       compact: false,
+      row: {},
     }
   },
 }
@@ -111,7 +132,7 @@ $colorBorderNone: transparent;
   position: relative;
   padding: 10px 20px 10px 0;
   text-align: left;
-  font-size: 14px;
+  font-size: 16px !important;
 
   &.cell-header {
     border-bottom: 1px solid;
