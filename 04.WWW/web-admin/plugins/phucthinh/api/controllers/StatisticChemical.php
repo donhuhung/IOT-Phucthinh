@@ -48,7 +48,6 @@ class StatisticChemical extends General {
         $dataHoaChatArr['kg'] = $objData->$fieldKg;
         $dataHoaChatArr['l'] = $objData->$fieldNuoc;
         $dataHoaChatArr['s'] = $objData->$fieldThoiGian;
-        $dataStationArr['title'] = $this->getNameHoaChat($index);
         $dataStationArr['info'] = $dataHoaChatArr;
         $stationArr['data_list'][$index-1] = $dataStationArr;
         return $stationArr;
@@ -75,7 +74,7 @@ class StatisticChemical extends General {
         $dataKhoiLuongDaNhapArr['title'] = 'Tổng Khối lượng đã nhập';
         $dataKhoiLuongDaNhapArr['info'] = $dataHoaChatNhapArr;
 
-        $dataStationArr['title'] = $this->getNameHoaChat($index);
+        $dataStationArr['title'] = 'Kho Hóa Chất';
         $dataStationArr['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'lít' : 'kg';
         $dataStationArr['data_list'][0] = $dataKhoiLuongConLaiArr;
         $dataStationArr['data_list'][1] = $dataKhoiLuongDaNhapArr;
@@ -122,7 +121,7 @@ class StatisticChemical extends General {
         $dataTong['info'] = $dataTongArr;
 
 
-        $dataStationArr['title'] = $this->getNameHoaChat($index);
+        $dataStationArr['title'] = 'Hóa Chất Tiêu Thụ';
         $dataStationArr['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'lít' : 'kg';
         $dataStationArr['data_list'][0] = $dataTrongNgay;
         $dataStationArr['data_list'][1] = $dataTrongThang;
@@ -144,7 +143,6 @@ class StatisticChemical extends General {
         //Foreach Thông Số
         $field = 'bieuGiaHoaChat' . ($index) . 'Value1';
         $dataHoaChatArr['value'] = $objData->$field;
-        $dataStationArr['title'] = $this->getNameHoaChat($index);
         $dataStationArr['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'VNĐ/lít' : 'VNĐ/kg';
         $dataStationArr['info'] = $dataHoaChatArr;
         $stationArr['data_list'][$index-1] = $dataStationArr;
@@ -191,7 +189,7 @@ class StatisticChemical extends General {
         $dataTong['info'] = $dataTongArr;
 
 
-        $dataStationArr['title'] = $this->getNameHoaChat($index);
+        $dataStationArr['title'] = 'Chi Phí Hóa Chất';
         $dataStationArr['unit'] = 'VNĐ';
         $dataStationArr['data_list'][0] = $dataTrongNgay;
         $dataStationArr['data_list'][1] = $dataTrongThang;

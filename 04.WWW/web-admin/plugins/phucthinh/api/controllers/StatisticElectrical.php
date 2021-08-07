@@ -1,12 +1,14 @@
-<?php namespace PhucThinh\API\Controllers;
+<?php
+
+namespace PhucThinh\API\Controllers;
 
 use Illuminate\Http\Request;
 
 /**
  * Statistic Electrical Back-end Controller
  */
-class StatisticElectrical extends General
-{
+class StatisticElectrical extends General {
+
     public function __construct() {
         
     }
@@ -112,7 +114,7 @@ class StatisticElectrical extends General
                 $stationArr['info'] = $dataStationArr;
                 $stationTotalArr['title'] = 'Thông số tổng - mcc' . ($i + 1);
                 $stationTotalArr['info'] = $dataStationTotalArr;
-                $dataStation['title'] = 'Thông Số Điện - Trạm Mcc'.($i+1);
+                $dataStation['title'] = 'Thông Số Điện - Trạm Mcc' . ($i + 1);
                 $dataStation['data_list'][0] = $stationArr;
                 $dataStation['data_list'][1] = $stationTotalArr;
                 $return[$i] = $dataStation;
@@ -125,26 +127,80 @@ class StatisticElectrical extends General
         $objData = json_decode($data);
         $objData = $objData[0];
         $return = [];
-        $stationArr = [];
-        $dataLuoiDienArr = [];
-        $dataMayPhatArr = [];
-        $dataLuoiDien = [];
-        $dataMayPhat = [];
-        $dataLuoiDien['title'] = 'Lưới Điện:VND/Kwh';
-        $dataLuoiDienArr['thap_diem'] = $objData->bieuGiaDienValue1;
-        $dataLuoiDienArr['binh_thuong'] = $objData->bieuGiaDienValue2;
-        $dataLuoiDienArr['cao_diem'] = $objData->bieuGiaDienValue3;
-        $dataLuoiDien['info'] = $dataLuoiDienArr;
+        
+        $stationArrLuoiDien = [];
+        $stationArrTuPhat = [];
+        
+        //Lưới Điện
+        $dataBieuGiaLuoiDienArr = [];
+        $dataDienNangLuoiDienArr = [];
+        $dataChiPhiLuoiDienArr = [];        
+        
+        //Tự phát
+        $dataBieuGiaMayPhatArr = [];
+        $dataDienNangMayPhatArr = [];
+        $dataChiPhiMayPhatArr = [];
+        
+        $dataBieuGiaLuoiDien = [];
+        $dataDienNangLuoiDien = [];
+        $dataChiPhiLuoiDien = [];
+        
+        $dataBieuGiaMayPhat = [];
+        $dataDienNangMayPhat = [];
+        $dataChiPhiMayPhat = [];
+        
+        //Group Lưới Điện
+        $dataBieuGiaLuoiDien['title'] = 'Biểu Giá Điện Lưới:VND/Kwh';
+        $dataBieuGiaLuoiDienArr['thap_diem'] = $objData->bieuGiaDienValue1;
+        $dataBieuGiaLuoiDienArr['binh_thuong'] = $objData->bieuGiaDienValue2;
+        $dataBieuGiaLuoiDienArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataBieuGiaLuoiDien['info'] = $dataBieuGiaLuoiDienArr;
+        
+        $dataDienNangLuoiDien['title'] = 'Điện Năng Tiêu Thụ:Kwh';
+        $dataDienNangLuoiDienArr['thap_diem'] = $objData->bieuGiaDienValue1;
+        $dataDienNangLuoiDienArr['binh_thuong'] = $objData->bieuGiaDienValue2;
+        $dataDienNangLuoiDienArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataDienNangLuoiDien['info'] = $dataDienNangLuoiDienArr;
+        
+        $dataChiPhiLuoiDien['title'] = 'Chi Phí Điện Năng:VNĐ';
+        $dataChiPhiLuoiDienArr['thap_diem'] = $objData->bieuGiaDienValue1;
+        $dataChiPhiLuoiDienArr['binh_thuong'] = $objData->bieuGiaDienValue2;
+        $dataChiPhiLuoiDienArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataChiPhiLuoiDien['info'] = $dataChiPhiLuoiDienArr;
 
-        $dataMayPhat['title'] = 'Máy phát:VND/Kwh';
-		$dataMayPhatArr['thap_diem'] = '';
-        $dataMayPhatArr['binh_thuong'] = $objData->bieuGiaDienValue4;
-		$dataMayPhatArr['cao_diem'] = '';
-        $dataMayPhat['info'] = $dataMayPhatArr;
-        $stationArr['title'] = 'Biểu Giá Điện';
-        $stationArr['data_list'][0] = $dataLuoiDien;
-        $stationArr['data_list'][1] = $dataMayPhat;
-        $return = $stationArr;
+        //Group tự Phát
+        $dataBieuGiaMayPhat['title'] = 'Biểu Giá Điện Tự Phát:VND/Kwh';
+        $dataBieuGiaMayPhatArr['thap_diem'] = $objData->bieuGiaDienValue1;
+        $dataBieuGiaMayPhatArr['binh_thuong'] = $objData->bieuGiaDienValue2;
+        $dataBieuGiaMayPhatArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataBieuGiaMayPhat['info'] = $dataBieuGiaMayPhatArr;
+        
+        $dataDienNangMayPhat['title'] = 'Điện Năng Tiêu Thụ:Kwh';
+        $dataDienNangMayPhatArr['thap_diem'] = $objData->bieuGiaDienValue1;
+        $dataDienNangMayPhatArr['binh_thuong'] = $objData->bieuGiaDienValue2;
+        $dataDienNangMayPhatArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataDienNangMayPhat['info'] = $dataDienNangMayPhatArr;
+        
+        $dataChiPhiMayPhat['title'] = 'Chi Phí Điện Năng:VNĐ';
+        $dataChiPhiMayPhatArr['thap_diem'] = $objData->bieuGiaDienValue1;
+        $dataChiPhiMayPhatArr['binh_thuong'] = $objData->bieuGiaDienValue2;
+        $dataChiPhiMayPhatArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataChiPhiMayPhat['info'] = $dataChiPhiMayPhatArr;
+        
+        //Lưới Điện
+        $stationArrLuoiDien['title'] = 'Điện Lưới';
+        $stationArrLuoiDien['data_list'][0] = $dataBieuGiaLuoiDien;
+        $stationArrLuoiDien['data_list'][1] = $dataDienNangLuoiDien;
+        $stationArrLuoiDien['data_list'][2] = $dataChiPhiLuoiDien;
+        
+        //Tự phát
+        $stationArrTuPhat['title'] = 'Điện Tự Phát';
+        $stationArrTuPhat['data_list'][0] = $dataBieuGiaMayPhat;
+        $stationArrTuPhat['data_list'][1] = $dataDienNangMayPhat;
+        $stationArrTuPhat['data_list'][2] = $dataChiPhiMayPhat;
+                
+        $return[0] = $stationArrLuoiDien;
+        $return[1] = $stationArrTuPhat;
         return $return;
     }
 
@@ -217,12 +273,12 @@ class StatisticElectrical extends General
             $dataTrongNgayKwh['title'] = 'Trong Ngày: Kwh/d';
             $dataTrongNgayKwh['info'] = $dataTrongNgayKwhArr;
 
-            /*$dataTrongNgayKvarhArr['thap_diem'] = $objData->$field5;
-            $dataTrongNgayKvarhArr['binh_thuong'] = $objData->$field6;
-            $dataTrongNgayKvarhArr['cao_diem'] = $objData->$field7;
-            $dataTrongNgayKvarhArr['tong'] = $objData->$field8;
-            $dataTrongNgayKvarh['title'] = 'Trong Ngày: Kvrah/d';
-            $dataTrongNgayKvarh['info'] = $dataTrongNgayKvarhArr;*/
+            /* $dataTrongNgayKvarhArr['thap_diem'] = $objData->$field5;
+              $dataTrongNgayKvarhArr['binh_thuong'] = $objData->$field6;
+              $dataTrongNgayKvarhArr['cao_diem'] = $objData->$field7;
+              $dataTrongNgayKvarhArr['tong'] = $objData->$field8;
+              $dataTrongNgayKvarh['title'] = 'Trong Ngày: Kvrah/d';
+              $dataTrongNgayKvarh['info'] = $dataTrongNgayKvarhArr; */
 
             //Trong Tháng
             $dataTrongThangKwhArr['thap_diem'] = $objData->$field9;
@@ -232,12 +288,12 @@ class StatisticElectrical extends General
             $dataTrongThangKwh['title'] = 'Trong Tháng: Kwh/m';
             $dataTrongThangKwh['info'] = $dataTrongThangKwhArr;
 
-            /*$dataTrongThangKvarhArr['thap_diem'] = $objData->$field13;
-            $dataTrongThangKvarhArr['binh_thuong'] = $objData->$field14;
-            $dataTrongThangKvarhArr['cao_diem'] = $objData->$field15;
-            $dataTrongThangKvarhArr['tong'] = $objData->$field16;
-            $dataTrongThangKvarh['title'] = 'Trong Tháng: Kvrah/m';
-            $dataTrongThangKvarh['info'] = $dataTrongThangKvarhArr;*/
+            /* $dataTrongThangKvarhArr['thap_diem'] = $objData->$field13;
+              $dataTrongThangKvarhArr['binh_thuong'] = $objData->$field14;
+              $dataTrongThangKvarhArr['cao_diem'] = $objData->$field15;
+              $dataTrongThangKvarhArr['tong'] = $objData->$field16;
+              $dataTrongThangKvarh['title'] = 'Trong Tháng: Kvrah/m';
+              $dataTrongThangKvarh['info'] = $dataTrongThangKvarhArr; */
 
             //Trong Năm
             $dataTrongNamKwhArr['thap_diem'] = $objData->$field17;
@@ -247,12 +303,12 @@ class StatisticElectrical extends General
             $dataTrongNamKwh['title'] = 'Trong Năm: Kwh/y';
             $dataTrongNamKwh['info'] = $dataTrongNamKwhArr;
 
-            /*$dataTrongNamKvarhArr['thap_diem'] = $objData->$field21;
-            $dataTrongNamKvarhArr['binh_thuong'] = $objData->$field22;
-            $dataTrongNamKvarhArr['cao_diem'] = $objData->$field23;
-            $dataTrongNamKvarhArr['tong'] = $objData->$field24;
-            $dataTrongNamKvarh['title'] = 'Trong Năm: Kvrah/y';
-            $dataTrongNamKvarh['info'] = $dataTrongNamKvarhArr;*/
+            /* $dataTrongNamKvarhArr['thap_diem'] = $objData->$field21;
+              $dataTrongNamKvarhArr['binh_thuong'] = $objData->$field22;
+              $dataTrongNamKvarhArr['cao_diem'] = $objData->$field23;
+              $dataTrongNamKvarhArr['tong'] = $objData->$field24;
+              $dataTrongNamKvarh['title'] = 'Trong Năm: Kvrah/y';
+              $dataTrongNamKvarh['info'] = $dataTrongNamKvarhArr; */
 
             //Tổng
             $dataTongKwhArr['thap_diem'] = $objData->$field25;
@@ -262,12 +318,12 @@ class StatisticElectrical extends General
             $dataTongKwh['title'] = 'Tổng: Kwh/t';
             $dataTongKwh['info'] = $dataTongKwhArr;
 
-            /*$dataTongKvrahArr['thap_diem'] = $objData->$field29;
-            $dataTongKvrahArr['binh_thuong'] = $objData->$field30;
-            $dataTongKvrahArr['cao_diem'] = $objData->$field31;
-            $dataTongKvrahArr['tong'] = $objData->$field32;
-            $dataTongKvrah['title'] = 'Tổng: Kvrah/t';
-            $dataTongKvrah['info'] = $dataTongKvrahArr;*/
+            /* $dataTongKvrahArr['thap_diem'] = $objData->$field29;
+              $dataTongKvrahArr['binh_thuong'] = $objData->$field30;
+              $dataTongKvrahArr['cao_diem'] = $objData->$field31;
+              $dataTongKvrahArr['tong'] = $objData->$field32;
+              $dataTongKvrah['title'] = 'Tổng: Kvrah/t';
+              $dataTongKvrah['info'] = $dataTongKvrahArr; */
 
             $stationArr['title'] = 'Trạm ' . ($i + 1) . ':' . $this->getNameStationStatistic($i + 1);
             $stationArr['data_list'][0] = $dataTrongNgayKwh;
@@ -318,7 +374,6 @@ class StatisticElectrical extends General
             $dataTongArr = [];
             //$dataTongStarArr = [];
             //$dataTotalArr = [];
-
             //Foreach Thông Số
             $field1 = 'chiPhiDien' . ($i + 1) . 'Value1';
             $field2 = 'chiPhiDien' . ($i + 1) . 'Value2';
@@ -366,16 +421,16 @@ class StatisticElectrical extends General
             $dataTrongNgay['title'] = 'Trong Ngày: VNĐ/d';
             $dataTrongNgay['info'] = $dataTrongNgayArr;
 
-            /*$dataTrongNgayStarArr['thap_diem'] = $objData->$field5;
-            $dataTrongNgayStarArr['binh_thuong'] = $objData->$field6;
-            $dataTrongNgayStarArr['cao_diem'] = $objData->$field7;
-            $dataTrongNgayStarArr['tong'] = $objData->$field8;
-            $dataTrongNgayStar['title'] = 'Trong Ngày: VNĐ/d*';
-            $dataTrongNgayStar['info'] = $dataTrongNgayStarArr;
+            /* $dataTrongNgayStarArr['thap_diem'] = $objData->$field5;
+              $dataTrongNgayStarArr['binh_thuong'] = $objData->$field6;
+              $dataTrongNgayStarArr['cao_diem'] = $objData->$field7;
+              $dataTrongNgayStarArr['tong'] = $objData->$field8;
+              $dataTrongNgayStar['title'] = 'Trong Ngày: VNĐ/d*';
+              $dataTrongNgayStar['info'] = $dataTrongNgayStarArr;
 
-            $dataTongNgayArr['tong'] = $objData->$field9;
-            $dataTongNgay['title'] = 'Tổng ngày:VNĐ/d + VNĐ/d*';
-            $dataTongNgay['info'] = $dataTrongNgayStarArr;*/
+              $dataTongNgayArr['tong'] = $objData->$field9;
+              $dataTongNgay['title'] = 'Tổng ngày:VNĐ/d + VNĐ/d*';
+              $dataTongNgay['info'] = $dataTrongNgayStarArr; */
 
             //Trong Tháng
             $dataTrongThangArr['thap_diem'] = $objData->$field10;
@@ -385,16 +440,16 @@ class StatisticElectrical extends General
             $dataTrongThang['title'] = 'Trong Tháng: VNĐ/m';
             $dataTrongThang['info'] = $dataTrongThangArr;
 
-            /*$dataTrongThangStarArr['thap_diem'] = $objData->$field14;
-            $dataTrongThangStarArr['binh_thuong'] = $objData->$field15;
-            $dataTrongThangStarArr['cao_diem'] = $objData->$field16;
-            $dataTrongThangStarArr['tong'] = $objData->$field17;
-            $dataTrongThangStar['title'] = 'Trong Tháng: VNĐ/m*';
-            $dataTrongThangStar['info'] = $dataTrongThangStarArr;
+            /* $dataTrongThangStarArr['thap_diem'] = $objData->$field14;
+              $dataTrongThangStarArr['binh_thuong'] = $objData->$field15;
+              $dataTrongThangStarArr['cao_diem'] = $objData->$field16;
+              $dataTrongThangStarArr['tong'] = $objData->$field17;
+              $dataTrongThangStar['title'] = 'Trong Tháng: VNĐ/m*';
+              $dataTrongThangStar['info'] = $dataTrongThangStarArr;
 
-            $dataTongThangArr['tong'] = $objData->$field18;
-            $dataTongThang['title'] = 'Tổng tháng:VNĐ/m + VNĐ/m*';
-            $dataTongThang['info'] = $dataTongThangArr;*/
+              $dataTongThangArr['tong'] = $objData->$field18;
+              $dataTongThang['title'] = 'Tổng tháng:VNĐ/m + VNĐ/m*';
+              $dataTongThang['info'] = $dataTongThangArr; */
 
             //Trong Năm
             $dataTrongNamArr['thap_diem'] = $objData->$field19;
@@ -404,16 +459,16 @@ class StatisticElectrical extends General
             $dataTrongNam['title'] = 'Trong Năm: VNĐ/y';
             $dataTrongNam['info'] = $dataTrongNamArr;
 
-            /*$dataTrongNamStarArr['thap_diem'] = $objData->$field23;
-            $dataTrongNamStarArr['binh_thuong'] = $objData->$field24;
-            $dataTrongNamStarArr['cao_diem'] = $objData->$field25;
-            $dataTrongNamStarArr['tong'] = $objData->$field26;
-            $dataTrongNamStar['title'] = 'Trong Năm: VNĐ/y*';
-            $dataTrongNamStar['info'] = $dataTrongNamStarArr;
+            /* $dataTrongNamStarArr['thap_diem'] = $objData->$field23;
+              $dataTrongNamStarArr['binh_thuong'] = $objData->$field24;
+              $dataTrongNamStarArr['cao_diem'] = $objData->$field25;
+              $dataTrongNamStarArr['tong'] = $objData->$field26;
+              $dataTrongNamStar['title'] = 'Trong Năm: VNĐ/y*';
+              $dataTrongNamStar['info'] = $dataTrongNamStarArr;
 
-            $dataTongNamArr['tong'] = $objData->$field27;
-            $dataTongNam['title'] = 'Tổng năm:VNĐ/y + VNĐ/y*';
-            $dataTongNam['info'] = $dataTongNamArr;*/
+              $dataTongNamArr['tong'] = $objData->$field27;
+              $dataTongNam['title'] = 'Tổng năm:VNĐ/y + VNĐ/y*';
+              $dataTongNam['info'] = $dataTongNamArr; */
 
             //Tổng
             $dataTongArr['thap_diem'] = $objData->$field28;
@@ -423,16 +478,16 @@ class StatisticElectrical extends General
             $dataTong['title'] = 'Tổng: VNĐ/t';
             $dataTong['info'] = $dataTongArr;
 
-            /*$dataTongStarArr['thap_diem'] = $objData->$field32;
-            $dataTongStarArr['binh_thuong'] = $objData->$field33;
-            $dataTongStarArr['cao_diem'] = $objData->$field34;
-            $dataTongStarArr['tong'] = $objData->$field35;
-            $dataTongStar['title'] = 'Tổng: VNĐ/t*';
-            $dataTongStar['info'] = $dataTongStarArr;
+            /* $dataTongStarArr['thap_diem'] = $objData->$field32;
+              $dataTongStarArr['binh_thuong'] = $objData->$field33;
+              $dataTongStarArr['cao_diem'] = $objData->$field34;
+              $dataTongStarArr['tong'] = $objData->$field35;
+              $dataTongStar['title'] = 'Tổng: VNĐ/t*';
+              $dataTongStar['info'] = $dataTongStarArr;
 
-            $dataTotalArr['tong'] = $objData->$field36;
-            $dataTotal['title'] = 'Tổng: VNĐ/t + VNĐ/t*';
-            $dataTotal['info'] = $dataTotalArr;*/
+              $dataTotalArr['tong'] = $objData->$field36;
+              $dataTotal['title'] = 'Tổng: VNĐ/t + VNĐ/t*';
+              $dataTotal['info'] = $dataTotalArr; */
 
             $stationArr['title'] = 'Trạm ' . ($i + 1) . ':' . $this->getNameStationStatistic($i + 1);
             $stationArr['data_list'][0] = $dataTrongNgay;
@@ -448,4 +503,5 @@ class StatisticElectrical extends General
         }
         return $return;
     }
+
 }
