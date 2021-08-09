@@ -184,7 +184,8 @@ class StatisticFlowmeter extends General
         $dataTongArrTotal['value'] = $objData->$fieldTong * 3000;
         $dataTongArrTotal['unit'] = 'VNĐ';
         $dataTong['title'] = 'Tổng';
-        $dataTong['info'] = $dataTongArr;
+        $dataTong['info'][0] = $dataTongArr;
+		$dataTong['info'][1] = $dataTongArrTotal;
 
 
         $dataStationArr['title'] = 'Lưu Lượng hao phí';
@@ -323,7 +324,8 @@ class StatisticFlowmeter extends General
         $dataTrongNamArrTotal['unit'] = 'VNĐ';
         
         $dataTrongNam['title'] = 'Trong Năm';
-        $dataTrongNam['info'] = $dataTrongNamArr;
+        $dataTrongNam['info'][0] = $dataTrongNamArr;
+		$dataTrongNam['info'][1] = $dataTrongNamArrTotal;
 
         $fieldTong = 'luuLuongBanRaValue5';
         $dataTongArr['value'] = $objData->$fieldTong;

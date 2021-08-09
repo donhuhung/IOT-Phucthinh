@@ -271,7 +271,7 @@ class General extends Controller {
         }
         return $result;
     }
-    
+
     public function getNameStationStatistic($index) {
         $name = '';
         switch ($index) {
@@ -302,7 +302,7 @@ class General extends Controller {
         }
         return $name;
     }
-    
+
     public function getNameHoaChat($index) {
         $name = '';
         switch ($index) {
@@ -324,27 +324,27 @@ class General extends Controller {
         }
         return $name;
     }
-    
+
     public function getDeviceName($factoryId) {
         try {
             //Call API
             $link = 'http://115.78.130.60:41440/api/TableMotorValveSensors/' . $factoryId;
-            $resp = $this->callAPI($link,"GET");
+            $resp = $this->callAPI($link, "GET");
             return $resp;
         } catch (\Exception $ex) {
             return $ex->getMessage();
         }
     }
-    
+
     public function getStation($factoryID) {
-        try {            
+        try {
             //Call API
             $link = 'http://115.78.130.60:41440/api/TableStations/' . $factoryID;
-            $resp = $this->callAPI($link,"GET");
+            $resp = $this->callAPI($link, "GET");
             return $resp;
         } catch (\Exception $ex) {
             return $ex->getMessage();
         }
-    }
+    }    
 
 }

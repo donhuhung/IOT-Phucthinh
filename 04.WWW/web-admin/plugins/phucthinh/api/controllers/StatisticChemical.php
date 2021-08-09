@@ -49,7 +49,7 @@ class StatisticChemical extends General {
         $dataHoaChatArr['l'] = $objData->$fieldNuoc;
         $dataHoaChatArr['s'] = $objData->$fieldThoiGian;
         $dataStationArr['info'] = $dataHoaChatArr;
-        $stationArr['data_list'][$index-1] = $dataStationArr;
+        $stationArr['data_list'][0] = $dataStationArr;
         return $stationArr;
     }
 
@@ -145,7 +145,7 @@ class StatisticChemical extends General {
         $dataHoaChatArr['value'] = $objData->$field;
         $dataStationArr['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'VNĐ/lít' : 'VNĐ/kg';
         $dataStationArr['info'] = $dataHoaChatArr;
-        $stationArr['data_list'][$index-1] = $dataStationArr;
+        $stationArr['data_list'][0] = $dataStationArr;
         return $stationArr;
     }
 

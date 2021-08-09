@@ -25,28 +25,28 @@ Route::group([
     });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('sensor')->group(function () {
         Route::post('list', 'PhucThinh\Api\Controllers\Device@getListSenSor');
-		Route::post('list-name', 'PhucThinh\Api\Controllers\Device@getListNameSenSor');
+        Route::post('list-name', 'PhucThinh\Api\Controllers\Device@getListNameSenSor');
         Route::post('update-set-point', 'PhucThinh\Api\Controllers\Device@updateSetPoint');
     });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('motor')->group(function () {
         Route::post('list', 'PhucThinh\Api\Controllers\Device@getListMotor');
-		Route::post('list-name', 'PhucThinh\Api\Controllers\Device@getListNameMotor');
+        Route::post('list-name', 'PhucThinh\Api\Controllers\Device@getListNameMotor');
     });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('valve')->group(function () {
         Route::post('list', 'PhucThinh\Api\Controllers\Device@getListValve');
-		Route::post('list-name', 'PhucThinh\Api\Controllers\Device@getListNameValve');
+        Route::post('list-name', 'PhucThinh\Api\Controllers\Device@getListNameValve');
     });
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('statistic')->group(function () {
         Route::post('electrical', 'PhucThinh\Api\Controllers\StatisticElectrical@getListElectrical');
         Route::post('chemical', 'PhucThinh\Api\Controllers\StatisticChemical@getListChemical');
         Route::post('flowmeter', 'PhucThinh\Api\Controllers\StatisticFlowmeter@getListFlowmeter');
     });
-    
+
     Route::middleware('PhucThinh\Api\Middleware\JwtMiddleware')->prefix('report')->group(function () {
-        Route::post('electrical', 'PhucThinh\Api\Controllers\Report@getListElectrical');
-        Route::post('chemical', 'PhucThinh\Api\Controllers\Report@getListChemical');
-        Route::post('flowmeter', 'PhucThinh\Api\Controllers\Report@getListFlowmeter');
-        
+        Route::post('electrical', 'PhucThinh\Api\Controllers\ReportElectrical@getListElectrical');
+        Route::post('chemical', 'PhucThinh\Api\Controllers\ReportChemical@getListChemical');
+        Route::post('flowmeter', 'PhucThinh\Api\Controllers\ReportFlowmeter@getListFlowmeter');
+
         Route::post('motor', 'PhucThinh\Api\Controllers\Report@getListMotor');
         Route::post('valve', 'PhucThinh\Api\Controllers\Report@getListValve');
         Route::post('sensor', 'PhucThinh\Api\Controllers\Report@getListSensor');
