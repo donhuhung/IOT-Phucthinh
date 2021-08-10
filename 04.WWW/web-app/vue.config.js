@@ -1,9 +1,7 @@
 const dotenv = require('dotenv')
 dotenv.config()
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/'
-    : '/',
+  publicPath: '/',
   filenameHashing: true,
   runtimeCompiler: true,
   configureWebpack: {
