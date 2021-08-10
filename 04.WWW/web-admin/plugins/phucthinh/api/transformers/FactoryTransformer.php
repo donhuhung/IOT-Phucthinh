@@ -25,9 +25,16 @@ class FactoryTransformer extends Fractal\TransformerAbstract {
     }
 
     private function rotateImage($file, $factoryID) {
-        $url = url('');
-        $extensionFile = $file->getExtension();
-        $fileName = $file->getPath();
+		$url = url('');
+		if($factoryID != 1){
+			$fileName = $file->getPath();
+			$extensionFile = $file->getExtension();
+		}
+		else{
+			$fileName = url('').'/storage/app/media/overview/'.'overview-' . $factoryID . '.jpg';
+			$extensionFile = 'jpg';
+		}
+               
         $degrees = -90;
         $path = storage_path('app/media/rotate/');
         $fileNameRotate = 'overview-' . $factoryID . '.' . $extensionFile;
@@ -50,6 +57,9 @@ class FactoryTransformer extends Fractal\TransformerAbstract {
             $data = HelperClass::drawTextImageHaThanh($file, $factoryID);
             return $data;
         }
+		else{			
+            return $file->getpath();
+		}
     }
 
 }

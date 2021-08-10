@@ -123,8 +123,13 @@ class HelperClass {
         $file = HelperClass::drawSensor(6,$file, $factoryID, $sensorLT06_03, 1675, 515);
         $file = HelperClass::drawSensor(7,$file, $factoryID, $sensorCL06, 1840, 785);
         $file = HelperClass::drawSensor(8,$file, $factoryID, $sensorPH06, 1840, 800);
-        $file = HelperClass::drawSensor(8,$file, $factoryID, $sensorNTU06, 1840, 815);
-        return $file;
+        $file = HelperClass::drawSensor(9,$file, $factoryID, $sensorNTU06, 1840, 815);
+        $file = HelperClass::drawSensor(10,$file, $factoryID, $sensorFT06_01, 1760, 962);
+        $file = HelperClass::drawSensor(11,$file, $factoryID, $sensorFT06_02, 1760, 980);
+        $file = HelperClass::drawSensor(11,$file, $factoryID, $sensorFT06_03, 1760, 1001);
+        
+        $fileOverview = url('').'/storage/app/media/overview/'.'overview-' . $factoryID . '.jpg';
+        return $fileOverview;
     }
 
     private static function drawSensor($index,$file, $factoryID, $text, $x, $y) {
@@ -146,7 +151,7 @@ class HelperClass {
         $white = imagecolorallocate($source, 0, 9, 169);
 
         // Set Path to Font File
-        $font_path = storage_path() . '/app/assets/fonts/Roboto-Regular.TTF';
+        $font_path = storage_path() . '/app/assets/fonts/Roboto-Regular.ttf';
 
         imagettftext($source, 7, 0, $x, $y, $white, $font_path, $text);
 
