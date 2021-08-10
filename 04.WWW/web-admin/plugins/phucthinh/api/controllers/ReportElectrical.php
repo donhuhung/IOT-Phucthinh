@@ -44,7 +44,7 @@ class ReportElectrical extends General {
                 $postdata = json_encode($data);
 
                 //Call API
-                $link = 'http://115.78.130.60:41440/api/InsertsTableThongKeChiPhiDiens';
+                $link = 'http://115.78.130.60/api/InsertsTableThongKeChiPhiDiens';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
                     $return = $this->parseContentElectrical($resp, $parseDataByMonth);

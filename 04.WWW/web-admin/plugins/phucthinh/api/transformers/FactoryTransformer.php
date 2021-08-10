@@ -9,19 +9,42 @@ use PhucThinh\API\Classes\HelperClass;
 
 class FactoryTransformer extends Fractal\TransformerAbstract {
 
+	protected $type;
+
+    public function __construct($type) {
+		$this->type = $type;
+    }
+	
     public function transform(Factory $factory) {
-        return [
-            'id' => (int) $factory->id,
-            'factory_id' => (int) $factory->factory_id,
-            'name' => (string) $factory->name,
-            'ip' => (string) $factory->ip,
-            'langtitude' => $factory->langtitude,
-            'longtitude' => $factory->longtitude,
-            'address' => (string) $factory->address,
-            'thumbnail' => $factory->thumbnail ? $factory->thumbnail->getPath() : '',
-            'overview' => $this->drawTextImage($factory->overview, $factory->factory_id),
-            'overview_app' => $this->rotateImage($factory->overview, $factory->factory_id)
-        ];
+		if($this->type && $this->type == 'list'){
+			return [
+				'id' => (int) $factory->id,
+				'factory_id' => (int) $factory->factory_id,
+				'name' => (string) $factory->name,
+				'ip' => (string) $factory->ip,
+				'langtitude' => $factory->langtitude,
+				'longtitude' => $factory->longtitude,
+				'address' => (string) $factory->address,
+				'thumbnail' => $factory->thumbnail ? $factory->thumbnail->getPath() : '',
+				'overview' => $factory->overview?$factory->overview->getPath():'',
+				'overview_app' => $this->rotateImage($factory->overview, $factory->factory_id)
+			];
+		}
+		else{
+			return [
+				'id' => (int) $factory->id,
+				'factory_id' => (int) $factory->factory_id,
+				'name' => (string) $factory->name,
+				'ip' => (string) $factory->ip,
+				'langtitude' => $factory->langtitude,
+				'longtitude' => $factory->longtitude,
+				'address' => (string) $factory->address,
+				'thumbnail' => $factory->thumbnail ? $factory->thumbnail->getPath() : '',
+				'overview' => $this->drawTextImage($factory->overview, $factory->factory_id),
+				'overview_app' => $this->rotateImage($factory->overview, $factory->factory_id)
+			];
+		}
+        
     }
 
     private function rotateImage($file, $factoryID) {
@@ -31,8 +54,8 @@ class FactoryTransformer extends Fractal\TransformerAbstract {
 			$extensionFile = $file->getExtension();
 		}
 		else{
-			$fileName = url('').'/storage/app/media/overview/'.'overview-' . $factoryID . '.jpg';
-			$extensionFile = 'jpg';
+			$fileName = url('').'/storage/app/media/overview/'.'overview-' . $factoryID . '.png';
+			$extensionFile = 'png';
 		}
                
         $degrees = -90;

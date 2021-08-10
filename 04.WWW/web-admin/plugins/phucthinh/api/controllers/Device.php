@@ -28,7 +28,7 @@ class Device extends General {
             $deviceName = $this->getDeviceName($factoryID);
 
             //Call API
-            $link = 'http://115.78.130.60:41440/api/UpdatesTableSensors/' . $factoryID;
+            $link = 'http://115.78.130.60/api/UpdatesTableSensors/' . $factoryID;
             $resp = $this->callAPI($link, "GET");
             $return = $this->parseContentSensor($resp, $stations, $selects, $deviceName);
 
@@ -53,7 +53,7 @@ class Device extends General {
             $deviceName = $this->getDeviceName($factoryID);
 
             //Call API
-            $link = 'http://115.78.130.60:41440/api/UpdatesTableSensors/' . $factoryID;
+            $link = 'http://115.78.130.60/api/UpdatesTableSensors/' . $factoryID;
             $resp = $this->callAPI($link, "GET");
             $return = $this->parseContentNameSensor($resp, $stations, $selects, $deviceName);
 
@@ -75,7 +75,7 @@ class Device extends General {
             $deviceName = $this->getDeviceName($factoryID);
 
             //Call API
-            $link = 'http://115.78.130.60:41440/api/UpdatesTableMotors/' . $factoryID;
+            $link = 'http://115.78.130.60/api/UpdatesTableMotors/' . $factoryID;
             $resp = $this->callAPI($link, "GET");
 
             $return = $this->parseContentMotor($resp, $stations, $deviceName);
@@ -98,7 +98,7 @@ class Device extends General {
             $deviceName = $this->getDeviceName($factoryID);
 
             //Call API
-            $link = 'http://115.78.130.60:41440/api/UpdatesTableMotors/' . $factoryID;
+            $link = 'http://115.78.130.60/api/UpdatesTableMotors/' . $factoryID;
             $resp = $this->callAPI($link, "GET");
 
             $return = $this->parseContentNameMotor($resp, $stations, $deviceName);
@@ -121,7 +121,7 @@ class Device extends General {
             $deviceName = $this->getDeviceName($factoryID);
 
             //Call API
-            $link = 'http://115.78.130.60:41440/api/UpdatesTableValves/' . $factoryID;
+            $link = 'http://115.78.130.60/api/UpdatesTableValves/' . $factoryID;
             $resp = $this->callAPI($link, "GET");
 
             $return = $this->parseContentValve($resp, $stations, $deviceName);
@@ -144,7 +144,7 @@ class Device extends General {
             $deviceName = $this->getDeviceName($factoryID);
 
             //Call API
-            $link = 'http://115.78.130.60:41440/api/UpdatesTableMotors/' . $factoryID;
+            $link = 'http://115.78.130.60/api/UpdatesTableMotors/' . $factoryID;
             $resp = $this->callAPI($link, "GET");
 
             $return = $this->parseContentNameValve($resp, $stations, $deviceName);
@@ -167,7 +167,7 @@ class Device extends General {
             $postdata = json_encode($data);
 
             //Call API
-            $link = 'http://115.78.130.60:41440/api/SelectsTableSensors';
+            $link = 'http://115.78.130.60/api/SelectsTableSensors';
             $this->callAPI($link, "POST", $postdata);
 
             return $this->respondWithMessage("Update Setpoint succesful!");
@@ -460,7 +460,7 @@ class Device extends General {
     private function getStatusDevice() {
         try {
             //Call API
-            $link = 'http://115.78.130.60:41440/api/TableMotorValveSensorStatus';
+            $link = 'http://115.78.130.60/api/TableMotorValveSensorStatus';
             $resp = $this->callAPI($link, "GET");
             return $resp;
         } catch (\Exception $ex) {
@@ -471,7 +471,7 @@ class Device extends General {
     private function getInfoSelect($factoryId) {
         try {
             //Call API
-            $link = 'http://115.78.130.60:41440/api/SelectsTableSensors/' . $factoryId;
+            $link = 'http://115.78.130.60/api/SelectsTableSensors/' . $factoryId;
             $resp = $this->callAPI($link, "GET");
             return $resp;
         } catch (\Exception $ex) {

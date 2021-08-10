@@ -18,7 +18,7 @@ class StatisticChemical extends General {
             $factoryID = $request->get('factory_id');
 
             //Call API
-            $link = 'http://115.78.130.60:41440/api/UpdatesTableThongKeLuuLuongHoaChats/' . $factoryID;
+            $link = 'http://115.78.130.60/api/UpdatesTableThongKeLuuLuongHoaChats/' . $factoryID;
             $data = $this->callAPI($link, "GET");
 
             $return['voi'] = $this->parseArrayChemical($data, 1);

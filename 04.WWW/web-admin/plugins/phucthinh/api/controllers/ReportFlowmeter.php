@@ -30,7 +30,7 @@ class ReportFlowmeter extends General
                 $postdata = json_encode($data);
 
                 //Call API
-                $link = 'http://115.78.130.60:41440/api/InsertsTableThongKeLuuLuongHoaChats';
+                $link = 'http://115.78.130.60/api/InsertsTableThongKeLuuLuongHoaChats';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
                     $return = $this->parseContentFlowmeter($resp);

@@ -328,7 +328,7 @@ class General extends Controller {
     public function getDeviceName($factoryId) {
         try {
             //Call API
-            $link = 'http://115.78.130.60:41440/api/TableMotorValveSensors/' . $factoryId;
+            $link = 'http://115.78.130.60/api/TableMotorValveSensors/' . $factoryId;
             $resp = $this->callAPI($link, "GET");
             return $resp;
         } catch (\Exception $ex) {
@@ -339,7 +339,7 @@ class General extends Controller {
     public function getStation($factoryID) {
         try {
             //Call API
-            $link = 'http://115.78.130.60:41440/api/TableStations/' . $factoryID;
+            $link = 'http://115.78.130.60/api/TableStations/' . $factoryID;
             $resp = $this->callAPI($link, "GET");
             return $resp;
         } catch (\Exception $ex) {

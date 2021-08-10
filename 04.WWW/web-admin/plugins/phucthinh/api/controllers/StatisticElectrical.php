@@ -18,10 +18,10 @@ class StatisticElectrical extends General {
             $factoryID = $request->get('factory_id');
 
             //Call API
-            $linkThongSoDien = 'http://115.78.130.60:41440/api/UpdatesTableThongKeThongSoDiens/' . $factoryID;
+            $linkThongSoDien = 'http://115.78.130.60/api/UpdatesTableThongKeThongSoDiens/' . $factoryID;
             $dataThongSoDien = $this->callAPI($linkThongSoDien, "GET");
 
-            $linkBieuGiaDien = 'http://115.78.130.60:41440/api/UpdatesTableThongKeChiPhiDiens/' . $factoryID;
+            $linkBieuGiaDien = 'http://115.78.130.60/api/UpdatesTableThongKeChiPhiDiens/' . $factoryID;
             $dataBieuGiaDien = $this->callAPI($linkBieuGiaDien, "GET");
 
             $thongSoDien = $this->parseContentThongSoDien($dataThongSoDien);

@@ -19,19 +19,26 @@ class HelperClass {
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_URL => $link,
-                CURLOPT_SSL_VERIFYPEER => false, //Bỏ kiểm SSL
+                CURLOPT_SSL_VERIFYPEER => false,
             ));
         }
         $resp = curl_exec($curl);
+		if (curl_errno($curl)) {
+			$error_msg = curl_error($curl);
+		}
+		curl_close($curl);
+		if (isset($error_msg)) {
+			return $error_msg;
+		}
         return $resp;
-        curl_close($curl);
+        
     }
 
     public static function getStation($factoryID) {
         try {
             //Call API
-            $link = 'http://115.78.130.60:41440/api/TableStations/' . $factoryID;
-            $resp = HelperClass::callAPI($link, "GET");
+            $link = 'http://115.78.130.60/api/TableStations/' . $factoryID;
+            $resp = self::callAPI($link, "GET");
             return $resp;
         } catch (\Exception $ex) {
             return $ex->getMessage();
@@ -41,8 +48,8 @@ class HelperClass {
     public static function getDeviceName($factoryId) {
         try {
             //Call API
-            $link = 'http://115.78.130.60:41440/api/TableMotorValveSensors/' . $factoryId;
-            $resp = HelperClass::callAPI($link, "GET");
+            $link = 'http://115.78.130.60/api/TableMotorValveSensors/' . $factoryId;
+            $resp = self::callAPI($link, "GET");
             return $resp;
         } catch (\Exception $ex) {
             return $ex->getMessage();
@@ -52,16 +59,16 @@ class HelperClass {
     public static function getDataSensor($factoryID) {
         //Call API
         //Get Station
-        $stations = HelperClass::getStation($factoryID);
+        $stations = self::getStation($factoryID);
 
         //Get Info Device
-        $deviceName = HelperClass::getDeviceName($factoryID);
+        $deviceName = self::getDeviceName($factoryID);
 
-        $link = 'http://115.78.130.60:41440/api/UpdatesTableSensors/' . $factoryID;
-        $data = HelperClass::callAPI($link, "GET");
-
+        $link = 'http://115.78.130.60/api/UpdatesTableSensors/' . $factoryID;
+        $data = self::callAPI($link, "GET");
         //Parse Json
         $objData = json_decode($data);
+		
         $objData = $objData[0];
         $objStation = json_decode($stations);
         $deviceName = json_decode($deviceName);
@@ -84,9 +91,7 @@ class HelperClass {
                     $dataStationArr[$j]['symbol'] = trim($deviceName[$numberStart - 1]->sensorSymbol);
                     $loopSensor = 0;
                     for ($k = 0; $k < 3; $k++) {
-                        $isPercent = 'false';
                         $field = "sensor" . $numberStart . "Value" . ($k + 1);
-                        $paramSensor = "sensorUnit" . ($k + 1);
                         if (isset($objData->$field) && $objData->$field > 0) {
                             $dataSensor[$loopSensor]['value'] = isset($objData->$field) ? trim($objData->$field) : 0;
                             $loopSensor++;
@@ -128,16 +133,13 @@ class HelperClass {
         $file = HelperClass::drawSensor(11,$file, $factoryID, $sensorFT06_02, 1760, 980);
         $file = HelperClass::drawSensor(11,$file, $factoryID, $sensorFT06_03, 1760, 1001);
         
-        $fileOverview = url('').'/storage/app/media/overview/'.'overview-' . $factoryID . '.jpg';
+        $fileOverview = url('').'/storage/app/media/overview/'.'overview-' . $factoryID . '.png';
         return $fileOverview;
     }
 
     private static function drawSensor($index,$file, $factoryID, $text, $x, $y) {
         $fileName = $index == 1?$file->getPath():$file;
-        $extensionFile = $index == 1?$file->getExtension():'jpg';
-
-        //Set the Content Type
-        header('Content-type: image/png');
+        $extensionFile = $index == 1?$file->getExtension():'png';
 
         if ($extensionFile == 'png') {
             // Create Image From Existing File
@@ -148,21 +150,20 @@ class HelperClass {
         }
 
         // Allocate A Color For The Text
-        $white = imagecolorallocate($source, 0, 9, 169);
+        $black = imagecolorallocate($source, 0, 9, 169);
 
         // Set Path to Font File
         $font_path = storage_path() . '/app/assets/fonts/Roboto-Regular.ttf';
 
-        imagettftext($source, 7, 0, $x, $y, $white, $font_path, $text);
-
-
+        imagefttext($source, 7, 0, $x, $y, $black, $font_path, $text);
+				
         $path = storage_path().'/app/media/overview/';
         $fileNameRotate = 'overview-' . $factoryID . '.' . $extensionFile;
         $fileSave = $path . $fileNameRotate;
 
         // Send Image to Browser
         if ($extensionFile == 'png') {
-            imagepng($source, $fileSave,100);
+            imagepng($source, $fileSave);
         } else {
             imagejpeg($source, $fileSave, 100);
         }

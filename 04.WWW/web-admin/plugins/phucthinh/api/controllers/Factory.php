@@ -23,7 +23,7 @@ class Factory extends General {
         try {
             $customerID = $request->get('customer_id');
             $factories = FactoryModel::where('status', 1)->where('customer_id',$customerID)->get();
-            $results = fractal($factories, new FactoryTransformer())->toArray();
+            $results = fractal($factories, new FactoryTransformer('list'))->toArray();
             return $this->respondWithSuccess($results, "Get List Factory succesful!");
         } catch (\Exception $ex) {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
@@ -34,7 +34,7 @@ class Factory extends General {
         try {
             $factoryID = $request->get('factory_id');
             $factories = FactoryModel::find($factoryID);
-            $results = fractal($factories, new FactoryTransformer())->toArray();
+            $results = fractal($factories, new FactoryTransformer('detail'))->toArray();
             return $this->respondWithSuccess($results, "Get List Factory succesful!");
         } catch (\Exception $ex) {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);

@@ -40,7 +40,7 @@ class Report extends General {
                 $postdata = json_encode($data);
 
                 //Call API
-                $link = 'http://115.78.130.60:41440/api/InsertsTableMotors';
+                $link = 'http://115.78.130.60/api/InsertsTableMotors';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
                     $return = $this->parseContentMotor($resp, $deviceName, $numberStart);
@@ -136,7 +136,7 @@ class Report extends General {
                 $postdata = json_encode($data);
 
                 //Call API
-                $link = 'http://115.78.130.60:41440/api/InsertsTableValves';
+                $link = 'http://115.78.130.60/api/InsertsTableValves';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
                     $return = $this->parseContentValve($resp, $deviceName, $numberStart);
@@ -217,7 +217,7 @@ class Report extends General {
                 $postdata = json_encode($data);
 
                 //Call API
-                $link = 'http://115.78.130.60:41440/api/InsertsTableSensors';
+                $link = 'http://115.78.130.60/api/InsertsTableSensors';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
                     $return = $this->parseContentSensor($resp, $deviceName, $numberStart);
