@@ -2,7 +2,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/phucthinh/'
+    ? '/'
     : '/',
   filenameHashing: true,
   runtimeCompiler: true,
