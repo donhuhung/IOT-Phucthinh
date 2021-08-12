@@ -25,14 +25,12 @@ class StatisticElectrical extends General {
             $dataBieuGiaDien = $this->callAPI($linkBieuGiaDien, "GET");
 
             $thongSoDien = $this->parseContentThongSoDien($dataThongSoDien);
-            $dienNangTieuThu = $this->parseContentDienNangTieuThu($dataThongSoDien);
+            $dienNangTieuThu = $this->parseContentDienNangTieuThu($dataThongSoDien, $dataBieuGiaDien);
             $bieuGiaDien = $this->parseContentBieuGiaDien($dataBieuGiaDien);
-            $chiPhiDien = $this->parseContentChiPhiDienNang($dataBieuGiaDien);
 
             $return['thong_so_dien'] = $thongSoDien;
             $return['bieu_gia_dien'] = $bieuGiaDien;
             $return['dien_nang_tieu_thu'] = $dienNangTieuThu;
-            $return['chi_phi_dien'] = $chiPhiDien;
 
             return $this->respondWithSuccess($return, "Get List Electrical succesful!");
         } catch (\Exception $ex) {
@@ -127,84 +125,88 @@ class StatisticElectrical extends General {
         $objData = json_decode($data);
         $objData = $objData[0];
         $return = [];
-        
+
         $stationArrLuoiDien = [];
         $stationArrTuPhat = [];
-        
+
         //Lưới Điện
         $dataBieuGiaLuoiDienArr = [];
         $dataDienNangLuoiDienArr = [];
-        $dataChiPhiLuoiDienArr = [];        
-        
+        $dataChiPhiLuoiDienArr = [];
+
         //Tự phát
         $dataBieuGiaMayPhatArr = [];
         $dataDienNangMayPhatArr = [];
         $dataChiPhiMayPhatArr = [];
-        
+
         $dataBieuGiaLuoiDien = [];
         $dataDienNangLuoiDien = [];
         $dataChiPhiLuoiDien = [];
-        
+
         $dataBieuGiaMayPhat = [];
         $dataDienNangMayPhat = [];
         $dataChiPhiMayPhat = [];
-        
+
         //Group Lưới Điện
         $dataBieuGiaLuoiDien['title'] = 'Biểu Giá Điện Lưới:VND/Kwh';
         $dataBieuGiaLuoiDienArr['thap_diem'] = $objData->bieuGiaDienValue1;
         $dataBieuGiaLuoiDienArr['binh_thuong'] = $objData->bieuGiaDienValue2;
         $dataBieuGiaLuoiDienArr['cao_diem'] = $objData->bieuGiaDienValue3;
         $dataBieuGiaLuoiDien['info'] = $dataBieuGiaLuoiDienArr;
-        
+
         $dataDienNangLuoiDien['title'] = 'Điện Năng Tiêu Thụ:Kwh';
-        $dataDienNangLuoiDienArr['thap_diem'] = $objData->bieuGiaDienValue1;
-        $dataDienNangLuoiDienArr['binh_thuong'] = $objData->bieuGiaDienValue2;
-        $dataDienNangLuoiDienArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataDienNangLuoiDienArr['trong_ngay'] = $objData->chiPhiDien7Value4;
+        $dataDienNangLuoiDienArr['trong_thang'] = $objData->chiPhiDien7Value13;
+        $dataDienNangLuoiDienArr['trong_nam'] = $objData->chiPhiDien7Value22;
+        $dataDienNangLuoiDienArr['tong'] = $objData->chiPhiDien7Value31;
         $dataDienNangLuoiDien['info'] = $dataDienNangLuoiDienArr;
-        
+
         $dataChiPhiLuoiDien['title'] = 'Chi Phí Điện Năng:VNĐ';
-        $dataChiPhiLuoiDienArr['thap_diem'] = $objData->bieuGiaDienValue1;
-        $dataChiPhiLuoiDienArr['binh_thuong'] = $objData->bieuGiaDienValue2;
-        $dataChiPhiLuoiDienArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataDienNangLuoiDienArr['trong_ngay'] = $objData->chiPhiDien7Value4;
+        $dataDienNangLuoiDienArr['trong_thang'] = $objData->chiPhiDien7Value13;
+        $dataDienNangLuoiDienArr['trong_nam'] = $objData->chiPhiDien7Value22;
+        $dataDienNangLuoiDienArr['tong'] = $objData->chiPhiDien7Value31;
         $dataChiPhiLuoiDien['info'] = $dataChiPhiLuoiDienArr;
 
         //Group tự Phát
         $dataBieuGiaMayPhat['title'] = 'Biểu Giá Điện Tự Phát:VND/Kwh';
-        $dataBieuGiaMayPhatArr['thap_diem'] = $objData->bieuGiaDienValue1;
-        $dataBieuGiaMayPhatArr['binh_thuong'] = $objData->bieuGiaDienValue2;
-        $dataBieuGiaMayPhatArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataBieuGiaMayPhatArr['thap_diem'] = $objData->bieuGiaDienValue4;
+        $dataBieuGiaMayPhatArr['binh_thuong'] = $objData->bieuGiaDienValue4;
+        $dataBieuGiaMayPhatArr['cao_diem'] = $objData->bieuGiaDienValue4;
         $dataBieuGiaMayPhat['info'] = $dataBieuGiaMayPhatArr;
-        
+
         $dataDienNangMayPhat['title'] = 'Điện Năng Tiêu Thụ:Kwh';
-        $dataDienNangMayPhatArr['thap_diem'] = $objData->bieuGiaDienValue1;
-        $dataDienNangMayPhatArr['binh_thuong'] = $objData->bieuGiaDienValue2;
-        $dataDienNangMayPhatArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataDienNangMayPhatArr['trong_ngay'] = $objData->bieuGiaDienValue1;
+        $dataDienNangMayPhatArr['trong_thang'] = $objData->bieuGiaDienValue2;
+        $dataDienNangMayPhatArr['trong_nam'] = $objData->bieuGiaDienValue3;
+        $dataDienNangMayPhatArr['tong'] = $objData->bieuGiaDienValue3;
         $dataDienNangMayPhat['info'] = $dataDienNangMayPhatArr;
-        
+
         $dataChiPhiMayPhat['title'] = 'Chi Phí Điện Năng:VNĐ';
-        $dataChiPhiMayPhatArr['thap_diem'] = $objData->bieuGiaDienValue1;
-        $dataChiPhiMayPhatArr['binh_thuong'] = $objData->bieuGiaDienValue2;
-        $dataChiPhiMayPhatArr['cao_diem'] = $objData->bieuGiaDienValue3;
+        $dataChiPhiMayPhatArr['trong_ngay'] = $objData->chiPhiDien8Value4;
+        $dataChiPhiMayPhatArr['trong_thang'] = $objData->chiPhiDien8Value13;
+        $dataChiPhiMayPhatArr['trong_nam'] = $objData->chiPhiDien8Value22;
+        $dataChiPhiMayPhatArr['tong'] = $objData->chiPhiDien8Value31;
         $dataChiPhiMayPhat['info'] = $dataChiPhiMayPhatArr;
-        
+
         //Lưới Điện
         $stationArrLuoiDien['title'] = 'Điện Lưới';
         $stationArrLuoiDien['data_list'][0] = $dataBieuGiaLuoiDien;
         $stationArrLuoiDien['data_list'][1] = $dataDienNangLuoiDien;
         $stationArrLuoiDien['data_list'][2] = $dataChiPhiLuoiDien;
-        
+
         //Tự phát
         $stationArrTuPhat['title'] = 'Điện Tự Phát';
         $stationArrTuPhat['data_list'][0] = $dataBieuGiaMayPhat;
         $stationArrTuPhat['data_list'][1] = $dataDienNangMayPhat;
         $stationArrTuPhat['data_list'][2] = $dataChiPhiMayPhat;
-                
+
         $return[0] = $stationArrLuoiDien;
         $return[1] = $stationArrTuPhat;
         return $return;
     }
 
-    private function parseContentDienNangTieuThu($data) {
+    private function parseContentDienNangTieuThu($data, $dataChiPhiDien) {
         $objData = json_decode($data);
         $objData = $objData[0];
         $return = [];
@@ -264,7 +266,6 @@ class StatisticElectrical extends General {
             $field31 = 'dienTieuThu' . ($i + 1) . 'Value31';
             $field32 = 'dienTieuThu' . ($i + 1) . 'Value32';
 
-            //if($objData->$field1 && $objData->$field2 && $objData->$field3){
             //Trong ngày
             $dataTrongNgayKwhArr['thap_diem'] = $objData->$field1;
             $dataTrongNgayKwhArr['binh_thuong'] = $objData->$field2;
@@ -273,12 +274,6 @@ class StatisticElectrical extends General {
             $dataTrongNgayKwh['title'] = 'Trong Ngày: Kwh/d';
             $dataTrongNgayKwh['info'] = $dataTrongNgayKwhArr;
 
-            /* $dataTrongNgayKvarhArr['thap_diem'] = $objData->$field5;
-              $dataTrongNgayKvarhArr['binh_thuong'] = $objData->$field6;
-              $dataTrongNgayKvarhArr['cao_diem'] = $objData->$field7;
-              $dataTrongNgayKvarhArr['tong'] = $objData->$field8;
-              $dataTrongNgayKvarh['title'] = 'Trong Ngày: Kvrah/d';
-              $dataTrongNgayKvarh['info'] = $dataTrongNgayKvarhArr; */
 
             //Trong Tháng
             $dataTrongThangKwhArr['thap_diem'] = $objData->$field9;
@@ -288,13 +283,6 @@ class StatisticElectrical extends General {
             $dataTrongThangKwh['title'] = 'Trong Tháng: Kwh/m';
             $dataTrongThangKwh['info'] = $dataTrongThangKwhArr;
 
-            /* $dataTrongThangKvarhArr['thap_diem'] = $objData->$field13;
-              $dataTrongThangKvarhArr['binh_thuong'] = $objData->$field14;
-              $dataTrongThangKvarhArr['cao_diem'] = $objData->$field15;
-              $dataTrongThangKvarhArr['tong'] = $objData->$field16;
-              $dataTrongThangKvarh['title'] = 'Trong Tháng: Kvrah/m';
-              $dataTrongThangKvarh['info'] = $dataTrongThangKvarhArr; */
-
             //Trong Năm
             $dataTrongNamKwhArr['thap_diem'] = $objData->$field17;
             $dataTrongNamKwhArr['binh_thuong'] = $objData->$field18;
@@ -302,13 +290,6 @@ class StatisticElectrical extends General {
             $dataTrongNamKwhArr['tong'] = $objData->$field20;
             $dataTrongNamKwh['title'] = 'Trong Năm: Kwh/y';
             $dataTrongNamKwh['info'] = $dataTrongNamKwhArr;
-
-            /* $dataTrongNamKvarhArr['thap_diem'] = $objData->$field21;
-              $dataTrongNamKvarhArr['binh_thuong'] = $objData->$field22;
-              $dataTrongNamKvarhArr['cao_diem'] = $objData->$field23;
-              $dataTrongNamKvarhArr['tong'] = $objData->$field24;
-              $dataTrongNamKvarh['title'] = 'Trong Năm: Kvrah/y';
-              $dataTrongNamKvarh['info'] = $dataTrongNamKvarhArr; */
 
             //Tổng
             $dataTongKwhArr['thap_diem'] = $objData->$field25;
@@ -318,190 +299,131 @@ class StatisticElectrical extends General {
             $dataTongKwh['title'] = 'Tổng: Kwh/t';
             $dataTongKwh['info'] = $dataTongKwhArr;
 
-            /* $dataTongKvrahArr['thap_diem'] = $objData->$field29;
-              $dataTongKvrahArr['binh_thuong'] = $objData->$field30;
-              $dataTongKvrahArr['cao_diem'] = $objData->$field31;
-              $dataTongKvrahArr['tong'] = $objData->$field32;
-              $dataTongKvrah['title'] = 'Tổng: Kvrah/t';
-              $dataTongKvrah['info'] = $dataTongKvrahArr; */
 
+
+            $chiPhiDien = $this->parseContentChiPhiDienNang($dataChiPhiDien, $i);
             $stationArr['title'] = 'Trạm ' . ($i + 1) . ':' . $this->getNameStationStatistic($i + 1);
             $stationArr['data_list'][0] = $dataTrongNgayKwh;
-            //$stationArr['data_list'][1] = $dataTrongNgayKvarh;
             $stationArr['data_list'][1] = $dataTrongThangKwh;
-            //$stationArr['data_list'][3] = $dataTrongThangKvarh;
             $stationArr['data_list'][2] = $dataTrongNamKwh;
-            //$stationArr['data_list'][5] = $dataTrongNamKvarh;
             $stationArr['data_list'][3] = $dataTongKwh;
-            //$stationArr['data_list'][7] = $dataTongKvrah;
+            $stationArr['data_list'][4] = $chiPhiDien[0];
+            $stationArr['data_list'][5] = $chiPhiDien[1];
+            $stationArr['data_list'][6] = $chiPhiDien[2];
+            $stationArr['data_list'][7] = $chiPhiDien[3];
+
             $return[$i] = $stationArr;
-            //}                        
         }
         return $return;
     }
 
-    private function parseContentChiPhiDienNang($data) {
+    private function parseContentChiPhiDienNang($data, $index) {
         $objData = json_decode($data);
         $objData = $objData[0];
         $return = [];
-        //Foreach Trạm
-        for ($i = 0; $i < 10; $i++) {
-            //Define Variable
-            $stationArr = [];
+        //Define Variable
+        $stationArr = [];
 
-            $dataTrongNgay = [];
-            //$dataTrongNgayStar = [];
-            $dataTrongThang = [];
-            //$dataTrongThangStar = [];
-            $dataTrongNam = [];
-            //$dataTrongNamStar = [];
-            $dataTongNgay = [];
-            $dataTongThang = [];
-            $dataTongNam = [];
-            $dataTong = [];
-            //$dataTongStar = [];
-            $dataTotal = [];
+        $dataTrongNgay = [];
+        //$dataTrongNgayStar = [];
+        $dataTrongThang = [];
+        //$dataTrongThangStar = [];
+        $dataTrongNam = [];
+        //$dataTrongNamStar = [];
+        $dataTongNgay = [];
+        $dataTongThang = [];
+        $dataTongNam = [];
+        $dataTong = [];
+        //$dataTongStar = [];
+        $dataTotal = [];
 
-            $dataTrongNgayArr = [];
-            //$dataTrongNgayStarArr = [];
-            $dataTrongThangArr = [];
-            //$dataTrongThangStarArr = [];
-            $dataTrongNamArr = [];
-            //$dataTrongNamStarArr = [];
-            $dataTongNgayArr = [];
-            $dataTongThangArr = [];
-            $dataTongNamArr = [];
-            $dataTongArr = [];
-            //$dataTongStarArr = [];
-            //$dataTotalArr = [];
-            //Foreach Thông Số
-            $field1 = 'chiPhiDien' . ($i + 1) . 'Value1';
-            $field2 = 'chiPhiDien' . ($i + 1) . 'Value2';
-            $field3 = 'chiPhiDien' . ($i + 1) . 'Value3';
-            $field4 = 'chiPhiDien' . ($i + 1) . 'Value4';
-            $field5 = 'chiPhiDien' . ($i + 1) . 'Value5';
-            $field6 = 'chiPhiDien' . ($i + 1) . 'Value6';
-            $field7 = 'chiPhiDien' . ($i + 1) . 'Value7';
-            $field8 = 'chiPhiDien' . ($i + 1) . 'Value8';
-            $field9 = 'chiPhiDien' . ($i + 1) . 'Value9';
-            $field10 = 'chiPhiDien' . ($i + 1) . 'Value10';
-            $field11 = 'chiPhiDien' . ($i + 1) . 'Value11';
-            $field12 = 'chiPhiDien' . ($i + 1) . 'Value12';
-            $field13 = 'chiPhiDien' . ($i + 1) . 'Value13';
-            $field14 = 'chiPhiDien' . ($i + 1) . 'Value14';
-            $field15 = 'chiPhiDien' . ($i + 1) . 'Value15';
-            $field16 = 'chiPhiDien' . ($i + 1) . 'Value16';
-            $field17 = 'chiPhiDien' . ($i + 1) . 'Value17';
-            $field18 = 'chiPhiDien' . ($i + 1) . 'Value18';
-            $field19 = 'chiPhiDien' . ($i + 1) . 'Value19';
-            $field20 = 'chiPhiDien' . ($i + 1) . 'Value20';
-            $field21 = 'chiPhiDien' . ($i + 1) . 'Value21';
-            $field22 = 'chiPhiDien' . ($i + 1) . 'Value22';
-            $field23 = 'chiPhiDien' . ($i + 1) . 'Value23';
-            $field24 = 'chiPhiDien' . ($i + 1) . 'Value24';
-            $field25 = 'chiPhiDien' . ($i + 1) . 'Value25';
-            $field26 = 'chiPhiDien' . ($i + 1) . 'Value26';
-            $field27 = 'chiPhiDien' . ($i + 1) . 'Value27';
-            $field28 = 'chiPhiDien' . ($i + 1) . 'Value28';
-            $field29 = 'chiPhiDien' . ($i + 1) . 'Value29';
-            $field30 = 'chiPhiDien' . ($i + 1) . 'Value30';
-            $field31 = 'chiPhiDien' . ($i + 1) . 'Value31';
-            $field32 = 'chiPhiDien' . ($i + 1) . 'Value32';
-            $field33 = 'chiPhiDien' . ($i + 1) . 'Value33';
-            $field34 = 'chiPhiDien' . ($i + 1) . 'Value34';
-            $field35 = 'chiPhiDien' . ($i + 1) . 'Value35';
-            $field36 = 'chiPhiDien' . ($i + 1) . 'Value36';
+        $dataTrongNgayArr = [];
+        //$dataTrongNgayStarArr = [];
+        $dataTrongThangArr = [];
+        //$dataTrongThangStarArr = [];
+        $dataTrongNamArr = [];
+        //$dataTrongNamStarArr = [];
+        $dataTongNgayArr = [];
+        $dataTongThangArr = [];
+        $dataTongNamArr = [];
+        $dataTongArr = [];
+        //$dataTongStarArr = [];
+        //$dataTotalArr = [];
+        //Foreach Thông Số
+        $field1 = 'chiPhiDien' . ($index + 1) . 'Value1';
+        $field2 = 'chiPhiDien' . ($index + 1) . 'Value2';
+        $field3 = 'chiPhiDien' . ($index + 1) . 'Value3';
+        $field4 = 'chiPhiDien' . ($index + 1) . 'Value4';
+        $field5 = 'chiPhiDien' . ($index + 1) . 'Value5';
+        $field6 = 'chiPhiDien' . ($index + 1) . 'Value6';
+        $field7 = 'chiPhiDien' . ($index + 1) . 'Value7';
+        $field8 = 'chiPhiDien' . ($index + 1) . 'Value8';
+        $field9 = 'chiPhiDien' . ($index + 1) . 'Value9';
+        $field10 = 'chiPhiDien' . ($index + 1) . 'Value10';
+        $field11 = 'chiPhiDien' . ($index + 1) . 'Value11';
+        $field12 = 'chiPhiDien' . ($index + 1) . 'Value12';
+        $field13 = 'chiPhiDien' . ($index + 1) . 'Value13';
+        $field14 = 'chiPhiDien' . ($index + 1) . 'Value14';
+        $field15 = 'chiPhiDien' . ($index + 1) . 'Value15';
+        $field16 = 'chiPhiDien' . ($index + 1) . 'Value16';
+        $field17 = 'chiPhiDien' . ($index + 1) . 'Value17';
+        $field18 = 'chiPhiDien' . ($index + 1) . 'Value18';
+        $field19 = 'chiPhiDien' . ($index + 1) . 'Value19';
+        $field20 = 'chiPhiDien' . ($index + 1) . 'Value20';
+        $field21 = 'chiPhiDien' . ($index + 1) . 'Value21';
+        $field22 = 'chiPhiDien' . ($index + 1) . 'Value22';
+        $field23 = 'chiPhiDien' . ($index + 1) . 'Value23';
+        $field24 = 'chiPhiDien' . ($index + 1) . 'Value24';
+        $field25 = 'chiPhiDien' . ($index + 1) . 'Value25';
+        $field26 = 'chiPhiDien' . ($index + 1) . 'Value26';
+        $field27 = 'chiPhiDien' . ($index + 1) . 'Value27';
+        $field28 = 'chiPhiDien' . ($index + 1) . 'Value28';
+        $field29 = 'chiPhiDien' . ($index + 1) . 'Value29';
+        $field30 = 'chiPhiDien' . ($index + 1) . 'Value30';
+        $field31 = 'chiPhiDien' . ($index + 1) . 'Value31';
+        $field32 = 'chiPhiDien' . ($index + 1) . 'Value32';
+        $field33 = 'chiPhiDien' . ($index + 1) . 'Value33';
+        $field34 = 'chiPhiDien' . ($index + 1) . 'Value34';
+        $field35 = 'chiPhiDien' . ($index + 1) . 'Value35';
+        $field36 = 'chiPhiDien' . ($index + 1) . 'Value36';
 
-            //if($objData->$field1 && $objData->$field2 && $objData->$field3){
-            //Trong ngày
-            $dataTrongNgayArr['thap_diem'] = $objData->$field1;
-            $dataTrongNgayArr['binh_thuong'] = $objData->$field2;
-            $dataTrongNgayArr['cao_diem'] = $objData->$field3;
-            $dataTrongNgayArr['tong'] = $objData->$field4;
-            $dataTrongNgay['title'] = 'Trong Ngày: VNĐ/d';
-            $dataTrongNgay['info'] = $dataTrongNgayArr;
+        //Trong ngày
+        $dataTrongNgayArr['thap_diem'] = $objData->$field1;
+        $dataTrongNgayArr['binh_thuong'] = $objData->$field2;
+        $dataTrongNgayArr['cao_diem'] = $objData->$field3;
+        $dataTrongNgayArr['tong'] = $objData->$field4;
+        $dataTrongNgay['title'] = 'Trong Ngày: VNĐ/d';
+        $dataTrongNgay['info'] = $dataTrongNgayArr;
 
-            /* $dataTrongNgayStarArr['thap_diem'] = $objData->$field5;
-              $dataTrongNgayStarArr['binh_thuong'] = $objData->$field6;
-              $dataTrongNgayStarArr['cao_diem'] = $objData->$field7;
-              $dataTrongNgayStarArr['tong'] = $objData->$field8;
-              $dataTrongNgayStar['title'] = 'Trong Ngày: VNĐ/d*';
-              $dataTrongNgayStar['info'] = $dataTrongNgayStarArr;
+        //Trong Tháng
+        $dataTrongThangArr['thap_diem'] = $objData->$field10;
+        $dataTrongThangArr['binh_thuong'] = $objData->$field11;
+        $dataTrongThangArr['cao_diem'] = $objData->$field12;
+        $dataTrongThangArr['tong'] = $objData->$field13;
+        $dataTrongThang['title'] = 'Trong Tháng: VNĐ/m';
+        $dataTrongThang['info'] = $dataTrongThangArr;
 
-              $dataTongNgayArr['tong'] = $objData->$field9;
-              $dataTongNgay['title'] = 'Tổng ngày:VNĐ/d + VNĐ/d*';
-              $dataTongNgay['info'] = $dataTrongNgayStarArr; */
+        //Trong Năm
+        $dataTrongNamArr['thap_diem'] = $objData->$field19;
+        $dataTrongNamArr['binh_thuong'] = $objData->$field20;
+        $dataTrongNamArr['cao_diem'] = $objData->$field21;
+        $dataTrongNamArr['tong'] = $objData->$field22;
+        $dataTrongNam['title'] = 'Trong Năm: VNĐ/y';
+        $dataTrongNam['info'] = $dataTrongNamArr;
 
-            //Trong Tháng
-            $dataTrongThangArr['thap_diem'] = $objData->$field10;
-            $dataTrongThangArr['binh_thuong'] = $objData->$field11;
-            $dataTrongThangArr['cao_diem'] = $objData->$field12;
-            $dataTrongThangArr['tong'] = $objData->$field13;
-            $dataTrongThang['title'] = 'Trong Tháng: VNĐ/m';
-            $dataTrongThang['info'] = $dataTrongThangArr;
-
-            /* $dataTrongThangStarArr['thap_diem'] = $objData->$field14;
-              $dataTrongThangStarArr['binh_thuong'] = $objData->$field15;
-              $dataTrongThangStarArr['cao_diem'] = $objData->$field16;
-              $dataTrongThangStarArr['tong'] = $objData->$field17;
-              $dataTrongThangStar['title'] = 'Trong Tháng: VNĐ/m*';
-              $dataTrongThangStar['info'] = $dataTrongThangStarArr;
-
-              $dataTongThangArr['tong'] = $objData->$field18;
-              $dataTongThang['title'] = 'Tổng tháng:VNĐ/m + VNĐ/m*';
-              $dataTongThang['info'] = $dataTongThangArr; */
-
-            //Trong Năm
-            $dataTrongNamArr['thap_diem'] = $objData->$field19;
-            $dataTrongNamArr['binh_thuong'] = $objData->$field20;
-            $dataTrongNamArr['cao_diem'] = $objData->$field21;
-            $dataTrongNamArr['tong'] = $objData->$field22;
-            $dataTrongNam['title'] = 'Trong Năm: VNĐ/y';
-            $dataTrongNam['info'] = $dataTrongNamArr;
-
-            /* $dataTrongNamStarArr['thap_diem'] = $objData->$field23;
-              $dataTrongNamStarArr['binh_thuong'] = $objData->$field24;
-              $dataTrongNamStarArr['cao_diem'] = $objData->$field25;
-              $dataTrongNamStarArr['tong'] = $objData->$field26;
-              $dataTrongNamStar['title'] = 'Trong Năm: VNĐ/y*';
-              $dataTrongNamStar['info'] = $dataTrongNamStarArr;
-
-              $dataTongNamArr['tong'] = $objData->$field27;
-              $dataTongNam['title'] = 'Tổng năm:VNĐ/y + VNĐ/y*';
-              $dataTongNam['info'] = $dataTongNamArr; */
-
-            //Tổng
-            $dataTongArr['thap_diem'] = $objData->$field28;
-            $dataTongArr['binh_thuong'] = $objData->$field29;
-            $dataTongArr['cao_diem'] = $objData->$field30;
-            $dataTongArr['tong'] = $objData->$field31;
-            $dataTong['title'] = 'Tổng: VNĐ/t';
-            $dataTong['info'] = $dataTongArr;
-
-            /* $dataTongStarArr['thap_diem'] = $objData->$field32;
-              $dataTongStarArr['binh_thuong'] = $objData->$field33;
-              $dataTongStarArr['cao_diem'] = $objData->$field34;
-              $dataTongStarArr['tong'] = $objData->$field35;
-              $dataTongStar['title'] = 'Tổng: VNĐ/t*';
-              $dataTongStar['info'] = $dataTongStarArr;
-
-              $dataTotalArr['tong'] = $objData->$field36;
-              $dataTotal['title'] = 'Tổng: VNĐ/t + VNĐ/t*';
-              $dataTotal['info'] = $dataTotalArr; */
-
-            $stationArr['title'] = 'Trạm ' . ($i + 1) . ':' . $this->getNameStationStatistic($i + 1);
-            $stationArr['data_list'][0] = $dataTrongNgay;
-            //$stationArr['data_list'][1] = $dataTrongNgayStar;
-            $stationArr['data_list'][1] = $dataTrongThang;
-            //$stationArr['data_list'][3] = $dataTrongThangStar;
-            $stationArr['data_list'][2] = $dataTrongNam;
-            //$stationArr['data_list'][5] = $dataTrongNamStar;
-            $stationArr['data_list'][3] = $dataTong;
-            //$stationArr['data_list'][7] = $dataTotal;
-            $return[$i] = $stationArr;
-            //}                        
-        }
-        return $return;
+        //Tổng
+        $dataTongArr['thap_diem'] = $objData->$field28;
+        $dataTongArr['binh_thuong'] = $objData->$field29;
+        $dataTongArr['cao_diem'] = $objData->$field30;
+        $dataTongArr['tong'] = $objData->$field31;
+        $dataTong['title'] = 'Tổng: VNĐ/t';
+        $dataTong['info'] = $dataTongArr;
+        
+        $stationArr[0] = $dataTrongNgay;
+        $stationArr[1] = $dataTrongThang;
+        $stationArr[2] = $dataTrongNam;
+        $stationArr[3] = $dataTong;
+        return $stationArr;
     }
 
 }

@@ -26,14 +26,26 @@ class ReportFlowmeter extends General
                 $toDateFormat = date_format($toDate, "Y/m/d");
                 $toDateFormat = $toDateFormat . '23:59:00';
 
-                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat);
+                $ts1 = strtotime($fromDateFormat);
+                $ts2 = strtotime($toDateFormat);
+                $month1 = date('m', $ts1);
+                $month2 = date('m', $ts2);
+                $numberMonth = $month2 - $month1;
+
+                $year1 = date('Y', $ts1);
+                $year2 = date('Y', $ts2);
+                $numberYear = $year2 - $year1;
+                if ($numberYear > 0 || $numberMonth > 2)
+                    $parseDataByMonth = true;
+
+                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat,'isMonth' => $parseDataByMonth);
                 $postdata = json_encode($data);
 
                 //Call API
-                $link = 'http://115.78.130.60/api/InsertsTableThongKeLuuLuongHoaChats';
+                $link = 'http://115.78.130.60/api/InsertsTableThongKeLuuLuongHoaChatPts';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
-                    $return = $this->parseContentFlowmeter($resp);
+                    $return = $this->parseContentFlowmeter($resp, $parseDataByMonth);
                     return $this->respondWithSuccess($return, "Get List Flowrate succesful!");
                 } else {
                     return $this->respondWithMessage('Hiện tại Dữ Liệu đang được cập nhật!!!');
@@ -46,12 +58,17 @@ class ReportFlowmeter extends General
         }
     }
 
-    private function parseContentFlowmeter($data) {
+    private function parseContentFlowmeter($data, $isMonth) {
         $objData = json_decode($data);
         $return = [];
         foreach ($objData as $index => $obj) {
+            if($isMonth)
+                $timeStamp = "Tháng ".date_format(date_create($obj->timeStamp), 'm-Y');
+            else 
+                $timeStamp = date_format(date_create($obj->timeStamp), 'd-m-Y');
+            
             $return[$index]['id'] = $obj->id;
-            $return[$index]['timeStamp'] = $obj->timeStamp;
+            $return[$index]['timeStamp'] = $timeStamp;
             $return[$index]['total'] = $obj->doanhSoBanNuocValue1;
             $return[$index]['total_station'] = 1;
         }

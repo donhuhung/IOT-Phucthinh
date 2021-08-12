@@ -21,7 +21,7 @@ class StatisticFlowmeter extends General
 
             $luuLuongDauVao = $this->parseContenntLuuLuongDauVao($data);
             $luuLuongHaoPhi = $this->parseContentLuuLuongHaoPhi($data);
-            $doanhSoBanNuoc = $this->parseContentDoanhSoBanNuoc($data);
+            //$doanhSoBanNuoc = $this->parseContentDoanhSoBanNuoc($data);
             $luuLuongBanRa = $this->parseContentLuuLuongBanRa($data);
 
             $return['luu_luong_dau_vao'] = $luuLuongDauVao;
@@ -42,12 +42,16 @@ class StatisticFlowmeter extends General
         //Define Variable
         $dataStationArr = [];
 
+        $dataBieuGia = [];
         $dataTucThoi = [];
         $dataTrongNgay = [];
         $dataTrongThang = [];
         $dataTrongNam = [];
         $dataTong = [];
 
+        $dataBieuGiaArr = [];
+        $dataBieuGiaArrTotal = [];
+        
         $dataTucThoiArr = [];
         $dataTucThoiArrTotal = [];
         
@@ -64,11 +68,24 @@ class StatisticFlowmeter extends General
         $dataTongArrTotal = [];
 
         //Foreach Thông Số
+        $dataBieuGiaArr['value'] = 1;
+        $dataBieuGiaArr['unit'] = 'm3';
+        
+        $fieldChiPhiBieuGia = 'bieuGiaNuocValue1';
+        $dataBieuGiaArrTotal['value'] = $objData->$fieldChiPhiBieuGia;
+        $dataBieuGiaArrTotal['unit'] = 'VNĐ';
+        
+        $dataBieuGia['title'] = 'Biểu Giá';
+        $dataBieuGia['info'][0] = $dataBieuGiaArr;
+        $dataBieuGia['info'][1] = $dataBieuGiaArrTotal;
+        
+        
         $fieldTucThoi = 'luuLuongDauVaoValue1';
         $dataTucThoiArr['value'] = $objData->$fieldTucThoi;
         $dataTucThoiArr['unit'] = 'm3/h';
         
-        $dataTucThoiArrTotal['value'] = $objData->$fieldTucThoi * 3000;
+        $fieldChiPhiTucThoi = 'chiPhiDauVaoValue1';
+        $dataTucThoiArrTotal['value'] = $objData->$fieldChiPhiTucThoi;
         $dataTucThoiArrTotal['unit'] = 'VNĐ';
         
         $dataTucThoi['title'] = 'Tức thời';
@@ -78,7 +95,9 @@ class StatisticFlowmeter extends General
         $fieldTrongNgay = 'luuLuongDauVaoValue2';
         $dataTrongNgayArr['value'] = $objData->$fieldTrongNgay;
         $dataTrongNgayArr['unit'] = 'm3/d';
-        $dataTrongNgayArrTotal['value'] = $objData->$fieldTrongNgay * 3000;
+        
+        $fieldChiPhiTrongNgay = 'chiPhiDauVaoValue2';
+        $dataTrongNgayArrTotal['value'] = $objData->$fieldChiPhiTrongNgay;
         $dataTrongNgayArrTotal['unit'] = 'VNĐ';
         $dataTrongNgay['title'] = 'Trong Ngày';
         $dataTrongNgay['info'][0] = $dataTrongNgayArr;
@@ -88,7 +107,9 @@ class StatisticFlowmeter extends General
         $fieldTrongThang = 'luuLuongDauVaoValue3';
         $dataTrongThangArr['value'] = $objData->$fieldTrongThang;
         $dataTrongThangArr['unit'] = 'm3/m';
-        $dataTrongThangArrTotal['value'] = $objData->$fieldTrongThang * 3000;
+        
+        $fieldChiPhiTrongThang = 'chiPhiDauVaoValue3';
+        $dataTrongThangArrTotal['value'] = $objData->$fieldChiPhiTrongThang;
         $dataTrongThangArrTotal['unit'] = 'VNĐ';
         $dataTrongThang['title'] = 'Trong Tháng';
         $dataTrongThang['info'][0] = $dataTrongThangArr;
@@ -97,7 +118,9 @@ class StatisticFlowmeter extends General
         $fieldTrongNam = 'luuLuongDauVaoValue4';
         $dataTrongNamArr['value'] = $objData->$fieldTrongNam;
         $dataTrongNamArr['unit'] = 'm3/y';
-        $dataTrongNamArrTotal['value'] = $objData->$fieldTrongNam * 3000;
+        
+        $fieldChiPhiTrongNam = 'chiPhiDauVaoValue4';
+        $dataTrongNamArrTotal['value'] = $objData->$fieldChiPhiTrongNam;
         $dataTrongNamArrTotal['unit'] = 'VNĐ';
         $dataTrongNam['title'] = 'Trong Năm';
         $dataTrongNam['info'][0] = $dataTrongNamArr;
@@ -106,7 +129,9 @@ class StatisticFlowmeter extends General
         $fieldTong = 'luuLuongDauVaoValue5';
         $dataTongArr['value'] = $objData->$fieldTong;
         $dataTongArr['unit'] = 'm3/t';
-        $dataTongArrTotal['value'] = $objData->$fieldTong * 3000;
+        
+        $fieldChiPhiTong = 'chiPhiDauVaoValue5';
+        $dataTongArrTotal['value'] = $objData->$fieldChiPhiTong;
         $dataTongArrTotal['unit'] = 'VNĐ';
         $dataTong['title'] = 'Tổng';
         $dataTong['info'][0] = $dataTongArr;
@@ -114,11 +139,12 @@ class StatisticFlowmeter extends General
 
 
         $dataStationArr['title'] = 'Lưu Lượng đầu vào';
-        $dataStationArr['data_list'][0] = $dataTucThoi;
-        $dataStationArr['data_list'][1] = $dataTrongNgay;
-        $dataStationArr['data_list'][2] = $dataTrongThang;
-        $dataStationArr['data_list'][3] = $dataTrongNam;
-        $dataStationArr['data_list'][4] = $dataTong;
+        $dataStationArr['data_list'][0] = $dataBieuGia;
+        $dataStationArr['data_list'][1] = $dataTucThoi;
+        $dataStationArr['data_list'][2] = $dataTrongNgay;
+        $dataStationArr['data_list'][3] = $dataTrongThang;
+        $dataStationArr['data_list'][4] = $dataTrongNam;
+        $dataStationArr['data_list'][5] = $dataTong;
         $return[0] = $dataStationArr;
         return $return;
     }
@@ -130,10 +156,18 @@ class StatisticFlowmeter extends General
         //Define Variable
         $dataStationArr = [];
         
+        $dataBieuGia = [];
+        $dataTucThoi = [];
         $dataTrongNgay = [];
         $dataTrongThang = [];
         $dataTrongNam = [];
         $dataTong = [];
+        
+        $dataBieuGiaArr = [];
+        $dataBieuGiaArrTotal = [];
+        
+        $dataTucThoiArr = [];
+        $dataTucThoiArrTotal = [];
 
         $dataTrongNgayArr = [];
         $dataTrongNgayArrTotal = [];
@@ -147,52 +181,85 @@ class StatisticFlowmeter extends General
         $dataTongArr = [];
         $dataTongArrTotal = [];
 
-        //Foreach Thông Số        
-        $fieldTrongNgay = 'luuLuongHaoPhiValue1';
+        //Foreach Thông Số     
+        $dataBieuGiaArr['value'] = 1;
+        $dataBieuGiaArr['unit'] = 'm3';
+        
+        $fieldChiPhiBieuGia = 'bieuGiaNuocValue2';
+        $dataBieuGiaArrTotal['value'] = $objData->$fieldChiPhiBieuGia;
+        $dataBieuGiaArrTotal['unit'] = 'VNĐ';
+        
+        $dataBieuGia['title'] = 'Biểu Giá';
+        $dataBieuGia['info'][0] = $dataBieuGiaArr;
+        $dataBieuGia['info'][1] = $dataBieuGiaArrTotal;
+        
+        $fieldTucThoi = 'luuLuongHaoPhiValue1';
+        $dataTucThoiArr['value'] = $objData->$fieldTucThoi;
+        $dataTucThoiArr['unit'] = 'm3/h';
+        
+        $fieldChiPhiTucThoi = 'chiPhiHaoPhiValue1';
+        $dataTucThoiArrTotal['value'] = $objData->$fieldChiPhiTucThoi;
+        $dataTucThoiArrTotal['unit'] = 'VNĐ';
+        
+        $dataTucThoi['title'] = 'Tức thời';
+        $dataTucThoi['info'][0] = $dataTucThoiArr;
+        $dataTucThoi['info'][1] = $dataTucThoiArrTotal;
+        
+        $fieldTrongNgay = 'luuLuongHaoPhiValue2';
         $dataTrongNgayArr['value'] = $objData->$fieldTrongNgay;
         $dataTrongNgayArr['unit'] = 'm3/d';
-        $dataTrongNgayArrTotal['value'] = $objData->$fieldTrongNgay * 3000;
+        
+        $fieldChiPhiTrongNgay = 'chiPhiHaoPhiValue2';
+        $dataTrongNgayArrTotal['value'] = $objData->$fieldChiPhiTrongNgay;
         $dataTrongNgayArrTotal['unit'] = 'VNĐ';
         
         $dataTrongNgay['title'] = 'Trong Ngày';
         $dataTrongNgay['info'][0] = $dataTrongNgayArr;
         $dataTrongNgay['info'][1] = $dataTrongNgayArrTotal;
 
-        $fieldTrongThang = 'luuLuongHaoPhiValue2';
+        $fieldTrongThang = 'luuLuongHaoPhiValue3';
         $dataTrongThangArr['value'] = $objData->$fieldTrongThang;
         $dataTrongThangArr['unit'] = 'm3/m';
-        $dataTrongThangArrTotal['value'] = $objData->$fieldTrongThang * 3000;
+        
+        $fieldChiPhiTrongThang = 'chiPhiHaoPhiValue3';
+        $dataTrongThangArrTotal['value'] = $objData->$fieldChiPhiTrongThang;
         $dataTrongThangArrTotal['unit'] = 'VNĐ';
         
         $dataTrongThang['title'] = 'Trong Tháng';
         $dataTrongThang['info'][0] = $dataTrongThangArr;
         $dataTrongThang['info'][1] = $dataTrongThangArrTotal;
 
-        $fieldTrongNam = 'luuLuongHaoPhiValue3';
+        $fieldTrongNam = 'luuLuongHaoPhiValue4';
         $dataTrongNamArr['value'] = $objData->$fieldTrongNam;
         $dataTrongNamArr['unit'] = 'm3/y';
-        $dataTrongNamArrTotal['value'] = $objData->$fieldTrongNam * 3000;
+        
+        $fieldChiPhiTrongNam = 'chiPhiHaoPhiValue4';
+        $dataTrongNamArrTotal['value'] = $objData->$fieldChiPhiTrongNam;
         $dataTrongNamArrTotal['unit'] = 'VNĐ';
         
         $dataTrongNam['title'] = 'Trong Năm';
         $dataTrongNam['info'][0] = $dataTrongNamArr;
         $dataTrongNam['info'][1] = $dataTrongNamArrTotal;
 
-        $fieldTong = 'luuLuongHaoPhiValue4';
+        $fieldTong = 'luuLuongHaoPhiValue5';
         $dataTongArr['value'] = $objData->$fieldTong;
         $dataTongArr['unit'] = 'm3/t';
-        $dataTongArrTotal['value'] = $objData->$fieldTong * 3000;
+        
+        $fieldChiPhiTong = 'chiPhiHaoPhiValue5';
+        $dataTongArrTotal['value'] = $objData->$fieldChiPhiTong;
         $dataTongArrTotal['unit'] = 'VNĐ';
         $dataTong['title'] = 'Tổng';
         $dataTong['info'][0] = $dataTongArr;
-		$dataTong['info'][1] = $dataTongArrTotal;
+        $dataTong['info'][1] = $dataTongArrTotal;
 
 
         $dataStationArr['title'] = 'Lưu Lượng hao phí';
-        $dataStationArr['data_list'][0] = $dataTrongNgay;
-        $dataStationArr['data_list'][1] = $dataTrongThang;
-        $dataStationArr['data_list'][2] = $dataTrongNam;
-        $dataStationArr['data_list'][3] = $dataTong;
+        $dataStationArr['data_list'][0] = $dataBieuGia;
+        $dataStationArr['data_list'][1] = $dataTucThoi;
+        $dataStationArr['data_list'][2] = $dataTrongNgay;
+        $dataStationArr['data_list'][3] = $dataTrongThang;
+        $dataStationArr['data_list'][4] = $dataTrongNam;
+        $dataStationArr['data_list'][5] = $dataTong;
         $return[0] = $dataStationArr;
         return $return;
     }
@@ -265,12 +332,16 @@ class StatisticFlowmeter extends General
         //Define Variable
         $dataStationArr = [];
         
+        $dataBieuGia = [];
         $dataTucThi = [];
         $dataTrongNgay = [];
         $dataTrongThang = [];
         $dataTrongNam = [];
         $dataTong = [];
 
+        $dataBieuGiaArr = [];
+        $dataBieuGiaArrTotal = [];
+        
         $dataTucThiArr = [];
         $dataTucThiArrTotal = [];
         
@@ -286,11 +357,24 @@ class StatisticFlowmeter extends General
         $dataTongArr = [];
         $dataTongArrTotal = [];
 
-        //Foreach Thông Số        
+        //Foreach Thông Số  
+        $dataBieuGiaArr['value'] = 1;
+        $dataBieuGiaArr['unit'] = 'm3';
+        
+        $fieldChiPhiBieuGia = 'bieuGiaNuocValue3';
+        $dataBieuGiaArrTotal['value'] = $objData->$fieldChiPhiBieuGia;
+        $dataBieuGiaArrTotal['unit'] = 'VNĐ';
+        
+        $dataBieuGia['title'] = 'Biểu Giá';
+        $dataBieuGia['info'][0] = $dataBieuGiaArr;
+        $dataBieuGia['info'][1] = $dataBieuGiaArrTotal;
+        
         $fieldTucThi = 'luuLuongBanRaValue1';
         $dataTucThiArr['value'] = $objData->$fieldTucThi;
+        
+        $fieldChiPhiTucThi = 'doanhSoBanNuocValue1';
         $dataTucThiArr['unit'] = 'm3/h';
-        $dataTucThiArrTotal['value'] = $objData->$fieldTucThi * 3000;
+        $dataTucThiArrTotal['value'] = $objData->$fieldChiPhiTucThi;
         $dataTucThiArrTotal['unit'] = 'VNĐ';
         
         $dataTucThi['title'] = 'Tức thời';
@@ -300,7 +384,9 @@ class StatisticFlowmeter extends General
         $fieldTrongNgay = 'luuLuongBanRaValue2';
         $dataTrongNgayArr['value'] = $objData->$fieldTrongNgay;
         $dataTrongNgayArr['unit'] = 'm3/d';
-        $dataTrongNgayArrTotal['value'] = $objData->$fieldTrongNgay * 3000;
+        
+        $fieldChiPhiTrongNgay = 'doanhSoBanNuocValue2';
+        $dataTrongNgayArrTotal['value'] = $objData->$fieldChiPhiTrongNgay;
         $dataTrongNgayArrTotal['unit'] = 'VNĐ';
         
         $dataTrongNgay['title'] = 'Trong Ngày';
@@ -310,7 +396,9 @@ class StatisticFlowmeter extends General
         $fieldTrongThang = 'luuLuongBanRaValue3';
         $dataTrongThangArr['value'] = $objData->$fieldTrongThang;
         $dataTrongThangArr['unit'] = 'm3/m';
-        $dataTrongThangArrTotal['value'] = $objData->$fieldTrongThang * 3000;
+        
+        $fieldChiPhiTrongThang = 'doanhSoBanNuocValue3';
+        $dataTrongThangArrTotal['value'] = $objData->$fieldChiPhiTrongThang;
         $dataTrongThangArrTotal['unit'] = 'VNĐ';
         
         $dataTrongThang['title'] = 'Trong Tháng';
@@ -320,17 +408,21 @@ class StatisticFlowmeter extends General
         $fieldTrongNam = 'luuLuongBanRaValue4';
         $dataTrongNamArr['value'] = $objData->$fieldTrongNam;
         $dataTrongNamArr['unit'] = 'm3/y';
-        $dataTrongNamArrTotal['value'] = $objData->$fieldTrongNam * 3000;
+        
+        $fieldChiPhiTrongNam = 'doanhSoBanNuocValue4';
+        $dataTrongNamArrTotal['value'] = $objData->$fieldChiPhiTrongNam;
         $dataTrongNamArrTotal['unit'] = 'VNĐ';
         
         $dataTrongNam['title'] = 'Trong Năm';
         $dataTrongNam['info'][0] = $dataTrongNamArr;
-		$dataTrongNam['info'][1] = $dataTrongNamArrTotal;
+	$dataTrongNam['info'][1] = $dataTrongNamArrTotal;
 
         $fieldTong = 'luuLuongBanRaValue5';
         $dataTongArr['value'] = $objData->$fieldTong;
         $dataTongArr['unit'] = 'm3/t';
-        $dataTongArrTotal['value'] = $objData->$fieldTong * 3000;
+        
+        $fieldChiPhiTong = 'doanhSoBanNuocValue5';
+        $dataTongArrTotal['value'] = $objData->$fieldChiPhiTong;
         $dataTongArrTotal['unit'] = 'VNĐ';
         
         $dataTong['title'] = 'Tổng';
@@ -339,11 +431,12 @@ class StatisticFlowmeter extends General
 
 
         $dataStationArr['title'] = 'Lưu lượng bán ra';
-        $dataStationArr['data_list'][0] = $dataTucThi;
-        $dataStationArr['data_list'][1] = $dataTrongNgay;
-        $dataStationArr['data_list'][2] = $dataTrongThang;
-        $dataStationArr['data_list'][3] = $dataTrongNam;
-        $dataStationArr['data_list'][4] = $dataTong;
+        $dataStationArr['data_list'][0] = $dataBieuGia;
+        $dataStationArr['data_list'][1] = $dataTucThi;
+        $dataStationArr['data_list'][2] = $dataTrongNgay;
+        $dataStationArr['data_list'][3] = $dataTrongThang;
+        $dataStationArr['data_list'][4] = $dataTrongNam;
+        $dataStationArr['data_list'][5] = $dataTong;
         $return[0] = $dataStationArr;
         return $return;
     }

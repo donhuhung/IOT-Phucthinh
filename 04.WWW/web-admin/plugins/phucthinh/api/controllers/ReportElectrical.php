@@ -40,11 +40,11 @@ class ReportElectrical extends General {
                 if ($numberYear > 0 || $numberMonth > 2)
                     $parseDataByMonth = true;
 
-                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat);
+                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat,'isMonth' => $parseDataByMonth);
                 $postdata = json_encode($data);
 
                 //Call API
-                $link = 'http://115.78.130.60/api/InsertsTableThongKeChiPhiDiens';
+                $link = 'http://115.78.130.60/api/InsertsTableThongKeChiPhiDienPts';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
                     $return = $this->parseContentElectrical($resp, $parseDataByMonth);
@@ -63,8 +63,6 @@ class ReportElectrical extends General {
     private function parseContentElectrical($data, $isMonth) {
         $objData = json_decode($data);
         $return = [];
-        $timeStampCurrent = '';
-        $timeStamp = '';
         foreach ($objData as $index => $obj) {
             $tram1 = (int) $obj->chiPhiDien1Value36;
             $tram2 = (int) $obj->chiPhiDien2Value36;
@@ -78,10 +76,13 @@ class ReportElectrical extends General {
             $tram10 = (int) $obj->chiPhiDien10Value36;
             $total = $tram1 + $tram2 + $tram3 + $tram4 + $tram5 + $tram6 + $tram7 + $tram8 + $tram9 + $tram10;
 
-            $timeStamp = date_format(date_create($obj->timeStamp), 'd-m-Y');
-            //if ($timeStampCurrent != $timeStamp) {
+            if($isMonth)
+                $timeStamp = "Tháng ".date_format(date_create($obj->timeStamp), 'm-Y');
+            else 
+                $timeStamp = date_format(date_create($obj->timeStamp), 'd-m-Y');
+            
                 $return[$index]['id'] = $obj->id;
-                $return[$index]['timeStamp'] = $obj->timeStamp;
+                $return[$index]['timeStamp'] = $timeStamp;
                 $return[$index]['tram1'] = $tram1;
                 $return[$index]['tram2'] = $tram1;
                 $return[$index]['tram3'] = $tram1;
@@ -94,9 +95,6 @@ class ReportElectrical extends General {
                 $return[$index]['tram10'] = $tram1;
                 $return[$index]['total'] = $total;
                 $return[$index]['total_station'] = 10;
-                $return[$index]['date'] = $timeStamp;
-                $timeStampCurrent = $timeStamp;
-            //}
         }
         return $return;
     }

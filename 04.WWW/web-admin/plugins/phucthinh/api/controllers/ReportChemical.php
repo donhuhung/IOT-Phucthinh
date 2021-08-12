@@ -18,6 +18,7 @@ class ReportChemical extends General
             $factoryID = $request->get('factory_id');
             $fromDate = $request->get('from_date');
             $toDate = $request->get('to_date');
+            $parseDataByMonth = false;
             if ($fromDate && $toDate) {
                 $fromDate = date_create($fromDate);
                 $toDate = date_create($toDate);
@@ -27,14 +28,26 @@ class ReportChemical extends General
                 $toDateFormat = date_format($toDate, "Y/m/d");
                 $toDateFormat = $toDateFormat . '23:59:00';
 
-                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat);
+                $ts1 = strtotime($fromDateFormat);
+                $ts2 = strtotime($toDateFormat);
+                $month1 = date('m', $ts1);
+                $month2 = date('m', $ts2);
+                $numberMonth = $month2 - $month1;
+
+                $year1 = date('Y', $ts1);
+                $year2 = date('Y', $ts2);
+                $numberYear = $year2 - $year1;
+                if ($numberYear > 0 || $numberMonth > 2)
+                    $parseDataByMonth = true;
+
+                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat,'isMonth' => $parseDataByMonth);
                 $postdata = json_encode($data);
 
                 //Call API
-                $link = 'http://115.78.130.60/api/InsertsTableThongKeLuuLuongHoaChats';
+                $link = 'http://115.78.130.60/api/InsertsTableThongKeLuuLuongHoaChatPts';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
-                    $return = $this->parseContentChemical($resp);
+                    $return = $this->parseContentChemical($resp, $parseDataByMonth);
                     return $this->respondWithSuccess($return, "Get List Chemical succesful!");
                 } else {
                     return $this->respondWithMessage('Hiện tại Dữ Liệu đang được cập nhật!!!');
@@ -48,7 +61,7 @@ class ReportChemical extends General
         
     }
 
-    private function parseContentChemical($data) {
+    private function parseContentChemical($data, $isMonth) {
         $objData = json_decode($data);
         $return = [];
         foreach ($objData as $index => $obj) {
@@ -59,8 +72,13 @@ class ReportChemical extends General
             $hoaChat5 = (int) $obj->chiPhiHoaChat5Value1;
             $total = $hoaChat1 + $hoaChat2 + $hoaChat3 + $hoaChat4 + $hoaChat5;
 
+            if($isMonth)
+                $timeStamp = "Tháng ".date_format(date_create($obj->timeStamp), 'm-Y');
+            else 
+                $timeStamp = date_format(date_create($obj->timeStamp), 'd-m-Y');
+            
             $return[$index]['id'] = $obj->id;
-            $return[$index]['timeStamp'] = $obj->timeStamp;
+            $return[$index]['timeStamp'] = $timeStamp;
             $return[$index]['lime'] = $hoaChat1;
             $return[$index]['pac'] = $hoaChat2;
             $return[$index]['polymer'] = $hoaChat3;

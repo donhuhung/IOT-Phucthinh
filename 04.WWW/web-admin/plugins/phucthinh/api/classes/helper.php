@@ -120,30 +120,86 @@ class HelperClass {
         $sensorFT06_01 = $dataSensor[4][5]['data_sensor'][0]['value'];
         $sensorFT06_02 = $dataSensor[4][5]['data_sensor'][1]['value'];
         $sensorFT06_03 = $dataSensor[4][5]['data_sensor'][2]['value'];
-        $file = HelperClass::drawSensor(1,$file, $factoryID, $sensorFT01A, 297, 180);        
-        $file = HelperClass::drawSensor(2,$file, $factoryID, $sensorFT01B, 297, 450);
-        $file = HelperClass::drawSensor(3,$file, $factoryID, $sensorFT01C, 297, 720);
-        $file = HelperClass::drawSensor(4,$file, $factoryID, $sensorLT06_01, 1675, 485);
-        $file = HelperClass::drawSensor(5,$file, $factoryID, $sensorLT06_02, 1675, 500);
-        $file = HelperClass::drawSensor(6,$file, $factoryID, $sensorLT06_03, 1675, 515);
-        $file = HelperClass::drawSensor(7,$file, $factoryID, $sensorCL06, 1840, 785);
-        $file = HelperClass::drawSensor(8,$file, $factoryID, $sensorPH06, 1840, 800);
-        $file = HelperClass::drawSensor(9,$file, $factoryID, $sensorNTU06, 1840, 815);
-        $file = HelperClass::drawSensor(10,$file, $factoryID, $sensorFT06_01, 1760, 962);
-        $file = HelperClass::drawSensor(11,$file, $factoryID, $sensorFT06_02, 1760, 980);
-        $file = HelperClass::drawSensor(11,$file, $factoryID, $sensorFT06_03, 1760, 1001);
+		$arrayData = [
+			"ft01A" => [
+				'text' => $sensorFT01A,
+				'x' => 297,
+				'y' => 180
+			],
+			"ft01B" => [
+				'text' => $sensorFT01B,
+				'x' => 297,
+				'y' => 450
+			],
+			"ft01C" => [
+				'text' => $sensorFT01C,
+				'x' => 297,
+				'y' => 720
+			],
+			"lT06_01" => [
+				'text' => $sensorLT06_01,
+				'x' => 1675,
+				'y' => 485
+			],
+			"lT06_02" => [
+				'text' => $sensorLT06_02,
+				'x' => 1675,
+				'y' => 500
+			],
+			"lT06_03" => [
+				'text' => $sensorLT06_03,
+				'x' => 1675,
+				'y' => 515
+			],
+			"sensorCL06" => [
+				'text' => $sensorCL06,
+				'x' => 1840,
+				'y' => 785
+			],
+			"sensorPH06" => [
+				'text' => $sensorPH06,
+				'x' => 1840,
+				'y' => 800
+			],
+			"sensorNTU06" => [
+				'text' => $sensorNTU06,
+				'x' => 1840,
+				'y' => 815
+			],
+			"sensorFT06_01" => [
+				'text' => $sensorFT06_01,
+				'x' => 1760,
+				'y' => 962
+			],
+			"sensorFT06_02" => [
+				'text' => $sensorFT06_02,
+				'x' => 1760,
+				'y' => 980
+			],
+			"sensorFT06_03" => [
+				'text' => $sensorFT06_03,
+				'x' => 1760,
+				'y' => 1001
+			],
+			
+		];
+        $file = HelperClass::drawSensor($file, $factoryID, $arrayData);
         
         $fileOverview = url('').'/storage/app/media/overview/'.'overview-' . $factoryID . '.png';
         return $fileOverview;
     }
 
-    private static function drawSensor($index,$file, $factoryID, $text, $x, $y) {
-        $fileName = $index == 1?$file->getPath():$file;
-        $extensionFile = $index == 1?$file->getExtension():'png';
-
+    private static function drawSensor($file, $factoryID, $arrayData) {
+        $fileName = $file->getPath();
+        $extensionFile = $file->getExtension();
+		//$extensionFile = pathinfo($fileName, PATHINFO_EXTENSION);
         if ($extensionFile == 'png') {
             // Create Image From Existing File
-            $source = imagecreatefrompng($fileName);
+			if(exif_imagetype($fileName) != IMAGETYPE_JPEG){
+				$source = imagecreatefrompng($fileName);
+			}
+			else
+				return false;
         } else {
             // Create Image From Existing File
             $source = imagecreatefromjpeg($fileName);
@@ -154,8 +210,12 @@ class HelperClass {
 
         // Set Path to Font File
         $font_path = storage_path() . '/app/assets/fonts/Roboto-Regular.ttf';
-
-        imagefttext($source, 7, 0, $x, $y, $black, $font_path, $text);
+		foreach($arrayData as $data){
+			$text = $data['text'];
+			$x = $data['x'];
+			$y = $data['y'];
+			imagefttext($source, 7, 0, $x, $y, $black, $font_path, $text);
+		}
 				
         $path = storage_path().'/app/media/overview/';
         $fileNameRotate = 'overview-' . $factoryID . '.' . $extensionFile;

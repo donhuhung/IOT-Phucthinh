@@ -57,8 +57,10 @@ class StatisticChemical extends General {
         $objData = json_decode($data);
         $objData = $objData[0];
         $return = [];
+        $dataStationBieuGiaArr = $this->parseContentBieuGiaHoaChat($data,$index);
         //Define Variable
         $dataStationArr = [];
+        
         $dataHoaChatConArr = [];
         $dataHoaChatNhapArr = [];
         $dataKhoiLuongConLaiArr = [];
@@ -68,17 +70,20 @@ class StatisticChemical extends General {
         $fieldKhoiLuongDaNhap = 'khoHoaChat' . ($index) . 'Value3';
         $dataHoaChatConArr['khoi_luong_con_lai'] = $objData->$fieldKhoiLuongConLai;
         $dataKhoiLuongConLaiArr['title'] = 'Khối lượng còn lại';
+        $dataKhoiLuongConLaiArr['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'lít' : 'kg';
         $dataKhoiLuongConLaiArr['info'] = $dataHoaChatConArr;
 
         $dataHoaChatNhapArr['khoi_luong_da_nhap'] = $objData->$fieldKhoiLuongDaNhap;
         $dataKhoiLuongDaNhapArr['title'] = 'Tổng Khối lượng đã nhập';
+        $dataKhoiLuongDaNhapArr['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'lít' : 'kg';
         $dataKhoiLuongDaNhapArr['info'] = $dataHoaChatNhapArr;
 
         $dataStationArr['title'] = 'Kho Hóa Chất';
-        $dataStationArr['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'lít' : 'kg';
-        $dataStationArr['data_list'][0] = $dataKhoiLuongConLaiArr;
-        $dataStationArr['data_list'][1] = $dataKhoiLuongDaNhapArr;
-        $return = $dataStationArr;
+        $dataStationArr['data_list'][0] = $dataStationBieuGiaArr;
+        $dataStationArr['data_list'][1] = $dataKhoiLuongConLaiArr;
+        $dataStationArr['data_list'][2] = $dataKhoiLuongDaNhapArr;        
+                
+        $return[0] = $dataStationArr;
         return $return;
     }
 
@@ -103,49 +108,56 @@ class StatisticChemical extends General {
         $fieldTrongNgay = 'hoaChatTieuThu' . ($index) . 'Value1';
         $dataTrongNgayArr['value'] = $objData->$fieldTrongNgay;
         $dataTrongNgay['title'] = 'Trong Ngày';
+        $dataTrongNgay['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'lít' : 'kg';
         $dataTrongNgay['info'] = $dataTrongNgayArr;
 
         $fieldTrongThang = 'hoaChatTieuThu' . ($index) . 'Value2';
         $dataTrongThangArr['value'] = $objData->$fieldTrongThang;
         $dataTrongThang['title'] = 'Trong Tháng';
+        $dataTrongThang['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'lít' : 'kg';
         $dataTrongThang['info'] = $dataTrongThangArr;
 
         $fieldTrongNam = 'hoaChatTieuThu' . ($index) . 'Value3';
         $dataTrongNamArr['value'] = $objData->$fieldTrongNam;
         $dataTrongNam['title'] = 'Trong Năm';
+        $dataTrongNam['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'lít' : 'kg';
         $dataTrongNam['info'] = $dataTrongNamArr;
 
         $fieldTong = 'hoaChatTieuThu' . ($index) . 'Value4';
         $dataTongArr['value'] = $objData->$fieldTong;
         $dataTong['title'] = 'Tổng';
+        $dataTong['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'lít' : 'kg';
         $dataTong['info'] = $dataTongArr;
 
 
+        $dataChiPhiHoaChat = $this->parseContentChiPhiPhaHoaChat($data, $index);
         $dataStationArr['title'] = 'Hóa Chất Tiêu Thụ';
         $dataStationArr['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'lít' : 'kg';
         $dataStationArr['data_list'][0] = $dataTrongNgay;
         $dataStationArr['data_list'][1] = $dataTrongThang;
         $dataStationArr['data_list'][2] = $dataTrongNam;
         $dataStationArr['data_list'][3] = $dataTong;
-        $return = $dataStationArr;
-        return $return;
+        $dataStationArr['data_list'][4] = $dataChiPhiHoaChat[0];
+        $dataStationArr['data_list'][5] = $dataChiPhiHoaChat[1];
+        $dataStationArr['data_list'][6] = $dataChiPhiHoaChat[2];
+        $dataStationArr['data_list'][7] = $dataChiPhiHoaChat[3];
+        return $dataStationArr;
     }
 
     private function parseContentBieuGiaHoaChat($data, $index) {
         $objData = json_decode($data);
         $objData = $objData[0];
-        $return = [];
-        $stationArr = [];
-        $stationArr['title'] = 'Biểu Giá Hóa Chất';
+        $stationArr = [];        
         //Define Variable
         $dataStationArr = [];
         $dataHoaChatArr = [];
         //Foreach Thông Số
         $field = 'bieuGiaHoaChat' . ($index) . 'Value1';
         $dataHoaChatArr['value'] = $objData->$field;
+        $dataStationArr['title'] = 'Biểu Giá';
         $dataStationArr['unit'] = $this->getNameHoaChat($index) == 'PAC' ? 'VNĐ/lít' : 'VNĐ/kg';
-        $dataStationArr['info'] = $dataHoaChatArr;
-        $stationArr['data_list'][0] = $dataStationArr;
+        $dataStationArr['info'] = $dataHoaChatArr;        
+        $stationArr = $dataStationArr;
         return $stationArr;
     }
 
@@ -171,32 +183,33 @@ class StatisticChemical extends General {
         $fieldTrongNgay = 'chiPhiHoaChat' . ($index) . 'Value1';
         $dataTrongNgayArr['value'] = $objData->$fieldTrongNgay;
         $dataTrongNgay['title'] = 'Trong Ngày';
+        $dataTrongNgay['unit'] = 'VNĐ';
         $dataTrongNgay['info'] = $dataTrongNgayArr;
 
         $fieldTrongThang = 'chiPhiHoaChat' . ($index) . 'Value2';
         $dataTrongThangArr['value'] = $objData->$fieldTrongThang;
         $dataTrongThang['title'] = 'Trong Tháng';
+        $dataTrongThang['unit'] = 'VNĐ';
         $dataTrongThang['info'] = $dataTrongThangArr;
 
         $fieldTrongNam = 'chiPhiHoaChat' . ($index) . 'Value3';
         $dataTrongNamArr['value'] = $objData->$fieldTrongNam;
         $dataTrongNam['title'] = 'Trong Năm';
+        $dataTrongNam['unit'] = 'VNĐ';
         $dataTrongNam['info'] = $dataTrongNamArr;
 
         $fieldTong = 'chiPhiHoaChat' . ($index) . 'Value4';
         $dataTongArr['value'] = $objData->$fieldTong;
         $dataTong['title'] = 'Tổng';
+        $dataTong['unit'] = 'VNĐ';
         $dataTong['info'] = $dataTongArr;
 
 
-        $dataStationArr['title'] = 'Chi Phí Hóa Chất';
-        $dataStationArr['unit'] = 'VNĐ';
-        $dataStationArr['data_list'][0] = $dataTrongNgay;
-        $dataStationArr['data_list'][1] = $dataTrongThang;
-        $dataStationArr['data_list'][2] = $dataTrongNam;
-        $dataStationArr['data_list'][3] = $dataTong;
-        $return = $dataStationArr;
-        return $return;
+        $dataStationArr[0] = $dataTrongNgay;
+        $dataStationArr[1] = $dataTrongThang;
+        $dataStationArr[2] = $dataTrongNam;
+        $dataStationArr[3] = $dataTong;
+        return $dataStationArr;
     }
 
     private function parseArrayChemical($data, $index) {
@@ -204,8 +217,8 @@ class StatisticChemical extends General {
         $return['cong_thuc_hoa_chat'] = $this->parseContentCongThucPhaHoaChat($data, $index);
         $return['kho_hoa_chat'] = $this->parseContentKhoHoaChat($data, $index);
         $return['hoa_chat_tieu_thu'] = $this->parseContentHoaChatTieuThu($data, $index);
-        $return['bieu_gia_hoa_chat'] = $this->parseContentBieuGiaHoaChat($data, $index);
-        $return['chi_phi_hoa_chat'] = $this->parseContentChiPhiPhaHoaChat($data, $index);
+        //$return['bieu_gia_hoa_chat'] = $this->parseContentBieuGiaHoaChat($data, $index);
+        //$return['chi_phi_hoa_chat'] = $this->parseContentChiPhiPhaHoaChat($data, $index);
         return $return;
     }
 
