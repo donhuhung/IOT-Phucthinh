@@ -1,6 +1,6 @@
 <template>
 <div>
-  <ReportTemplate end-point="/api/v1/report/flowmeter" device-name="flowmeter"/>
+  <ReportTemplate end-point="/api/v1/report/flowmeter" :label-select="labelSelect" :items-select="itemsSelect" device-name="flowmeter"/>
 </div>
 </template>
 
@@ -8,7 +8,26 @@
 import ReportTemplate from "../../../components/ReportTemplate";
 export default {
   name: "flowmeter",
-  components: {ReportTemplate}
+  components: {ReportTemplate},
+  data() {
+    return {
+      labelSelect:'Select Flowmeter',
+      itemsSelect: [
+        {
+          'id': 1,
+          'name': 'Lưu lượng đầu vào'
+        },
+        {
+          'id': 2,
+          'name': 'Lưu lượng hao phí'
+        },
+        {
+          'id': 3,
+          'name': 'Lưu lượng bán ra'
+        }
+      ]
+    }
+  }
 }
 </script>
 

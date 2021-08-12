@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="getting">
-      <v-skeleton-loader type="table" width="690px"/>
+      <v-skeleton-loader type="table" width="100%"/>
     </template>
     <template v-else>
       <div>

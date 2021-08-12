@@ -2,17 +2,32 @@
   <div>
 
     <template v-if="getting">
-      <v-skeleton-loader type="table" width="690px"/>
+      <v-skeleton-loader type="table" width="100%"/>
     </template>
     <template v-else>
       <div>
         <div class="filter-date text-center">
-          <label class="pr-4 pt-2">Chọn ngày:</label>
+          <div style="width: 300px; margin-right: 15px">
+            <v-select
+                class="pt-2"
+                :items="itemsSelect"
+                item-text="name"
+                item-value="id"
+                :label="labelSelect"
+                v-model="dataSelect"
+                persistent-hint
+                return-object
+                outlined
+            ></v-select>
+          </div>
+          <label class="pr-4 mt-6">Chọn ngày:</label>
           <date-range-picker
+              class="pt-4"
               v-model="dateRange"
               :locale-data="{format: 'dd-mm-yyyy'}"
               @update="updateDatePicker"
           ></date-range-picker>
+          <v-btn @click="submitFilter" type="button" class="mt-4 ml-4">Tìm kiếm</v-btn>
         </div>
         <v-card class="w-full h-full box-sensor space-y-2" style="margin-top: 30px;" flat tile>
           <template v-if="report">
@@ -82,6 +97,14 @@ export default {
     deviceName: {
       type: String,
       default: () => '',
+    },
+    labelSelect: {
+      type: String,
+      default: () => '',
+    },
+    itemsSelect:{
+      type: Object,
+      default: () => ({}),
     }
   },
   data() {
@@ -95,7 +118,8 @@ export default {
       timeFilter: null,
       dateRange: {startDate, endDate},
       fromDate:'',
-      toDate:''
+      toDate:'',
+      dataSelect:null
     }
   },
 

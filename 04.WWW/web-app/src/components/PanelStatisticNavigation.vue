@@ -76,10 +76,9 @@ export default {
           }
         },
         [
-          ['bieu_gia_dien', 'Biểu Giá Điện', 'pink'],
-          ['thong_so_dien', 'Thông Số Điện', 'green'],
-          ['dien_nang_tieu_thu', 'Điện Năng Tiêu Thụ', 'orange'],
-          ['chi_phi_dien', 'Chi Phí Điện', 'teal', 'mdi-currency-usd']
+          ['bieu_gia_dien', 'Tổng điện năng tiêu thụ', 'pink'],
+          ['thong_so_dien', 'Thông số điện', 'green'],
+          ['dien_nang_tieu_thu', 'Chi tiết Điện Năng Tiêu Thụ', 'orange']
         ]
       ]
       const chemical = [

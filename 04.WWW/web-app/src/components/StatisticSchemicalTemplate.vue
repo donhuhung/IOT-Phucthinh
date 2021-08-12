@@ -4,7 +4,7 @@
       <v-skeleton-loader type="table" width="690px"/>
     </template>
     <div class="pl-6" v-else>
-      <template v-for="([id, label, color]) in categories">
+      <template v-for="([id, label, color,subColor]) in categories">
         <div :ref="id" :key="`${id}`" :class="`line_${color}`">
           <v-card tile flat color="transparent">
             <div class="top-line">
@@ -25,7 +25,7 @@
                       <div class="station" @click="collapseSubTab(index)">
                         <v-alert class="mb-0"
                                  dense
-                                 :color="color"
+                                 :color="subColor"
                                  dark
                                  :icon="collapseIndex==index?'mdi-arrow-down':'mdi-arrow-up'">
                           {{ item.title }}
@@ -35,7 +35,7 @@
                         <div class="d"></div>
                         <template v-for="(t, index) in item.data_list">
                           <div :key="index" class="row_sheet--item">
-                            <GridInfoUnits type="electrical" :info="t.info" :unit="item.unit"  :title="t.title"/>
+                            <GridInfoUnits type="chemical" :info="t.info" :unit="t.unit"  :title="t.title"/>
                           </div>
                         </template>
                       </div>
@@ -70,11 +70,11 @@ export default {
   computed: {
     categories() {
       return [
-        ['voi', 'Vôi', 'light-green darken-3', 'mdi-format-header-equal'],
-        ['pac', 'PAC', 'lime darken-2', 'mdi-factory'],
-        ['polyme', 'Polyme', 'amber accent-4'],
-        ['clo', 'Clo', 'deep-purple lighten-3', 'mdi-currency-usd'],
-        ['other', 'Khác', 'teal accent-4', 'mdi-currency-usd']
+        ['voi', 'Vôi', 'light-green darken-3','light-green darken-1', 'mdi-format-header-equal'],
+        ['pac', 'PAC', 'lime darken-2','lime darken-1', 'mdi-factory'],
+        ['polyme', 'Polyme', 'amber accent-4','amber accent-3'],
+        ['clo', 'Clo', 'deep-purple lighten-3','deep-purple lighten-2', 'mdi-currency-usd'],
+        ['other', 'Khác', 'teal accent-4','teal accent-2', 'mdi-currency-usd']
       ]
     }
   },
@@ -235,7 +235,7 @@ $colorLine: gray;
     }
 
     .row_sheet--item {
-      width: 275px;
+      width: 375px;
       padding: 5px;
       margin: 2px;
     }

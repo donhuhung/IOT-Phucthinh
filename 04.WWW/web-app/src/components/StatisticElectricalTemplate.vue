@@ -4,7 +4,7 @@
       <v-skeleton-loader type="table" width="690px"/>
     </template>
     <div class="pl-6" v-else>
-      <template v-for="([id, label, color]) in categories">
+      <template v-for="([id, label, color,subColor]) in categories">
         <div :ref="id" :key="`${id}`" :class="`line_${color}`">
           <v-card tile flat color="transparent">
             <div class="top-line">
@@ -26,7 +26,7 @@
                       <div class="station" @click="collapseSubTab(index)" v-if="row[id].length > 1">
                         <v-alert class="mb-0"
                                  dense
-                                 :color="color"
+                                 :color="subColor"
                                  dark
                                  :icon="collapseIndex==index?'mdi-arrow-down':'mdi-arrow-up'">
                           {{ item.title }}
@@ -90,10 +90,9 @@ export default {
   computed: {
     categories() {
       return [
-        ['bieu_gia_dien', 'Biểu Giá Điện', 'pink'],
-        ['thong_so_dien', 'Thông Số Điện', 'green'],
-        ['dien_nang_tieu_thu', 'Điện Năng Tiêu Thụ', 'orange'],
-        ['chi_phi_dien', 'Chi Phí Điện', 'teal', 'mdi-currency-usd']
+        ['bieu_gia_dien', 'Tổng điện năng tiêu thụ', 'pink','pink lighten-2'],
+        ['thong_so_dien', 'Thông Số Điện', 'green darken-3','green darken-1'],
+        ['dien_nang_tieu_thu', 'Chi Tiết Điện Năng Tiêu Thụ', 'orange darken-2','orange lighten-1']
       ]
     }
   },
@@ -254,7 +253,7 @@ $colorLine: gray;
     }
 
     .row_sheet--item {
-      width: 275px;
+      width: 375px;
       padding: 5px;
       margin: 2px;
     }

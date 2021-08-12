@@ -13,6 +13,15 @@ export const numberUnit = (unit) => {
     case "tong":
       title = "Tổng";
       break;
+    case "trong_ngay":
+      title = "Trong ngày";
+      break;
+    case "trong_thang":
+      title = "Trong tháng";
+      break;
+    case "trong_nam":
+      title = "Trong năm";
+      break;
     default:
       title = unit;
   }
