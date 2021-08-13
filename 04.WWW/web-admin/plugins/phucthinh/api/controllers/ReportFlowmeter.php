@@ -1,22 +1,25 @@
-<?php namespace PhucThinh\API\Controllers;
+<?php
+
+namespace PhucThinh\API\Controllers;
 
 use Illuminate\Http\Request;
 
 /**
  * Report Flowmeter Back-end Controller
  */
-class ReportFlowmeter extends General
-{    
+class ReportFlowmeter extends General {
 
-    public function __construct()
-    {        
+    public function __construct() {
+        
     }
-    
+
     public function getListFlowmeter(Request $request) {
         try {
             $factoryID = $request->get('factory_id');
             $fromDate = $request->get('from_date');
             $toDate = $request->get('to_date');
+            $type = $request->get('type');
+            $parseDataByMonth = false;
             if ($fromDate && $toDate) {
                 $fromDate = date_create($fromDate);
                 $toDate = date_create($toDate);
@@ -38,14 +41,14 @@ class ReportFlowmeter extends General
                 if ($numberYear > 0 || $numberMonth > 2)
                     $parseDataByMonth = true;
 
-                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat,'isMonth' => $parseDataByMonth);
+                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat, 'isMonth' => $parseDataByMonth);
                 $postdata = json_encode($data);
 
                 //Call API
                 $link = 'http://115.78.130.60/api/InsertsTableThongKeLuuLuongHoaChatPts';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
-                    $return = $this->parseContentFlowmeter($resp, $parseDataByMonth);
+                    $return = $this->parseContentFlowmeter($resp, $parseDataByMonth, $type);
                     return $this->respondWithSuccess($return, "Get List Flowrate succesful!");
                 } else {
                     return $this->respondWithMessage('Hiện tại Dữ Liệu đang được cập nhật!!!');
@@ -58,20 +61,37 @@ class ReportFlowmeter extends General
         }
     }
 
-    private function parseContentFlowmeter($data, $isMonth) {
+    private function parseContentFlowmeter($data, $isMonth, $type) {
         $objData = json_decode($data);
         $return = [];
-        foreach ($objData as $index => $obj) {
-            if($isMonth)
-                $timeStamp = "Tháng ".date_format(date_create($obj->timeStamp), 'm-Y');
-            else 
-                $timeStamp = date_format(date_create($obj->timeStamp), 'd-m-Y');
-            
-            $return[$index]['id'] = $obj->id;
-            $return[$index]['timeStamp'] = $timeStamp;
-            $return[$index]['total'] = $obj->doanhSoBanNuocValue1;
-            $return[$index]['total_station'] = 1;
+        if ($objData) {
+            foreach ($objData as $index => $obj) {
+                if ($isMonth)
+                    $timeStamp = "Tháng " . date_format(date_create($obj->timeStamp), 'm-Y');
+                else
+                    $timeStamp = date_format(date_create($obj->timeStamp), 'd-m-Y');
+
+
+                $fieldBieuGia = 'bieuGiaNuocValue' . $type;
+                if ($type == 1) {
+                    $fieldLuuLuong = 'luuLuongDauVaoValue2';
+                    $fieldChiPhi = 'chiPhiDauVaoValue2';
+                }
+                if ($type == 2) {
+                    $fieldLuuLuong = 'luuLuongHaoPhiValue2';
+                    $fieldChiPhi = 'chiPhiHaoPhiValue2';
+                } else {
+                    $fieldLuuLuong = 'luuLuongBanRaValue2';
+                    $fieldChiPhi = 'doanhSoBanNuocValue2';
+                }
+                $return[$index]['id'] = $obj->id;
+                $return[$index]['timeStamp'] = $timeStamp;
+                $return[$index]['bieu_gia'] = $obj->$fieldBieuGia;
+                $return[$index]['luu_luong'] = isset($obj->$fieldLuuLuong) ? $obj->$fieldLuuLuong : 0;
+                $return[$index]['chi_phi'] = isset($obj->$fieldChiPhi) ? $obj->$fieldChiPhi : 0;
+            }
         }
         return $return;
     }
+
 }

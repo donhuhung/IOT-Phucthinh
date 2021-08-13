@@ -18,6 +18,7 @@ class ReportElectrical extends General {
             $factoryID = $request->get('factory_id');
             $fromDate = $request->get('from_date');
             $toDate = $request->get('to_date');
+            $station = $request->get('station');
             $parseDataByMonth = false;
             if ($fromDate && $toDate) {
                 $fromDate = date_create($fromDate);
@@ -40,14 +41,14 @@ class ReportElectrical extends General {
                 if ($numberYear > 0 || $numberMonth > 2)
                     $parseDataByMonth = true;
 
-                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat,'isMonth' => $parseDataByMonth);
+                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat, 'isMonth' => $parseDataByMonth);
                 $postdata = json_encode($data);
 
                 //Call API
                 $link = 'http://115.78.130.60/api/InsertsTableThongKeChiPhiDienPts';
                 $resp = $this->callAPI($link, "POST", $postdata);
                 if ($resp) {
-                    $return = $this->parseContentElectrical($resp, $parseDataByMonth);
+                    $return = $this->parseContentElectrical($resp, $parseDataByMonth, $station);
                     return $this->respondWithSuccess($return, "Get List Electrical succesful!");
                 } else {
                     return $this->respondWithMessage('Hiện tại Dữ Liệu đang được cập nhật!!!');
@@ -60,44 +61,42 @@ class ReportElectrical extends General {
         }
     }
 
-    private function parseContentElectrical($data, $isMonth) {
-        $objData = json_decode($data);
+    private function parseContentElectrical($data, $isMonth, $station) {
+        $obj = json_decode($data);
         $return = [];
-        foreach ($objData as $index => $obj) {
-            $tram1 = (int) $obj->chiPhiDien1Value36;
-            $tram2 = (int) $obj->chiPhiDien2Value36;
-            $tram3 = (int) $obj->chiPhiDien3Value36;
-            $tram4 = (int) $obj->chiPhiDien4Value36;
-            $tram5 = (int) $obj->chiPhiDien5Value36;
-            $tram6 = (int) $obj->chiPhiDien6Value36;
-            $tram7 = (int) $obj->chiPhiDien7Value36;
-            $tram8 = (int) $obj->chiPhiDien8Value36;
-            $tram9 = (int) $obj->chiPhiDien9Value36;
-            $tram10 = (int) $obj->chiPhiDien10Value36;
-            $total = $tram1 + $tram2 + $tram3 + $tram4 + $tram5 + $tram6 + $tram7 + $tram8 + $tram9 + $tram10;
+        if ($obj) {
+            foreach ($objData as $index => $obj) {
+                $fieldDienThapDiem = 'dienTieuThu' . $station . 'Value1';
+                $fieldDienBinhThuong = 'dienTieuThu' . $station . 'Value2';
+                $fieldDienCaoDiem = 'dienTieuThu' . $station . 'Value3';
+                $fieldDienTong = 'dienTieuThu' . $station . 'Value4';
 
-            if($isMonth)
-                $timeStamp = "Tháng ".date_format(date_create($obj->timeStamp), 'm-Y');
-            else 
-                $timeStamp = date_format(date_create($obj->timeStamp), 'd-m-Y');
-            
+                $fieldChiPhiDienThapDiem = 'chiPhiDien' . $station . 'Value1';
+                $fieldChiPhiDienBinhThuong = 'chiPhiDien' . $station . 'Value2';
+                $fieldChiPhiDienCaoDiem = 'chiPhiDien' . $station . 'Value3';
+                $fieldChiPhiDienTong = 'chiPhiDien' . $station . 'Value4';
+
+                if ($isMonth)
+                    $timeStamp = "Tháng " . date_format(date_create($obj->timeStamp), 'm-Y');
+                else
+                    $timeStamp = date_format(date_create($obj->timeStamp), 'd-m-Y');
+
                 $return[$index]['id'] = $obj->id;
                 $return[$index]['timeStamp'] = $timeStamp;
-                $return[$index]['tram1'] = $tram1;
-                $return[$index]['tram2'] = $tram1;
-                $return[$index]['tram3'] = $tram1;
-                $return[$index]['tram4'] = $tram1;
-                $return[$index]['tram5'] = $tram1;
-                $return[$index]['tram6'] = $tram1;
-                $return[$index]['tram7'] = $tram1;
-                $return[$index]['tram8'] = $tram1;
-                $return[$index]['tram9'] = $tram1;
-                $return[$index]['tram10'] = $tram1;
-                $return[$index]['total'] = $total;
-                $return[$index]['total_station'] = 10;
+                $return[$index]['bieu_gia_thap_diem'] = ($station != 8) ? (int) $obj->bieuGiaDienValue1 : (int) $obj->bieuGiaDienValue4;
+                $return[$index]['bieu_gia_binh_thuong'] = ($station != 8) ? (int) $obj->bieuGiaDienValue2 : (int) $obj->bieuGiaDienValue4;
+                $return[$index]['bieu_gia_cao_diem'] = ($station != 8) ? (int) $obj->bieuGiaDienValue3 : (int) $obj->bieuGiaDienValue4;
+                $return[$index]['dien_tieu_thu_thap_diem'] = isset($obj->$fieldDienThapDiem) ? $obj->$fieldDienThapDiem : 0;
+                $return[$index]['dien_tieu_thu_binh_thuong'] = isset($obj->$fieldDienBinhThuong) ? $obj->$fieldDienBinhThuong : 0;
+                $return[$index]['dien_tieu_thu_cao_Diem'] = isset($obj->$fieldDienCaoDiem) ? $obj->$fieldDienCaoDiem : 0;
+                $return[$index]['dien_tieu_thu_tong'] = isset($obj->$fieldDienTong) ? $obj->$fieldDienTong : 0;
+                $return[$index]['chi_phi_dien_thap_diem'] = isset($obj->$fieldChiPhiDienThapDiem) ? (int) $obj->$fieldChiPhiDienThapDiem : 0;
+                $return[$index]['chi_phi_dien_binh_thuong'] = isset($obj->$fieldChiPhiDienBinhThuong) ? (int) $obj->$fieldChiPhiDienBinhThuong : 0;
+                $return[$index]['chi_phi_dien_cao_diem'] = isset($obj->$fieldChiPhiDienCaoDiem) ? $obj->$fieldChiPhiDienCaoDiem : 0;
+                $return[$index]['chi_phi_dien_tong'] = isset($obj->$fieldChiPhiDienTong) ? $obj->$fieldChiPhiDienTong : 0;
+            }
         }
         return $return;
     }
-    
 
 }

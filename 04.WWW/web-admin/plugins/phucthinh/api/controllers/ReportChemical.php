@@ -1,23 +1,24 @@
-<?php namespace PhucThinh\API\Controllers;
+<?php
+
+namespace PhucThinh\API\Controllers;
 
 use Illuminate\Http\Request;
 
 /**
  * Report Chemical Back-end Controller
  */
-class ReportChemical extends General
-{    
+class ReportChemical extends General {
 
-    public function __construct()
-    {        
-    }
+    public function __construct() {
         
-    
+    }
+
     public function getListChemical(Request $request) {
         try {
             $factoryID = $request->get('factory_id');
             $fromDate = $request->get('from_date');
             $toDate = $request->get('to_date');
+            $device = $request->get('device');
             $parseDataByMonth = false;
             if ($fromDate && $toDate) {
                 $fromDate = date_create($fromDate);
@@ -40,14 +41,14 @@ class ReportChemical extends General
                 if ($numberYear > 0 || $numberMonth > 2)
                     $parseDataByMonth = true;
 
-                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat,'isMonth' => $parseDataByMonth);
+                $data = array("factoryID" => (int) $factoryID, "fromDate" => $fromDateFormat, 'toDate' => $toDateFormat, 'isMonth' => $parseDataByMonth);
                 $postdata = json_encode($data);
 
                 //Call API
                 $link = 'http://115.78.130.60/api/InsertsTableThongKeLuuLuongHoaChatPts';
-                $resp = $this->callAPI($link, "POST", $postdata);
+                $resp = $this->callAPI($link, "POST", $postdata, );
                 if ($resp) {
-                    $return = $this->parseContentChemical($resp, $parseDataByMonth);
+                    $return = $this->parseContentChemical($resp, $parseDataByMonth, $device);
                     return $this->respondWithSuccess($return, "Get List Chemical succesful!");
                 } else {
                     return $this->respondWithMessage('Hiện tại Dữ Liệu đang được cập nhật!!!');
@@ -58,35 +59,29 @@ class ReportChemical extends General
         } catch (\Exception $ex) {
             return $this->respondWithError($ex->getMessage(), self::HTTP_BAD_REQUEST);
         }
-        
     }
 
-    private function parseContentChemical($data, $isMonth) {
+    private function parseContentChemical($data, $isMonth, $device) {
         $objData = json_decode($data);
         $return = [];
-        foreach ($objData as $index => $obj) {
-            $hoaChat1 = (int) $obj->chiPhiHoaChat1Value1;
-            $hoaChat2 = (int) $obj->chiPhiHoaChat2Value1;
-            $hoaChat3 = (int) $obj->chiPhiHoaChat3Value1;
-            $hoaChat4 = (int) $obj->chiPhiHoaChat4Value1;
-            $hoaChat5 = (int) $obj->chiPhiHoaChat5Value1;
-            $total = $hoaChat1 + $hoaChat2 + $hoaChat3 + $hoaChat4 + $hoaChat5;
+        if ($objData) {
+            foreach ($objData as $index => $obj) {
+                $fieldBieuGia = 'bieuGiaHoaChat' . $device . 'Value1';
+                $fieldHoaChatTieuThu = 'hoaChatTieuThu' . $device . 'Value1';
+                $fieldChiPhiHoaChat = 'chiPhiHoaChat' . $device . 'Value1';
+                if ($isMonth)
+                    $timeStamp = "Tháng " . date_format(date_create($obj->timeStamp), 'm-Y');
+                else
+                    $timeStamp = date_format(date_create($obj->timeStamp), 'd-m-Y');
 
-            if($isMonth)
-                $timeStamp = "Tháng ".date_format(date_create($obj->timeStamp), 'm-Y');
-            else 
-                $timeStamp = date_format(date_create($obj->timeStamp), 'd-m-Y');
-            
-            $return[$index]['id'] = $obj->id;
-            $return[$index]['timeStamp'] = $timeStamp;
-            $return[$index]['lime'] = $hoaChat1;
-            $return[$index]['pac'] = $hoaChat2;
-            $return[$index]['polymer'] = $hoaChat3;
-            $return[$index]['chlorine'] = $hoaChat4;
-            $return[$index]['other'] = $hoaChat5;
-            $return[$index]['total'] = $total;
-            $return[$index]['total_station'] = 5;
+                $return[$index]['id'] = $obj->id;
+                $return[$index]['timeStamp'] = $timeStamp;
+                $return[$index]['bieu_gia_hoa_chat'] = $obj->$fieldBieuGia;
+                $return[$index]['hoa_chat_tieu_thu'] = $obj->$fieldHoaChatTieuThu;
+                $return[$index]['chi_phi_hoa_chat'] = $obj->$fieldChiPhiHoaChat;
+            }
         }
         return $return;
     }
+
 }

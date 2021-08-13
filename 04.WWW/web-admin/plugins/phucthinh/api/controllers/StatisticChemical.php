@@ -41,15 +41,34 @@ class StatisticChemical extends General {
         //Define Variable
         $dataStationArr = [];
         $dataHoaChatArr = [];
+		$dataKhoiLuongHoaChatArr = [];
+		$dataKhoiLuongNuocArr = [];
+		$dataThoiGianPhaArr = [];
+		
+		$dataKhoiLuongHoaChat = [];
+		$dataKhoiLuongNuoc = [];
+		$dataThoiGianPha = [];
         //Foreach Thông Số
         $fieldKg = 'congThucPhaHoaChat' . ($index) . 'Value1';
         $fieldNuoc = 'congThucPhaHoaChat' . ($index) . 'Value2';
         $fieldThoiGian = 'congThucPhaHoaChat' . ($index) . 'Value3';
-        $dataHoaChatArr['kg'] = $objData->$fieldKg;
-        $dataHoaChatArr['l'] = $objData->$fieldNuoc;
-        $dataHoaChatArr['s'] = $objData->$fieldThoiGian;
-        $dataStationArr['info'] = $dataHoaChatArr;
-        $stationArr['data_list'][0] = $dataStationArr;
+		
+		$dataKhoiLuongHoaChatArr['kg'] = $objData->$fieldKg;
+        $dataKhoiLuongHoaChat['title'] = 'Khối lượng hóa chất';
+        $dataKhoiLuongHoaChat['info'] = $dataKhoiLuongHoaChatArr;
+		
+		$dataKhoiLuongNuocArr['l'] = $objData->$fieldNuoc;
+        $dataKhoiLuongNuoc['title'] = 'Khối lượng nước';
+        $dataKhoiLuongNuoc['info'] = $dataKhoiLuongNuocArr;
+		
+		$dataThoiGianPhaArr['s'] = $objData->$fieldThoiGian;
+        $dataThoiGianPha['title'] = 'Thời gian pha';
+        $dataThoiGianPha['info'] = $dataThoiGianPhaArr;
+
+        
+        $stationArr['data_list'][0] = $dataKhoiLuongHoaChat;
+		$stationArr['data_list'][1] = $dataKhoiLuongNuoc;
+		$stationArr['data_list'][2] = $dataThoiGianPha;
         return $stationArr;
     }
 
@@ -83,8 +102,8 @@ class StatisticChemical extends General {
         $dataStationArr['data_list'][1] = $dataKhoiLuongConLaiArr;
         $dataStationArr['data_list'][2] = $dataKhoiLuongDaNhapArr;        
                 
-        $return[0] = $dataStationArr;
-        return $return;
+        $dataStationArr;
+        return $dataStationArr;
     }
 
     private function parseContentHoaChatTieuThu($data, $index) {

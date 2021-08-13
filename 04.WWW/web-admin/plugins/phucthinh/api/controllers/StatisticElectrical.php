@@ -162,10 +162,10 @@ class StatisticElectrical extends General {
         $dataDienNangLuoiDien['info'] = $dataDienNangLuoiDienArr;
 
         $dataChiPhiLuoiDien['title'] = 'Chi Phí Điện Năng:VNĐ';
-        $dataDienNangLuoiDienArr['trong_ngay'] = $objData->chiPhiDien7Value4;
-        $dataDienNangLuoiDienArr['trong_thang'] = $objData->chiPhiDien7Value13;
-        $dataDienNangLuoiDienArr['trong_nam'] = $objData->chiPhiDien7Value22;
-        $dataDienNangLuoiDienArr['tong'] = $objData->chiPhiDien7Value31;
+        $dataChiPhiLuoiDienArr['trong_ngay'] = $objData->chiPhiDien7Value4;
+        $dataChiPhiLuoiDienArr['trong_thang'] = $objData->chiPhiDien7Value13;
+        $dataChiPhiLuoiDienArr['trong_nam'] = $objData->chiPhiDien7Value22;
+        $dataChiPhiLuoiDienArr['tong'] = $objData->chiPhiDien7Value31;
         $dataChiPhiLuoiDien['info'] = $dataChiPhiLuoiDienArr;
 
         //Group tự Phát
