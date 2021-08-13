@@ -1,6 +1,6 @@
 <template>
 <div>
-  <ReportTemplate end-point="/api/v1/report/chemical" :label-select="labelSelect" :items-select="itemsSelect" device-name="chemical"/>
+  <ReportTemplate end-point="/api/v1/report/chemical" name-report="Hóa Chất" :label-select="labelSelect" :items-select="itemsSelect" device-name="chemical"/>
 </div>
 </template>
 

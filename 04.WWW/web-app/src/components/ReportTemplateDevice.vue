@@ -23,7 +23,14 @@
             <date-picker @change="updateDatePicker" v-model="startDate" format="DD-MM-YYYY H:mm" type="datetime"></date-picker>
           </div>
           <p class="pl-4 pt-4">To Date: {{toDate}}</p>
-          <v-btn @click="submitFilter" type="button" class="mt-2 ml-4">Tìm kiếm</v-btn>
+          <v-btn @click="submitFilter" color="blue lighten-2"  class="mt-4 ml-4">
+            <v-icon class="pr-2" small>mdi-text-box-search-outline</v-icon>
+            Tìm kiếm
+          </v-btn>
+          <v-btn @click="print" color="blue lighten-2" class="mt-4 ml-4">
+            <v-icon small class="pr-2">mdi-printer-search</v-icon>
+            In Báo Cáo
+          </v-btn>
         </div>
 
         <v-card class="w-full h-full box-sensor space-y-2" style="margin-top: 30px;" flat tile>
@@ -70,6 +77,11 @@
             <NotFoundData />
           </template>
         </v-card>
+
+        <div id="block-report" style="display: none;">
+          <PagePrintDevice :device-name="deviceName" :report="report" :name-report="nameReport" :from-date="fromDate" :to-date="toDate"/>
+        </div>
+
       </div>
     </template>
   </div>
@@ -81,11 +93,12 @@ import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
 import 'vue2-datepicker/index.css'
 import NotFoundData from "./NotFoundData";
+import PagePrintDevice from "./PagePrintDevice";
 import {getListSensorName, getListMotorName, getListValveName} from "../api/app"
 
 export default {
   name: "ReportTemplateDevice",
-  components: {DatePicker,NotFoundData},
+  components: {DatePicker,NotFoundData, PagePrintDevice},
   props: {
     endPoint: {
       type: String,
@@ -94,7 +107,11 @@ export default {
     deviceName: {
       type: String,
       default: () => '',
-    }
+    },
+    nameReport: {
+      type: String,
+      default: () => '',
+    },
   },
   data() {
     return {
@@ -290,6 +307,14 @@ export default {
       }
       else{
         this.$notify({message: 'Dữ liệu tìm kiếm không hợp lệ!!!', title: this.$t('layout.titleMess'), type: 'error'})
+      }
+    },
+    print () {
+      if(this.report){
+        this.$htmlToPaper('block-report');
+      }
+      else{
+        this.$notify({message: 'Hiện tại không có dữ liệu để in!!!', title: this.$t('layout.titleMess'), type: 'error'})
       }
     }
   }

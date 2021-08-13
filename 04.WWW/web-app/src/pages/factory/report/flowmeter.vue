@@ -1,6 +1,6 @@
 <template>
 <div>
-  <ReportTemplate end-point="/api/v1/report/flowmeter" :label-select="labelSelect" :items-select="itemsSelect" device-name="flowmeter"/>
+  <ReportTemplate end-point="/api/v1/report/flowmeter" name-report="Lưu Lượng" :label-select="labelSelect" :items-select="itemsSelect" device-name="flowmeter"/>
 </div>
 </template>
 

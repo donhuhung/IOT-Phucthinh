@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ReportTemplate end-point="/api/v1/report/electrical" :label-select="labelSelect" :items-select="itemsSelect" device-name="electrical"/>
+    <ReportTemplate end-point="/api/v1/report/electrical" name-report="Điện" :label-select="labelSelect" :items-select="itemsSelect" device-name="electrical"/>
   </div>
 </template>
 
@@ -46,14 +46,6 @@ export default {
         {
           'id': 8,
           'name': 'Trạm 8'
-        },
-        {
-          'id': 9,
-          'name': 'Trạm 9'
-        },
-        {
-          'id': 10,
-          'name': 'Trạm 10'
         }
       ]
     }

@@ -24,7 +24,7 @@
                   <template v-for="(item, index) in row[id]">
                     <v-card flat class="row_sheet" :key="index" tile>
                       <div class="station" @click="collapseIndex = index" v-if="row[id].length > 1">
-                        <v-alert class="mb-0"
+                        <v-alert class="mb-0 fs-14"
                                  dense
                                  :color="color"
                                  dark
@@ -246,9 +246,9 @@ $colorLine: gray;
     }
 
     .row_sheet--item {
-      width: 275px;
+      width: 230px;
       padding: 5px;
-      margin: 2px;
+      margin-bottom: 5px;
     }
   }
 

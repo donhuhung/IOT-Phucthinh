@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <template v-if="getting">
       <v-skeleton-loader type="table" width="100%"/>
     </template>
@@ -27,52 +26,67 @@
               :locale-data="{format: 'dd-mm-yyyy'}"
               @update="updateDatePicker"
           ></date-range-picker>
-          <v-btn @click="submitFilter" type="button" class="mt-4 ml-4">Tìm kiếm</v-btn>
+          <v-btn @click="submitFilter" color="blue lighten-2"  class="mt-4 ml-4">
+            <v-icon class="pr-2" small>mdi-text-box-search-outline</v-icon>
+            Tìm kiếm
+          </v-btn>
+          <v-btn @click="print" color="blue lighten-2" class="mt-4 ml-4">
+            <v-icon small class="pr-2">mdi-printer-search</v-icon>
+            In Báo Cáo
+          </v-btn>
         </div>
-        <v-card class="w-full h-full box-sensor space-y-2" style="margin-top: 30px;" flat tile>
-          <template v-if="report">
-          <table class="min-w-max w-full table-auto table-grid">
-            <tr>
-              <template v-for="(field, index) in fieldsCombined">
-                <th :key="index" class="cell-table cell-header">
-                  <div class="d-flex">
-                    <span class="cell-header--text">{{ field.label }}</span>
-                    <v-icon class="cursor-pointer"
-                            v-if="index !== 0"
-                            right
-                            @click="sortField(field.name )"
-                            small>mdi-sort-descending</v-icon>
-                  </div>
-                </th>
-              </template>
-            </tr>
-            <template v-for="(row, rowIndex) in report">
-              <tr :key="rowIndex" class="grid-row">
-                <template v-for="(header, cellIndex) in fieldsCombined">
-                  <td :key="`${rowIndex}-${cellIndex}`"
-                      class="cell-table cell-row" :class="`cell-row--${header.name}`">
-                    <div class="content-cell">
-                      <template v-if="header.name === 'no'">
-                        <div class="text-show">
-                          {{ rowIndex + 1}}
+          <v-card class="w-full h-full box-sensor space-y-2" style="margin-top: 30px;" flat tile>
+            <template v-if="report">
+              <table class="min-w-max w-full table-auto table-grid">
+                <tr>
+                  <template v-for="(field, index) in fieldsCombined">
+                    <th :key="index" class="cell-table cell-header">
+                      <div class="d-flex">
+                        <span class="cell-header--text">{{ field.label }}</span>
+                        <v-icon class="cursor-pointer"
+                                v-if="index !== 0"
+                                right
+                                @click="sortField(field.name )"
+                                small>mdi-sort-descending</v-icon>
+                      </div>
+                    </th>
+                  </template>
+                </tr>
+                <template v-for="(row, rowIndex) in report">
+                  <tr :key="rowIndex" class="grid-row">
+                    <template v-for="(header, cellIndex) in fieldsCombined">
+                      <td :key="`${rowIndex}-${cellIndex}`"
+                          class="cell-table cell-row" :class="`cell-row--${header.name}`">
+                        <div class="content-cell">
+                          <template v-if="header.name === 'no'">
+                            <div class="text-show">
+                              {{ rowIndex + 1}}
+                            </div>
+                          </template>
+                          <template v-if="header.type === 'price'">
+                            <div class="text-show">
+                              {{ row[header.name]|numberFormat}}
+                            </div>
+                          </template>
+                          <template v-else>
+                            <div class="text-show">
+                              {{ row[header.name] }}
+                            </div>
+                          </template>
                         </div>
-                      </template>
-                      <template v-else>
-                        <div class="text-show">
-                          {{ row[header.name] }}
-                        </div>
-                      </template>
-                    </div>
-                  </td>
+                      </td>
+                    </template>
+                  </tr>
                 </template>
-              </tr>
+              </table>
             </template>
-          </table>
-          </template>
             <template v-else>
               <NotFoundData />
             </template>
-        </v-card>
+          </v-card>
+        <div id="block-report" style="display: none;">
+          <PagePrint :device-name="deviceName" :report="report" :name-report="nameReport" :from-date="fromDate" :to-date="toDate"/>
+        </div>
       </div>
     </template>
   </div>
@@ -85,10 +99,12 @@ import DateRangePicker from 'vue2-daterange-picker'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 import moment from 'moment';
 import NotFoundData from "./NotFoundData";
+import PagePrint from "./PagePrint";
+import {numberFormat} from "@/filters/number";
 
 export default {
   name: "ReportTemplate",
-  components: { DateRangePicker , NotFoundData},
+  components: { DateRangePicker , NotFoundData, PagePrint},
   props: {
     endPoint: {
       type: String,
@@ -103,9 +119,16 @@ export default {
       default: () => '',
     },
     itemsSelect:{
-      type: Object,
+      type: Array,
       default: () => ({}),
-    }
+    },
+    nameReport: {
+      type: String,
+      default: () => '',
+    },
+  },
+  filters: {
+    numberFormat,
   },
   data() {
     let startDate = new Date(new Date(new Date().getFullYear(),new Date().getMonth(), 1));
@@ -119,7 +142,9 @@ export default {
       dateRange: {startDate, endDate},
       fromDate:'',
       toDate:'',
-      dataSelect:null
+      dataSelect:null,
+      paramFilter:null,
+      output: null
     }
   },
 
@@ -137,59 +162,59 @@ export default {
           type: 'text',
         },
         {
-          name: 'tram1',
-          label: 'Trạm 1',
-          type: 'text'
+          name: 'bieu_gia_thap_diem',
+          label: 'Biểu giá thấp điểm',
+          type: 'price'
         },
         {
-          name: "tram2",
-          label: 'Trạm 2',
-          type: 'text',
+          name: "bieu_gia_binh_thuong",
+          label: 'Biểu giá bình thường',
+          type: 'price',
         },
         {
-          name: "tram3",
-          label: 'Trạm 3',
-          type: 'text'
+          name: "bieu_gia_cao_diem",
+          label: 'Biểu giá cao điểm',
+          type: 'price'
         },
         {
-          name: 'tram4',
-          label: 'Trạm 4',
-          type: 'text'
+          name: 'chi_phi_dien_thap_diem',
+          label: 'Chi phí điện thấp điểm',
+          type: 'price'
         },
         {
-          name: "tram5",
-          label: 'Trạm 5',
-          type: 'text'
+          name: "chi_phi_dien_binh_thuong",
+          label: 'Chi phí điện bình thường',
+          type: 'price'
         },
         {
-          name: "tram6",
-          label: 'Trạm 6',
-          type: 'text'
+          name: "chi_phi_dien_cao_diem",
+          label: 'Chi phí điện cao điểm',
+          type: 'price'
         },
         {
-          name: "tram7",
-          label: 'Trạm 7',
-          type: 'text'
+          name: "chi_phi_dien_tong",
+          label: 'Chi phí điện tổng',
+          type: 'price'
         },
         {
-          name: "tram8",
-          label: 'Trạm 8',
-          type: 'text'
+          name: "dien_tieu_thu_thap_diem",
+          label: 'Điện tiêu thụ thấp điểm',
+          type: 'price'
         },
         {
-          name: "tram9",
-          label: 'Trạm 9',
-          type: 'text'
+          name: "dien_tieu_thu_binh_thuong",
+          label: 'Điện tiêu thụ bình thường',
+          type: 'price'
         },
         {
-          name: "tram10",
-          label: 'Trạm 10',
-          type: 'text'
+          name: "dien_tieu_thu_cao_Diem",
+          label: 'Điện tiêu thụ cao điểm',
+          type: 'price'
         },
         {
-          name: "total",
-          label: 'Tổng',
-          type: 'text'
+          name: "dien_tieu_thu_tong",
+          label: 'Điện tiêu thụ tổng',
+          type: 'price'
         }
       ]
     },
@@ -206,34 +231,19 @@ export default {
           type: 'text',
         },
         {
-          name: 'lime',
-          label: 'Lime',
-          type: 'chips'
+          name: 'bieu_gia_hoa_chat',
+          label: 'Biểu giá hóa chất',
+          type: 'price'
         },
         {
-          name: "pac",
-          label: 'PAC',
-          type: 'chips',
+          name: "hoa_chat_tieu_thu",
+          label: 'Hóa chất tiêu thụ',
+          type: 'text',
         },
         {
-          name: "polymer",
-          label: 'Polymer',
-          type: 'text'
-        },
-        {
-          name: 'chlorine',
-          label: 'Chlorine',
-          type: 'text'
-        },
-        {
-          name: 'other',
-          label: 'Other',
-          type: 'text'
-        },
-        {
-          name: "total",
-          label: 'Total',
-          type: 'text'
+          name: "chi_phi_hoa_chat",
+          label: 'Chi phí hóa chất',
+          type: 'price'
         }
       ]
     },
@@ -250,9 +260,19 @@ export default {
           type: 'text',
         },
         {
-          name: 'total',
-          label: 'Total',
+          name: 'bieu_gia',
+          label: 'Biểu Giá',
+          type: 'price'
+        },
+        {
+          name: 'luu_luong',
+          label: 'Lưu lượng',
           type: 'text'
+        },
+        {
+          name: 'chi_phi',
+          label: 'Chi phí',
+          type: 'price'
         }
       ]
     },
@@ -273,7 +293,8 @@ export default {
         const res = await https.post(endPoint, {
           factory_id: factory,
           from_date: this.fromDate,
-          to_date: this.toDate
+          to_date: this.toDate,
+          param: this.paramFilter,
         })
         this.report = res.data.data
       } finally {
@@ -293,7 +314,23 @@ export default {
     updateDatePicker(value){
       this.fromDate = moment(value.startDate).format("DD-MM-YYYY");
       this.toDate = moment(value.endDate).format("DD-MM-YYYY");
-      this.fetchReport()
+    },
+    submitFilter(){
+      if(this.dataSelect && this.fromDate && this.toDate){
+        this.paramFilter = this.dataSelect.id
+        this.fetchReport()
+      }
+      else{
+        this.$notify({message: 'Dữ liệu tìm kiếm không hợp lệ!!!', title: this.$t('layout.titleMess'), type: 'error'})
+      }
+    },
+    print () {
+      if(this.report){
+        this.$htmlToPaper('block-report');
+      }
+      else{
+        this.$notify({message: 'Hiện tại không có dữ liệu để in!!!', title: this.$t('layout.titleMess'), type: 'error'})
+      }
     }
   }
 }

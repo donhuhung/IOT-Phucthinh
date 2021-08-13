@@ -1,7 +1,7 @@
 <template>
   <div>
     <PanelReportDeviceNavigation/>
-    <ReportTemplateDevice end-point="/api/v1/report/motor" device-name="motor"/>
+    <ReportTemplateDevice end-point="/api/v1/report/motor" device-name="motor" name-report="Motor"/>
   </div>
 </template>
 

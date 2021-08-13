@@ -6,10 +6,6 @@
       </v-card-title>
       <v-card-text>
         <div class="">
-          <v-text-field v-model="ip_factory"
-                        type="text"
-                        readonly
-                        :label="$t('layout.IpFactory')"/>
           <v-text-field v-model="username"
                         type="text"
                         :label="$t('layout.UserName')"/>
@@ -44,8 +40,8 @@ export default {
   name: "AuthLogin",
   data() {
     return {
-      username: 'phucthinh@gmail.com',
-      password: '123456789',
+      username: '',
+      password: '',
       ip_factory: '197.168.0.12',
       error_login: false,
       submitting: false,
