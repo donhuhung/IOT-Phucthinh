@@ -44,7 +44,7 @@ class StatisticElectrical extends General {
         $return = [];
         $dataStation = [];
         //Foreach Trạm
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 8; $i++) {
             //Define Variable
             $stationArr = [];
             $stationTotalArr = [];
@@ -211,7 +211,7 @@ class StatisticElectrical extends General {
         $objData = $objData[0];
         $return = [];
         //Foreach Trạm
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 8; $i++) {
             //Define Variable
             $stationArr = [];
 
