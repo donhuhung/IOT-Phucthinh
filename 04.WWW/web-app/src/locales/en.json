@@ -1,0 +1,40 @@
+{
+  "layout": {
+    "login": "Login",
+    "IpFactory": "IP Factory",
+    "UserName": "Username",
+    "password": "Password",
+    "ForgotPassword": "Change password",
+    "submit": "Submit",
+    "navFactory": "Factory",
+    "navOverview": "Overview",
+    "navSensor": "Sensor",
+    "navDevice": "Device",
+    "navReport": "Statistic",
+    "navMaintenance": "Maintenance",
+    "navChart": "Report",
+    "navMaps": "Maps",
+    "navSetting": "Setting",
+    "msgWelcome": "Welcome",
+    "titleMess": "Update information",
+    "labelCustomer": "Customer",
+    "labelAccount": "Account",
+    "labelTheme": "Theme",
+    "darkLabel": "Dark",
+    "lightLabel": "Light",
+    "labelGetTheApp": "Get the app.",
+    "labelUpdateInformation": "Update info profile",
+    "labelUpdatePassword": "Update Password",
+    "btnUpdate": "Update",
+    "btnReset": "Reset",
+    "confirmSignOutDescription": "Log out session?",
+    "confirmSignOutLabel": "Log out",
+    "labelCancel": "Cancel",
+    "signOut": "Log out",
+    "labelLanguage": "Language",
+    "labelUpdateSetPoint": "Update SetPoint"
+  },
+  "message": {
+
+  }
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "label": "layout.navOverview",
+    "icon": "mdi-book-open-page-variant",
+    "inFactory": true,
+    "to": {
+      "path": "overview"
+    },
+    "name": "factory-overview"
+  },
+  {
+    "label": "layout.navSensor",
+    "icon": "mdi-radar",
+    "inFactory": true,
+    "to": {
+      "path": "sensor"
+    },
+    "name": "factory-sensor"
+  },
+  {
+    "label": "layout.navDevice",
+    "icon": "mdi-devices",
+    "inFactory": true,
+    "to": {
+      "path": "device"
+    },
+    "name": "factory-device"
+  },
+  {
+    "label": "layout.navReport",
+    "icon": "mdi-database-check",
+    "inFactory": true,
+    "to": {
+      "path": "statistic"
+    },
+    "name": "factory-statistic"
+  },
+  {
+    "label": "layout.navChart",
+    "icon": "mdi-chart-bar",
+    "inFactory": true,
+    "to": {
+      "path": "report"
+    },
+    "name": "factory-report"
+  },
+  {
+    "label": "layout.navMaps",
+    "icon": "mdi-google-maps",
+    "inFactory": true,
+    "to": {
+      "path": "maps"
+    },
+    "name": "customer-maps"
+  }
+]

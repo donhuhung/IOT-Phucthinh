@@ -1,0 +1,29 @@
+.table-grid {
+    border-top: solid 1px #EFEFEF;
+    border-right: solid 1px #EFEFEF;
+}
+.cell-table {
+    position: relative;
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+}
+.cell-header {
+    border-bottom: 1px solid #EFEFEF;
+    border-left: 1px solid #EFEFEF;
+    font-weight: bold;
+}
+.cell-header--text {
+    font-size: 14px;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+.cell-row {
+    border-bottom: 1px solid #EFEFEF;
+    border-left: 1px solid #EFEFEF;
+}
+.cell-row--no {
+     width: 50px;
+ }

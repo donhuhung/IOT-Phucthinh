@@ -1,0 +1,41 @@
+{
+  "layout": {
+    "login": "Đăng Nhập",
+    "IpFactory": "IP Nhà Máy",
+    "UserName": "Tên Đăng Nhập",
+    "password": "Mật Khẩu",
+    "ForgotPassword": "Thay đổi mật khẩu",
+    "submit": "Gửi",
+    "navFactory": "Nhà Máy",
+    "navOverview": "Tổng Quan",
+    "navSensor": "Cảm Biến",
+    "navDevice": "Thiết Bị",
+    "navReport": "Thống Kê",
+    "navMaintenance": "Bảo Trì",
+    "navChart": "Báo Cáo",
+    "navMaps": "Bản Đồ",
+    "navSetting": "Tài Khoản",
+    "msgWelcome": "Xin Chào",
+    "titleMess": "Cập nhật tài khoản",
+    "labelCustomer": "Khách Hàng",
+    "labelAccount": "Tài khoản",
+    "labelTheme": "Chủ đề",
+    "darkLabel": "Tối",
+    "lightLabel": "Sáng",
+    "labelGetTheApp": "Tải ứng dụng.",
+    "labelUpdateInformation": "Cập nhật thông tin",
+    "labelUpdatePassword": "Thay đổi mật khẩu",
+    "btnUpdate": "Cập nhật",
+    "btnReset": "Xóa",
+    "confirmSignOutDescription": "Đăng xuất phiên làm việc?",
+    "confirmSignOutLabel": "Đăng xuất",
+    "labelCancel": "Hủy bỏ",
+    "labelSave": "Lưu",
+    "signOut": "Đăng xuất",
+    "labelLanguage": "Ngôn Ngữ",
+    "labelUpdateSetPoint": "Cập nhật SetPoint"
+  },
+  "message": {
+
+  }
+}

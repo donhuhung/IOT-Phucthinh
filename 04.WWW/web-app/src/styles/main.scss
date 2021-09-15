@@ -1,0 +1,91 @@
+body{
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+* {
+  box-sizing: border-box !important;
+  -webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
+  overflow-scrolling: touch;
+}
+.h-full {
+  height: 100%;
+}
+.w-full {
+  width: 100%;
+}
+.w-50 {
+  width: 50%;
+}
+.page-enter-active,
+.page-leave-active {
+}
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.4s, transform 0.4s;
+  backface-visibility: hidden;
+  opacity: 1;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0.5;
+}
+.center-abs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+@import "./notify";
+
+.border-b {
+  border-bottom: solid 1px;
+  &:last-child {
+    td {
+      border-color: transparent;
+    }
+  }
+  td {
+    //border-bottom: solid 1px rgba(0,0,0,0.1);
+    padding: 5px 0px;
+    &:first-child {
+      font-weight: bold;
+    }
+  }
+}
+.space-y-2 {
+  &>* {
+    margin-bottom: 20px;
+
+  }
+}
+.space-x {
+  //margin: 0px -10px;
+  &>* {
+    padding: 0px 10px;
+  }
+}
+.space-border {
+  &>* {
+    border: solid 1px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+}
+
+.table-grid {
+  border-spacing: 0px;
+}
+.ranges{
+  padding: 0 !important;
+}
+.vue-daterange-picker{
+  width: 300px;
+}
+.filter-device .ranges{
+  display: none;
+}
+.fs-14{
+  font-size: 14px !important;
+}

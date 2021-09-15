@@ -1,0 +1,293 @@
+<template>
+  <div>
+    <template v-if="getting">
+      <v-skeleton-loader type="table" width="690px"/>
+    </template>
+    <div class="pl-6" v-else>
+      <template v-for="([id, label, color,subColor]) in categories">
+        <div :ref="id" :key="`${id}`" :class="`line_${color}`">
+          <v-card tile flat color="transparent">
+            <div class="top-line">
+              <v-alert class="mb-0"
+                       dense
+                       style="cursor: pointer"
+                       :color="color"
+                       dark
+                       @click="collapseTab(id)"
+                       icon="mdi-database-check">
+                {{ label }}
+              </v-alert>
+            </div>
+            <template v-if="Array.isArray(row[id])">
+              <div v-if="tabActive == id">
+                <div class="row_sheet_panels">
+                  <template v-for="(item, index) in row[id]">
+                    <v-card flat class="row_sheet" :key="index" tile>
+                      <div class="station" @click="collapseSubTab(index)" v-if="row[id].length > 1">
+                        <v-alert class="mb-0 fs-14"
+                                 dense
+                                 :color="subColor"
+                                 dark
+                                 :icon="collapseIndex==index?'mdi-arrow-down':'mdi-arrow-up'">
+                          {{ item.title }}
+                        </v-alert>
+                      </div>
+                      <div class="row_sheet--content" v-if="collapseIndex==index">
+                        <div class="d"></div>
+                        <template v-for="(t, index) in item.data_list">
+                          <div :key="index" class="row_sheet--item">
+                            <GridInfoUnits type="electrical" :info="t.info" :unit="item.unit"  :title="t.title"/>
+                          </div>
+                        </template>
+                      </div>
+                    </v-card>
+                  </template>
+                </div>
+              </div>
+            </template>
+            <template v-else>
+              <div v-if="tabActive == id">
+                <div class="row_sheet_panels">
+                  <v-card flat class="row_sheet" tile>
+                    <div class="row_sheet--content">
+                      <div class="d"></div>
+                      <template v-if="row[id]">
+                        <template v-for="(t, index) in row[id].data_list">
+                          <div :key="index" class="row_sheet--item">
+                            <GridInfoUnits type="electrical" :unit="t.unit" :info="t.info" :title="t.title"/>
+                          </div>
+                        </template>
+                      </template>
+                    </div>
+                  </v-card>
+                </div>
+              </div>
+            </template>
+          </v-card>
+        </div>
+      </template>
+    </div>
+  </div>
+</template>
+
+<script>
+import GridInfoUnits from "./GridInfoUnits";
+import https from "../plugins/https";
+
+export default {
+  name: "StatisticElectricalTemplate",
+  components: {GridInfoUnits},
+  data() {
+    return {
+      row: {},
+      getting: false,
+      tabActive: '',
+      collapseIndex: null,
+      tabCurrent:'',
+      subTabCurrent:null
+    }
+  },
+  computed: {
+    categories() {
+      return [
+        ['bieu_gia_dien', 'Tổng điện năng tiêu thụ', 'pink','pink lighten-2'],
+        ['thong_so_dien', 'Thông Số Điện', 'green darken-3','green darken-1'],
+        ['dien_nang_tieu_thu', 'Chi Tiết Điện Năng Tiêu Thụ', 'orange darken-2','orange lighten-1']
+      ]
+    }
+  },
+  mounted() {
+    this.fetchReport()
+    this.$watch('$route.hash', (hash) => {
+      const strHash = hash.replace('#', '')
+      this.gotoSection(strHash)
+    })
+  },
+  methods: {
+    gotoSection(id) {
+      try {
+        const ref = this.$refs[id][0]
+        this.$vuetify.goTo(ref, {offset: 10})
+        this.tabActive = id
+        this.collapseIndex = 0
+      } catch (e) {
+        throw e.message
+      }
+    },
+    async fetchReport() {
+      try {
+        this.getting = true
+        const res = await https.post('/api/v1/statistic/electrical')
+        this.row = res.data.data
+      } finally {
+        this.getting = false
+      }
+    },
+    collapseTab(id){
+      if(this.tabCurrent == id){
+        this.tabActive = '';
+        this.tabCurrent = '';
+      }
+      else{
+        this.tabActive = id;
+        this.tabCurrent = id;
+
+        this.collapseIndex = null;
+        this.subTabCurrent = null;
+      }
+    },
+    collapseSubTab(index){
+      if(this.subTabCurrent == index){
+        this.collapseIndex = null;
+        this.subTabCurrent = null;
+      }
+      else{
+        this.collapseIndex = index;
+        this.subTabCurrent = index;
+      }
+    }
+  },
+}
+</script>
+
+<style scoped lang="scss">
+$colorLine: gray;
+@mixin lineColor($color) {
+  .row_sheet--content, .top-line {
+    &:before, &:after {
+      background: $color !important;
+    }
+
+    .d {
+      background: $color !important;
+    }
+  }
+}
+
+.line_pink {
+  @include lineColor(#e91e63);
+}
+
+.line_primary {
+  @include lineColor(#1976d2);
+}
+
+.line_orange {
+  @include lineColor(orange);
+}
+
+.line_teal {
+  @include lineColor(teal);
+}
+
+.line_green {
+  @include lineColor(green);
+}
+
+.row_sheet_panels {
+  position: relative;
+
+  .station{
+    width: 690px;
+    margin: 10px 5px;
+    cursor:pointer;
+  }
+}
+
+
+.row_sheet {
+  margin-top: 20px;
+  background: transparent !important;
+  margin: 0px -5px;
+
+  &:first-child {
+    margin-top: 0px;
+  }
+
+  &:last-child {
+    .row_sheet--content {
+      &:after {
+        height: 50%;
+      }
+    }
+  }
+
+  .row_sheet--content {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    width: 100%;
+
+    .d {
+      width: 8px;
+      height: 8px;
+      background: red;
+      border-radius: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0px;
+      z-index: 2;
+    }
+
+    &:before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: $colorLine;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -20px;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 100%;
+      background: $colorLine;
+      position: absolute;
+      left: -20px;
+    }
+
+    .row_sheet--item {
+      width: 345px;
+      padding: 5px;
+      margin: 2px;
+    }
+  }
+
+}
+
+
+.top-line {
+  //border: solid 1px $colorLine;
+  position: relative;
+  width: 50%;
+  width: 690px;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    background: $colorLine;
+    width: 25px;
+    height: 1px;
+    left: -25px;
+    top: 50%;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: calc(50% + 4px);
+    background: $colorLine;
+    position: absolute;
+    top: 50%;
+    left: -25px;
+  }
+}
+</style>
